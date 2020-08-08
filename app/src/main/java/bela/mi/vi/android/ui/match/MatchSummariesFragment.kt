@@ -11,21 +11,18 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.observe
 import androidx.navigation.fragment.findNavController
-import bela.mi.vi.android.App
 import bela.mi.vi.android.R
 import bela.mi.vi.android.databinding.FragmentMatchSummariesBinding
 import bela.mi.vi.android.ui.MainActivity
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 
 @ExperimentalCoroutinesApi
+@AndroidEntryPoint
 class MatchSummariesFragment : Fragment(), Toolbar.OnMenuItemClickListener {
     private val adapter = MatchSummariesAdapter()
-    private val matchSummariesViewModel: MatchSummariesViewModel by viewModels {
-        MatchSummariesViewModel.Factory(
-            (context?.applicationContext as App).belaRepository
-        )
-    }
+    private val matchSummariesViewModel: MatchSummariesViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,

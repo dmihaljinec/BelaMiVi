@@ -1,7 +1,8 @@
 package bela.mi.vi.android.ui.game
 
+import androidx.hilt.Assisted
+import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.*
-import bela.mi.vi.data.BelaRepository
 import bela.mi.vi.data.Game
 import bela.mi.vi.interactor.WithMatch
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -9,27 +10,16 @@ import kotlinx.coroutines.launch
 
 
 @ExperimentalCoroutinesApi
-class GamesViewModel (private val belaRepository: BelaRepository,
-                      private val setId: Long
-) :ViewModel() {
+class GamesViewModel @ViewModelInject constructor(
+    private val withMatch: WithMatch,
+    @Assisted savedStateHandle: SavedStateHandle) : ViewModel() {
 
     var games: LiveData<List<Game>> = MutableLiveData()
+    private val setId = savedStateHandle.get<Long>("setId") ?: -1L
 
     init {
         viewModelScope.launch {
-            games = WithMatch(belaRepository).getAllGamesInSet(setId).asLiveData(coroutineContext)
-        }
-    }
-
-    @Suppress("UNCHECKED_CAST")
-    class Factory(private val belaRepository: BelaRepository,
-                  private val setId: Long
-    ) : ViewModelProvider.Factory {
-        override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-            return GamesViewModel(
-                belaRepository,
-                setId
-            ) as T
+            games = withMatch.getAllGamesInSet(setId).asLiveData(coroutineContext)
         }
     }
 }

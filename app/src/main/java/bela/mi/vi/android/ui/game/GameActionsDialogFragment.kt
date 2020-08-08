@@ -7,18 +7,20 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import bela.mi.vi.android.App
 import bela.mi.vi.android.R
 import bela.mi.vi.android.databinding.DialogFragmentActionsGameBinding
 import bela.mi.vi.data.BelaRepository
 import bela.mi.vi.interactor.WithGame
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 
 @ExperimentalCoroutinesApi
+@AndroidEntryPoint
 class GameActionsDialogFragment : BottomSheetDialogFragment() {
     private val matchId: Long by lazy { arguments?.getLong(getString(R.string.key_match_id), -1L) ?: -1L }
     private val gameId: Long by lazy { arguments?.getLong(getString(R.string.key_game_id), -1L) ?: -1L }
@@ -30,6 +32,7 @@ class GameActionsDialogFragment : BottomSheetDialogFragment() {
         }
         else throw exception
     }
+    @Inject lateinit var withGame: WithGame
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -53,8 +56,7 @@ class GameActionsDialogFragment : BottomSheetDialogFragment() {
         }
         binding.actionDelete.setOnClickListener {
             lifecycleScope.launch(handler) {
-                val belaRepository = (context?.applicationContext as App).belaRepository
-                WithGame(belaRepository).remove(gameId)
+                withGame.remove(gameId)
                 dismiss()
             }
         }

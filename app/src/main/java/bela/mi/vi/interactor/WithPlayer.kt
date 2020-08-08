@@ -7,10 +7,11 @@ import bela.mi.vi.data.NewPlayer
 import bela.mi.vi.data.Player
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
+import javax.inject.Inject
 
 
 @ExperimentalCoroutinesApi
-class WithPlayer(private val belaRepository: BelaRepository) {
+class WithPlayer @Inject constructor(private val belaRepository: BelaRepository) {
 
     @Throws(PlayerOperationFailed::class)
     suspend fun new(name: String): Long {

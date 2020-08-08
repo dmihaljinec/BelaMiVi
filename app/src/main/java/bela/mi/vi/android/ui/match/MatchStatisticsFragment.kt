@@ -7,22 +7,17 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import bela.mi.vi.android.App
 import bela.mi.vi.android.R
 import bela.mi.vi.android.databinding.FragmentMatchStatisticsBinding
 import bela.mi.vi.android.ui.MainActivity
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 
 @ExperimentalCoroutinesApi
+@AndroidEntryPoint
 class MatchStatisticsFragment : Fragment() {
-    private val matchId: Long by lazy { arguments?.getLong(getString(R.string.key_match_id), -1L) ?: -1L }
-    private val matchStatisticsViewModel: MatchStatisticsViewModel by viewModels {
-        MatchStatisticsViewModel.Factory(
-            (context?.applicationContext as App).belaRepository,
-            matchId
-        )
-    }
+    private val matchStatisticsViewModel: MatchStatisticsViewModel by viewModels()
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,

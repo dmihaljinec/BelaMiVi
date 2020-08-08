@@ -9,24 +9,21 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.observe
 import androidx.navigation.fragment.findNavController
-import bela.mi.vi.android.App
 import bela.mi.vi.android.R
 import bela.mi.vi.android.databinding.FragmentSetsBinding
 import bela.mi.vi.android.ui.MainActivity
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
+
 @ExperimentalCoroutinesApi
+@AndroidEntryPoint
 class SetsFragment : Fragment() {
-    val adapter = SetsAdapter()
+    private val adapter = SetsAdapter()
     val matchId: Long by lazy {
         arguments?.getLong(getString(R.string.key_match_id), -1L) ?: -1L
     }
-    val setsViewModel: SetsViewModel by viewModels {
-        SetsViewModel.Factory(
-            (context?.applicationContext as App).belaRepository,
-            matchId
-        )
-    }
+    private val setsViewModel: SetsViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,

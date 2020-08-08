@@ -7,18 +7,20 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import bela.mi.vi.android.App
 import bela.mi.vi.android.R
 import bela.mi.vi.android.databinding.DialogFragmentActionsPlayerBinding
 import bela.mi.vi.data.BelaRepository
 import bela.mi.vi.interactor.WithPlayer
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 
 @ExperimentalCoroutinesApi
+@AndroidEntryPoint
 class PlayerActionsDialogFragment : BottomSheetDialogFragment() {
     private val playerId: Long by lazy { arguments?.getLong(getString(R.string.key_player_id), -1L) ?: -1L }
     private val handler = CoroutineExceptionHandler { _, exception ->
@@ -29,6 +31,7 @@ class PlayerActionsDialogFragment : BottomSheetDialogFragment() {
         }
         else throw exception
     }
+    @Inject lateinit var withPlayer: WithPlayer
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -51,8 +54,7 @@ class PlayerActionsDialogFragment : BottomSheetDialogFragment() {
         }
         binding.actionDelete.setOnClickListener {
             lifecycleScope.launch(handler) {
-                val belaRepository = (context?.applicationContext as App).belaRepository
-                WithPlayer(belaRepository).remove(playerId)
+                withPlayer.remove(playerId)
                 dismiss()
             }
         }

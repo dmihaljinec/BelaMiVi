@@ -7,10 +7,11 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
+import javax.inject.Inject
 
 
 @ExperimentalCoroutinesApi
-class WithMatch(private val belaRepository: BelaRepository) {
+class WithMatch @Inject constructor(private val belaRepository: BelaRepository) {
 
     suspend fun new(teamOnePlayerOneId: Long,
                     teamOnePlayerTwoId: Long,

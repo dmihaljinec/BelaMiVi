@@ -8,10 +8,11 @@ import bela.mi.vi.data.Set
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
+import javax.inject.Inject
 
 
 @ExperimentalCoroutinesApi
-class WithGame(private val belaRepository: BelaRepository) {
+class WithGame @Inject constructor(private val belaRepository: BelaRepository) {
 
     suspend fun new(matchId: Long,
                     allTricks: Boolean = false,

@@ -7,17 +7,20 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import bela.mi.vi.android.App
 import bela.mi.vi.android.R
 import bela.mi.vi.android.databinding.DialogFragmentActionsMatchSummariesBinding
 import bela.mi.vi.interactor.WithMatch
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import javax.inject.Inject
 
 
 @ExperimentalCoroutinesApi
+@AndroidEntryPoint
 class MatchSummariesActionsDialogFragment : BottomSheetDialogFragment() {
     private val matchId: Long by lazy { arguments?.getLong(getString(R.string.key_match_id), -1L) ?: -1L }
+    @Inject lateinit var withMatch: WithMatch
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -40,8 +43,7 @@ class MatchSummariesActionsDialogFragment : BottomSheetDialogFragment() {
         }
         binding.actionDelete.setOnClickListener {
             lifecycleScope.launchWhenResumed {
-                val belaRepository = (context?.applicationContext as App).belaRepository
-                WithMatch(belaRepository).remove(matchId)
+                withMatch.remove(matchId)
                 dismiss()
             }
         }

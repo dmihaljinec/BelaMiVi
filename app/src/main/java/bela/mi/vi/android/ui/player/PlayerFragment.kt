@@ -11,25 +11,20 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import bela.mi.vi.android.App
 import bela.mi.vi.android.R
 import bela.mi.vi.android.databinding.FragmentPlayerBinding
 import bela.mi.vi.android.ui.MainActivity
 import bela.mi.vi.data.BelaRepository.PlayerOperationFailed
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.launch
 
 
 @ExperimentalCoroutinesApi
+@AndroidEntryPoint
 class PlayerFragment : Fragment(), Toolbar.OnMenuItemClickListener {
-    private val playerViewModel: PlayerViewModel by viewModels {
-        val playerId: Long by lazy { arguments?.getLong(getString(R.string.key_player_id), -1L) ?: -1L }
-        PlayerViewModel.Factory(
-            (context?.applicationContext as App).belaRepository,
-            playerId
-        )
-    }
+    private val playerViewModel: PlayerViewModel by viewModels()
     private val handler = CoroutineExceptionHandler { _, exception ->
         val context = activity
         if (context != null && exception is PlayerOperationFailed) playerCoroutineExceptionHandler(

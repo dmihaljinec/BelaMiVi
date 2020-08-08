@@ -14,25 +14,21 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.observe
 import androidx.navigation.fragment.findNavController
-import bela.mi.vi.android.App
 import bela.mi.vi.android.R
 import bela.mi.vi.android.databinding.FragmentMatchBinding
 import bela.mi.vi.android.ui.MainActivity
 import bela.mi.vi.android.ui.game.GamesAdapter
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.launch
 
 
 @ExperimentalCoroutinesApi
+@AndroidEntryPoint
 class MatchFragment : Fragment(), Toolbar.OnMenuItemClickListener {
     private val adapter = GamesAdapter()
     private val matchId: Long by lazy { arguments?.getLong(getString(R.string.key_match_id), -1L) ?: -1L }
-    private val matchViewModel: MatchViewModel by viewModels {
-        MatchViewModel.Factory(
-            (context?.applicationContext as App).belaRepository,
-            matchId
-        )
-    }
+    private val matchViewModel: MatchViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,

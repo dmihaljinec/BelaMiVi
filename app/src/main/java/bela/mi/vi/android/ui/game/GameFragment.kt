@@ -11,27 +11,20 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import bela.mi.vi.android.App
 import bela.mi.vi.android.R
 import bela.mi.vi.android.databinding.FragmentGameBinding
 import bela.mi.vi.android.ui.MainActivity
 import bela.mi.vi.data.BelaRepository
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.launch
 
 
 @ExperimentalCoroutinesApi
+@AndroidEntryPoint
 class GameFragment : Fragment(), Toolbar.OnMenuItemClickListener {
-    private val gameViewModel: GameViewModel by viewModels {
-        val matchId: Long by lazy { arguments?.getLong(getString(R.string.key_match_id), -1L) ?: -1L }
-        val gameId:Long by lazy { arguments?.getLong(getString(R.string.key_game_id), -1L) ?: -1L }
-        GameViewModel.Factory(
-            (context?.applicationContext as App).belaRepository,
-            matchId,
-            gameId
-        )
-    }
+    private val gameViewModel: GameViewModel by viewModels()
     private val title: String by lazy {
         if (hasGameId) getString(R.string.title_game)
         else getString(R.string.title_new_game)

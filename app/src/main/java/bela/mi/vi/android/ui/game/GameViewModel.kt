@@ -1,11 +1,12 @@
 package bela.mi.vi.android.ui.game
 
 import android.util.Log
+import androidx.hilt.Assisted
+import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
-import bela.mi.vi.data.BelaRepository
 import bela.mi.vi.data.Game
 import bela.mi.vi.interactor.WithGame
 import kotlinx.coroutines.CoroutineExceptionHandler
@@ -15,14 +16,16 @@ import kotlinx.coroutines.launch
 
 
 @ExperimentalCoroutinesApi
-class GameViewModel(private val belaRepository: BelaRepository,
-                    private val matchId: Long,
-                    private val gameId: Long = -1L) : ViewModel() {
+class GameViewModel @ViewModelInject constructor(
+    private val withGame: WithGame,
+    @Assisted savedStateHandle: SavedStateHandle) : ViewModel() {
     var allTricks: MutableLiveData<Boolean> = MutableLiveData(false)
     var teamOneDeclarations: MutableLiveData<String> = MutableLiveData()
     var teamTwoDeclarations: MutableLiveData<String> = MutableLiveData()
     var teamOnePoints: MutableLiveData<String> = MutableLiveData()
     var teamTwoPoints: MutableLiveData<String> = MutableLiveData()
+    private val matchId = savedStateHandle.get<Long>("matchId") ?: -1L
+    private val gameId = savedStateHandle.get<Long>("gameId") ?: -1L
     private val saveGame = if(gameId != -1L) ::editGame else ::newGame
     private val handler = CoroutineExceptionHandler { _, exception ->
         Log.d("FLOW","CoroutineExceptionHandler got $exception")
@@ -31,7 +34,7 @@ class GameViewModel(private val belaRepository: BelaRepository,
     init {
         if (gameId != -1L) {
             viewModelScope.launch(handler) {
-                val game = WithGame(belaRepository).get(gameId).first()
+                val game = withGame.get(gameId).first()
                 allTricks.value = game.allTricks
                 teamOneDeclarations.value = game.teamOneDeclarations.toString()
                 teamTwoDeclarations.value = game.teamTwoDeclarations.toString()
@@ -45,31 +48,31 @@ class GameViewModel(private val belaRepository: BelaRepository,
 
     suspend fun remove() {
         require(gameId != -1L)
-        WithGame(belaRepository).remove(gameId)
+        withGame.remove(gameId)
     }
 
     private suspend fun newGame() {
-            val game = game()
-            WithGame(belaRepository).new(
-                matchId,
-                game.allTricks,
-                game.teamOneDeclarations,
-                game.teamTwoDeclarations,
-                game.teamOnePoints,
-                game.teamTwoPoints
-            )
+        val game = game()
+        withGame.new(
+            matchId,
+            game.allTricks,
+            game.teamOneDeclarations,
+            game.teamTwoDeclarations,
+            game.teamOnePoints,
+            game.teamTwoPoints
+        )
     }
 
     private suspend fun editGame() {
-            val game = game()
-            WithGame(belaRepository).update(
-                gameId,
-                game.allTricks,
-                game.teamOneDeclarations,
-                game.teamTwoDeclarations,
-                game.teamOnePoints,
-                game.teamTwoPoints
-            )
+        val game = game()
+        withGame.update(
+            gameId,
+            game.allTricks,
+            game.teamOneDeclarations,
+            game.teamTwoDeclarations,
+            game.teamOnePoints,
+            game.teamTwoPoints
+        )
     }
 
     private fun game(): Game {
@@ -81,19 +84,5 @@ class GameViewModel(private val belaRepository: BelaRepository,
             teamOnePoints.value?.toInt() ?: 0,
             teamTwoPoints.value?.toInt() ?: 0
         )
-    }
-
-    @Suppress("UNCHECKED_CAST")
-    class Factory(private val belaRepository: BelaRepository,
-                  private val matchId: Long,
-                  private val gameId: Long = -1L
-    ) : ViewModelProvider.Factory {
-        override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-            return GameViewModel(
-                belaRepository,
-                matchId,
-                gameId
-            ) as T
-        }
     }
 }

@@ -12,22 +12,19 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import bela.mi.vi.android.App
 import bela.mi.vi.android.R
 import bela.mi.vi.android.databinding.FragmentNewMatchBinding
 import bela.mi.vi.android.ui.MainActivity
 import bela.mi.vi.android.ui.player.PlayersAdapter
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 
 @ExperimentalCoroutinesApi
+@AndroidEntryPoint
 class NewMatchFragment : Fragment(), Toolbar.OnMenuItemClickListener {
     private val adapter = PlayersAdapter()
-    private val newMatchViewModel: NewMatchViewModel by viewModels {
-        NewMatchViewModel.Factory(
-            (context?.applicationContext as App).belaRepository
-        )
-    }
+    private val newMatchViewModel: NewMatchViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,

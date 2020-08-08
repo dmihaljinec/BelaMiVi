@@ -4,6 +4,7 @@ plugins {
     id "kotlin-android-extensions"
     id "kotlin-kapt"
     id "androidx.navigation.safeargs.kotlin"
+    id "dagger.hilt.android.plugin"
 }
 
 android {
@@ -60,6 +61,11 @@ dependencies {
     // Room
     implementation "androidx.room:room-ktx:${versions.room}"
     kapt "androidx.room:room-compiler:${versions.room}"
+    // Hilt (Dagger dependency injection)
+    implementation "com.google.dagger:hilt-android:${versions.hiltDagger}"
+    kapt "com.google.dagger:hilt-android-compiler:${versions.hiltDagger}"
+    implementation "androidx.hilt:hilt-lifecycle-viewmodel:${versions.hilt}"
+    kapt "androidx.hilt:hilt-compiler:${versions.hilt}"
 
     // Allows to inspect real database content from browser when debug build is running on device
     debugImplementation 'com.amitshekhar.android:debug-db:1.0.6'

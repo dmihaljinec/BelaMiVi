@@ -1,8 +1,8 @@
 package bela.mi.vi.android.ui.match
 
+import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.*
 import bela.mi.vi.android.R
-import bela.mi.vi.data.BelaRepository
 import bela.mi.vi.data.Player
 import bela.mi.vi.interactor.WithMatch
 import bela.mi.vi.interactor.WithPlayer
@@ -11,7 +11,9 @@ import kotlinx.coroutines.launch
 
 
 @ExperimentalCoroutinesApi
-class NewMatchViewModel(private val belaRepository: BelaRepository) : ViewModel() {
+class NewMatchViewModel @ViewModelInject constructor(
+    private val withMatch: WithMatch,
+    private val withPlayer: WithPlayer) : ViewModel() {
     var availablePlayers: MediatorLiveData<List<Player>> = MediatorLiveData()
     private var all: LiveData<List<Player>> = MutableLiveData()
     private val selected: MutableLiveData<List<Player>> = MutableLiveData()
@@ -29,7 +31,7 @@ class NewMatchViewModel(private val belaRepository: BelaRepository) : ViewModel(
 
     init {
         viewModelScope.launch {
-            all = WithPlayer(belaRepository).getAll().asLiveData(coroutineContext)
+            all = withPlayer.getAll().asLiveData(coroutineContext)
         }
         availablePlayers.addSource(all) { updateAvailablePlayers() }
         availablePlayers.addSource(selected) { updateAvailablePlayers() }
@@ -49,7 +51,7 @@ class NewMatchViewModel(private val belaRepository: BelaRepository) : ViewModel(
             else -> {
                 var limit = setLimit.value ?: 1001
                 if (limit <= 0) limit = 1001
-                WithMatch(belaRepository).new(
+                withMatch.new(
                     teamOnePlayerOneId = teamOnePlayerOne.id,
                     teamOnePlayerTwoId = teamOnePlayerTwo.id,
                     teamTwoPlayerOneId = teamTwoPlayerOne.id,
@@ -143,12 +145,5 @@ class NewMatchViewModel(private val belaRepository: BelaRepository) : ViewModel(
             else -> return
         }
         selected.value = selected.value?.toMutableList()?.also { it.add(player) } ?: mutableListOf(player)
-    }
-
-    @Suppress("UNCHECKED_CAST")
-    class Factory(private val belaRepository: BelaRepository) : ViewModelProvider.Factory {
-        override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-            return NewMatchViewModel(belaRepository) as T
-        }
     }
 }

@@ -1,7 +1,8 @@
 package bela.mi.vi.android.ui.match
 
+import androidx.hilt.Assisted
+import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.*
-import bela.mi.vi.data.BelaRepository
 import bela.mi.vi.data.TeamOrdinal
 import bela.mi.vi.interactor.WithMatch
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -10,11 +11,11 @@ import java.text.DecimalFormat
 
 
 @ExperimentalCoroutinesApi
-class MatchStatisticsViewModel(
-    private val belaRepository: BelaRepository,
-    private val matchId: Long
-) : ViewModel() {
-    var gamesCount:LiveData<Int> = MutableLiveData()
+class MatchStatisticsViewModel @ViewModelInject constructor(
+    private val withMatch: WithMatch,
+    @Assisted savedStateHandle: SavedStateHandle) : ViewModel() {
+    private val matchId = savedStateHandle.get<Long>("matchId") ?: -1L
+    private var gamesCount:LiveData<Int> = MutableLiveData()
     var teamOneSetsWon: LiveData<Int> = MutableLiveData()
     var teamTwoSetsWon: LiveData<Int> = MutableLiveData()
     var teamOnePointsWon: LiveData<Int> = MutableLiveData()
@@ -34,7 +35,7 @@ class MatchStatisticsViewModel(
 
     init {
         viewModelScope.launch {
-            val matchStatistics = WithMatch(belaRepository).getMatchStatistics(matchId)
+            val matchStatistics = withMatch.getMatchStatistics(matchId)
             gamesCount = matchStatistics.gamesCount.asLiveData(coroutineContext)
             teamOneSetsWon = matchStatistics.teamOneStats.setsWon.asLiveData(coroutineContext)
             teamTwoSetsWon = matchStatistics.teamTwoStats.setsWon.asLiveData(coroutineContext)
@@ -96,18 +97,5 @@ class MatchStatisticsViewModel(
             percentage = DecimalFormat("0").format((numerator.toDouble() / denominator.toDouble()) * 100)
         }
         return "${percentage}% ($numerator/$denominator)"
-    }
-
-    @Suppress("UNCHECKED_CAST")
-    class Factory(
-        private val belaRepository: BelaRepository,
-        private val matchId: Long
-    ) : ViewModelProvider.Factory {
-        override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-            return MatchStatisticsViewModel(
-                belaRepository,
-                matchId
-            ) as T
-        }
     }
 }
