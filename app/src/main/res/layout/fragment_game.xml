@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <variable
+            name="game"
+            type="bela.mi.vi.android.ui.game.GameViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <EditText
+            android:id="@+id/team_one_points"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:minWidth="100dp"
+            android:hint="Team one points"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/team_two_points"
+            android:inputType="number"
+            android:text="@={game.teamOnePoints}"/>
+
+        <EditText
+            android:id="@+id/team_two_points"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:minWidth="100dp"
+            android:hint="Team two points"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toEndOf="@id/team_one_points"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:inputType="number"
+            android:text="@={game.teamTwoPoints}"/>
+
+        <EditText
+            android:id="@+id/team_one_declarations"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:minWidth="100dp"
+            android:hint="Team one declarations"
+            app:layout_constraintTop_toBottomOf="@id/team_one_points"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/team_two_declarations"
+            android:text="@={game.teamOneDeclarations}"/>
+
+        <EditText
+            android:id="@+id/team_two_declarations"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:minWidth="100dp"
+            android:hint="Team two declarations"
+            app:layout_constraintTop_toBottomOf="@id/team_two_points"
+            app:layout_constraintStart_toEndOf="@id/team_one_declarations"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:text="@={game.teamTwoDeclarations}"/>
+
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/team_one_declarations"
+            app:layout_constraintStart_toStartOf="parent"
+            android:text="All Tricks"
+            android:checked="@={game.allTricks}"/>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/save"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:src="@drawable/confirm_tint_24"
+            android:tint="@color/colorWhite"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

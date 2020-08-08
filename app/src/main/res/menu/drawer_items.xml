@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group
+        android:id="@+id/group_features"
+        android:checkableBehavior="single">
+
+        <item
+            android:id="@id/match_summaries_fragment"
+            android:icon="@drawable/matches_tint_24"
+            android:title="@string/title_list_of_matches" />
+
+        <item
+            android:id="@id/players_fragment"
+            android:icon="@drawable/players_tint_24"
+            android:title="@string/title_list_of_players" />
+
+    </group>
+
+    <group
+        android:id="@+id/group_settings"
+        android:checkableBehavior="single">
+
+        <item
+            android:id="@id/settings_fragment"
+            android:icon="@drawable/settings_tint_24"
+            android:title="@string/title_settings" />
+
+    </group>
+
+    <group
+        android:id="@+id/group_about"
+        android:checkableBehavior="single">
+
+        <item
+            android:id="@id/about_fragment"
+            android:icon="@drawable/about_tint_24"
+            android:title="@string/title_about" />
+
+    </group>
+
+</menu>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/new_game_menu_item"
+        android:title="@string/action_new_game" />
+
+    <item
+        android:id="@+id/match_statistics_menu_item"
+        android:title="@string/title_match_statistics" />
+
+    <item
+        android:id="@+id/list_of_sets_menu_item"
+        android:title="@string/title_list_of_sets" />
+
+    <item
+        android:id="@+id/delete_menu_item"
+        android:title="@string/action_delete" />
+
+</menu>

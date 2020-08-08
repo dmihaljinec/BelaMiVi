@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/match_summaries_fragment">
+
+    <fragment
+        android:id="@+id/match_summaries_fragment"
+        android:name="bela.mi.vi.android.ui.match.MatchSummariesFragment"
+        android:label="@string/title_list_of_matches" >
+        <action
+            android:id="@+id/action_match_summaries_fragment_to_new_match_fragment"
+            app:destination="@id/new_match_fragment" />
+        <action
+            android:id="@+id/action_match_summaries_fragment_to_match_fragment"
+            app:destination="@id/match_fragment" />
+        <action
+            android:id="@+id/action_match_summaries_fragment_to_players_fragment"
+            app:destination="@id/players_fragment" />
+        <action
+            android:id="@+id/action_match_summaries_fragment_to_match_summaries_actions_dialog_fragment"
+            app:destination="@id/match_summaries_actions_dialog_fragment"/>
+    </fragment>
+    <fragment
+        android:id="@+id/players_fragment"
+        android:name="bela.mi.vi.android.ui.player.PlayersFragment"
+        android:label="@string/title_list_of_players" >
+        <action
+            android:id="@+id/action_players_fragment_to_player_fragment"
+            app:destination="@id/player_fragment"/>
+        <action
+            android:id="@+id/action_players_fragment_to_player_actions_dialog_fragment"
+            app:destination="@id/player_actions_dialog_fragment"/>
+    </fragment>
+    <fragment
+        android:id="@+id/player_fragment"
+        android:name="bela.mi.vi.android.ui.player.PlayerFragment"
+        android:label="@string/title_player" >
+        <argument
+            android:name="playerId"
+            app:argType="long"
+            android:defaultValue="-1L"/>
+    </fragment>
+    <fragment
+        android:id="@+id/new_match_fragment"
+        android:name="bela.mi.vi.android.ui.match.NewMatchFragment"
+        android:label="@string/title_new_match" >
+        <action
+            android:id="@+id/action_new_match_fragment_to_match_fragment"
+            app:destination="@id/match_fragment"
+            app:popUpTo="@id/match_summaries_fragment"/>
+        <action
+            android:id="@+id/action_new_match_fragment_to_player_fragment"
+            app:destination="@id/player_fragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/match_fragment"
+        android:name="bela.mi.vi.android.ui.match.MatchFragment">
+        <!-- Putting '@string/key_match_id' as android:name does not work here for now -->
+        <argument
+            android:name="matchId"
+            app:argType="long"
+            android:defaultValue="-1L"/>
+        <action
+            android:id="@+id/action_match_fragment_to_game_fragment"
+            app:destination="@id/game_fragment" />
+        <action
+            android:id="@+id/action_match_fragment_to_game_actions_dialog_fragment"
+            app:destination="@id/game_actions_dialog_fragment"/>
+        <action
+            android:id="@+id/action_match_fragment_to_match_statistics_fragment"
+            app:destination="@id/match_statistics_fragment" />
+        <action
+            android:id="@+id/action_match_fragment_to_sets_fragment"
+            app:destination="@id/sets_fragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/game_fragment"
+        android:name="bela.mi.vi.android.ui.game.GameFragment">
+        <argument
+            android:name="matchId"
+            app:argType="long"
+            android:defaultValue="-1L"/>
+        <argument
+            android:name="gameId"
+            app:argType="long"
+            android:defaultValue="-1L"/>
+    </fragment>
+    <fragment
+        android:id="@+id/games_fragment"
+        android:name="bela.mi.vi.android.ui.game.GamesFragment"
+        android:label="@string/title_list_of_games">
+        <argument
+            android:name="setId"
+            app:argType="long"
+            android:defaultValue="-1L"/>
+        <action
+            android:id="@+id/action_games_fragment_to_game_fragment"
+            app:destination="@id/game_fragment" />
+        <action
+            android:id="@+id/action_games_fragment_to_game_actions_dialog_fragment"
+            app:destination="@id/game_actions_dialog_fragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/sets_fragment"
+        android:name="bela.mi.vi.android.ui.set.SetsFragment"
+        android:label="@string/title_list_of_sets">
+        <argument
+            android:name="matchId"
+            app:argType="long"
+            android:defaultValue="-1L"/>
+        <action
+            android:id="@+id/action_sets_fragment_to_games_fragment"
+            app:destination="@id/games_fragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/match_statistics_fragment"
+        android:name="bela.mi.vi.android.ui.match.MatchStatisticsFragment"
+        android:label="@string/title_match_statistics">
+        <argument
+            android:name="matchId"
+            app:argType="long"
+            android:defaultValue="-1L"/>
+    </fragment>
+    <fragment
+        android:id="@+id/settings_fragment"
+        android:name="bela.mi.vi.android.ui.player.PlayersFragment"
+        android:label="@string/title_settings" >
+    </fragment>
+    <fragment
+        android:id="@+id/about_fragment"
+        android:name="bela.mi.vi.android.ui.player.PlayersFragment"
+        android:label="@string/title_about" >
+    </fragment>
+    <dialog
+        android:id="@+id/match_summaries_actions_dialog_fragment"
+        android:name="bela.mi.vi.android.ui.match.MatchSummariesActionsDialogFragment">
+        <argument
+            android:name="matchId"
+            app:argType="long"
+            android:defaultValue="-1L"/>
+        <action
+            android:id="@+id/action_match_summaries_actions_dialog_fragment_to_match_fragment"
+            app:destination="@id/match_fragment" />
+    </dialog>
+    <dialog
+        android:id="@+id/game_actions_dialog_fragment"
+        android:name="bela.mi.vi.android.ui.game.GameActionsDialogFragment">
+        <argument
+            android:name="matchId"
+            app:argType="long"
+            android:defaultValue="-1L"/>
+        <argument
+            android:name="gameId"
+            app:argType="long"
+            android:defaultValue="-1L"/>
+        <action
+            android:id="@+id/action_game_actions_dialog_fragment_to_game_fragment"
+            app:destination="@id/game_fragment" />
+    </dialog>
+    <dialog
+        android:id="@+id/player_actions_dialog_fragment"
+        android:name="bela.mi.vi.android.ui.player.PlayerActionsDialogFragment">
+        <argument
+            android:name="playerId"
+            app:argType="long"
+            android:defaultValue="-1L"/>
+        <action
+            android:id="@+id/action_player_actions_dialog_fragment_to_player_fragment"
+            app:destination="@id/player_fragment" />
+    </dialog>
+</navigation>
