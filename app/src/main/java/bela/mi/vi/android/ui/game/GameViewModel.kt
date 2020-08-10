@@ -1,12 +1,13 @@
 package bela.mi.vi.android.ui.game
 
-import android.util.Log
 import androidx.hilt.Assisted
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import bela.mi.vi.android.ui.operationFailedCoroutineExceptionHandler
+import bela.mi.vi.data.BelaRepository.OperationFailed
 import bela.mi.vi.data.Game
 import bela.mi.vi.interactor.WithGame
 import kotlinx.coroutines.CoroutineExceptionHandler
@@ -28,7 +29,8 @@ class GameViewModel @ViewModelInject constructor(
     private val gameId = savedStateHandle.get<Long>("gameId") ?: -1L
     private val saveGame = if(gameId != -1L) ::editGame else ::newGame
     private val handler = CoroutineExceptionHandler { _, exception ->
-        Log.d("FLOW","CoroutineExceptionHandler got $exception")
+        if (exception is OperationFailed) operationFailedCoroutineExceptionHandler(exception)
+        else throw exception
     }
 
     init {

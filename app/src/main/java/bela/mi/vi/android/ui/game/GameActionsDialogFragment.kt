@@ -9,6 +9,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import bela.mi.vi.android.R
 import bela.mi.vi.android.databinding.DialogFragmentActionsGameBinding
+import bela.mi.vi.android.ui.gameCoroutineExceptionHandler
 import bela.mi.vi.data.BelaRepository
 import bela.mi.vi.interactor.WithGame
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment

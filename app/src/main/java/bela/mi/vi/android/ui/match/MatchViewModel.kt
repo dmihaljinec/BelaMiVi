@@ -1,11 +1,13 @@
 package bela.mi.vi.android.ui.match
 
-import android.util.Log
 import androidx.hilt.Assisted
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.*
+import bela.mi.vi.android.ui.operationFailedCoroutineExceptionHandler
+import bela.mi.vi.data.BelaRepository.OperationFailed
 import bela.mi.vi.data.Game
 import bela.mi.vi.interactor.WithMatch
+import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.map
@@ -20,13 +22,16 @@ class MatchViewModel @ViewModelInject constructor(
     private val matchId = savedStateHandle.get<Long>("matchId") ?: -1L
     var games: LiveData<List<Game>> = MutableLiveData()
     var matchScore: MediatorLiveData<String> = MediatorLiveData()
+    private val handler = CoroutineExceptionHandler { _, exception ->
+        if (exception is OperationFailed) operationFailedCoroutineExceptionHandler(exception)
+        else throw exception
+    }
 
     init {
         require(matchId != -1L) { "Invalid match id, $matchId" }
-        viewModelScope.launch {
+        viewModelScope.launch(handler) {
             games = withMatch.getAllGamesFromLastSet(matchId).asLiveData(coroutineContext)
             withMatch.get(matchId).map { match -> match.toMatchSummary(coroutineContext) }.collect {
-                Log.d("WTF", "Got match summary with id ${it.matchId}")
                 matchSummary = it
                 matchScore.addSource(matchSummary.teamOneSetsWon) { updateSetsScore() }
                 matchScore.addSource(matchSummary.teamTwoSetsWon) { updateSetsScore() }

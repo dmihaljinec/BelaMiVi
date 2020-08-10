@@ -3,8 +3,11 @@ package bela.mi.vi.android.ui.match
 import androidx.hilt.Assisted
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.*
+import bela.mi.vi.android.ui.operationFailedCoroutineExceptionHandler
+import bela.mi.vi.data.BelaRepository.OperationFailed
 import bela.mi.vi.data.TeamOrdinal
 import bela.mi.vi.interactor.WithMatch
+import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.launch
 import java.text.DecimalFormat
@@ -32,9 +35,13 @@ class MatchStatisticsViewModel @ViewModelInject constructor(
     var teamTwoChosenTrumpString = MediatorLiveData<String>()
     var teamOnePassedGamesString = MediatorLiveData<String>()
     var teamTwoPassedGamesString = MediatorLiveData<String>()
+    private val handler = CoroutineExceptionHandler { _, exception ->
+        if (exception is OperationFailed) operationFailedCoroutineExceptionHandler(exception)
+        else throw exception
+    }
 
     init {
-        viewModelScope.launch {
+        viewModelScope.launch(handler) {
             val matchStatistics = withMatch.getMatchStatistics(matchId)
             gamesCount = matchStatistics.gamesCount.asLiveData(coroutineContext)
             teamOneSetsWon = matchStatistics.teamOneStats.setsWon.asLiveData(coroutineContext)

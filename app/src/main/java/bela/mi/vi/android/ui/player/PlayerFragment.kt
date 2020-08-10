@@ -14,6 +14,7 @@ import androidx.navigation.fragment.findNavController
 import bela.mi.vi.android.R
 import bela.mi.vi.android.databinding.FragmentPlayerBinding
 import bela.mi.vi.android.ui.MainActivity
+import bela.mi.vi.android.ui.playerCoroutineExceptionHandler
 import bela.mi.vi.data.BelaRepository.PlayerOperationFailed
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineExceptionHandler

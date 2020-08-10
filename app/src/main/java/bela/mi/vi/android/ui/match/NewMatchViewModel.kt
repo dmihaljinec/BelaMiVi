@@ -3,10 +3,13 @@ package bela.mi.vi.android.ui.match
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.*
 import bela.mi.vi.android.R
+import bela.mi.vi.android.ui.operationFailedCoroutineExceptionHandler
 import bela.mi.vi.android.ui.settings.BelaSettings
+import bela.mi.vi.data.BelaRepository.OperationFailed
 import bela.mi.vi.data.Player
 import bela.mi.vi.interactor.WithMatch
 import bela.mi.vi.interactor.WithPlayer
+import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.launch
 
@@ -31,9 +34,13 @@ class NewMatchViewModel @ViewModelInject constructor(
     val teamTwoPlayerOneClear = MutableLiveData(0)
     val teamTwoPlayerTwoClear = MutableLiveData(0)
     var setLimit: MutableLiveData<Int> = MutableLiveData(belaSettings.getSetLimit())
+    private val handler = CoroutineExceptionHandler { _, exception ->
+        if (exception is OperationFailed) operationFailedCoroutineExceptionHandler(exception)
+        else throw exception
+    }
 
     init {
-        viewModelScope.launch {
+        viewModelScope.launch(handler) {
             all = withPlayer.getAll().asLiveData(coroutineContext)
         }
         availablePlayers.addSource(all) { updateAvailablePlayers() }

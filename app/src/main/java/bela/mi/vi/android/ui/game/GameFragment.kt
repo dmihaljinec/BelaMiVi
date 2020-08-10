@@ -14,7 +14,8 @@ import androidx.navigation.fragment.findNavController
 import bela.mi.vi.android.R
 import bela.mi.vi.android.databinding.FragmentGameBinding
 import bela.mi.vi.android.ui.MainActivity
-import bela.mi.vi.data.BelaRepository
+import bela.mi.vi.android.ui.gameCoroutineExceptionHandler
+import bela.mi.vi.data.BelaRepository.GameOperationFailed
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -36,7 +37,7 @@ class GameFragment : Fragment(), Toolbar.OnMenuItemClickListener {
     private val hasGameId: Boolean by lazy { arguments?.getLong(getString(R.string.key_game_id), -1L) != -1L }
     private val handler = CoroutineExceptionHandler { _, exception ->
         val context = activity
-        if (context != null && exception is BelaRepository.GameOperationFailed) gameCoroutineExceptionHandler(
+        if (context != null && exception is GameOperationFailed) gameCoroutineExceptionHandler(
             exception,
             context
         )

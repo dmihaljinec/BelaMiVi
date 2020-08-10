@@ -13,7 +13,6 @@ import kotlinx.coroutines.launch
 class GamesViewModel @ViewModelInject constructor(
     private val withMatch: WithMatch,
     @Assisted savedStateHandle: SavedStateHandle) : ViewModel() {
-
     var games: LiveData<List<Game>> = MutableLiveData()
     private val setId = savedStateHandle.get<Long>("setId") ?: -1L
 
