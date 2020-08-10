@@ -20,7 +20,6 @@ class PlayersViewModel @ViewModelInject constructor(
     init {
         viewModelScope.launch {
             players = withPlayer.getAll().asLiveData(coroutineContext)
-            Log.d("WTF", "init")
         }
     }
 

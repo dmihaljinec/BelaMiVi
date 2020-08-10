@@ -17,14 +17,6 @@ class SetsAdapter : ListAdapter<SetSummary>(diffCallback) {
         )
     }
 
-    override fun onBindViewHolder(holder: DataBindingViewHolder, position: Int) {
-        val item = getItem(position)
-        holder.viewModel = item
-        clickListener?.let { listener ->
-            holder.itemView.setOnClickListener { listener(item) }
-        }
-    }
-
 
     companion object {
         private val diffCallback = object : DiffUtil.ItemCallback<SetSummary>() {

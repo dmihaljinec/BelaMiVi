@@ -1,6 +1,5 @@
 package bela.mi.vi.android.ui
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
@@ -34,16 +33,13 @@ class DataBindingViewHolder(parent: ViewGroup, layoutId: Int, private val bindin
     init {
         // TODO find a way to destroy
         lifecycleRegistry.currentState = Lifecycle.State.INITIALIZED
-        Log.d("WTF", "Lifecycle.State.INITIALIZED ${System.identityHashCode(this)}")
     }
 
     fun markAttached() {
         lifecycleRegistry.currentState = Lifecycle.State.STARTED
-        Log.d("WTF", "Lifecycle.State.STARTED ${System.identityHashCode(this)}")
     }
 
     fun markDetached() {
         lifecycleRegistry.currentState = Lifecycle.State.CREATED
-        Log.d("WTF", "Lifecycle.State.CREATED ${System.identityHashCode(this)}")
     }
 }

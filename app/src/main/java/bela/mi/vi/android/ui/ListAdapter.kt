@@ -8,6 +8,17 @@ abstract class ListAdapter<T>(diffCallbak: DiffUtil.ItemCallback<T>) : ListAdapt
     var clickListener: ((T) -> Unit)? = null
     var longClickListener: ((T) -> Boolean)? = null
 
+    override fun onBindViewHolder(holder: DataBindingViewHolder, position: Int) {
+        val item = getItem(position)
+        holder.viewModel = item
+        clickListener?.let { listener ->
+            holder.itemView.setOnClickListener { listener(item) }
+        }
+        longClickListener?.let { listener ->
+            holder.itemView.setOnLongClickListener { listener(item) }
+        }
+    }
+
     override fun onViewAttachedToWindow(holder: DataBindingViewHolder) {
         super.onViewAttachedToWindow(holder)
         holder.markAttached()

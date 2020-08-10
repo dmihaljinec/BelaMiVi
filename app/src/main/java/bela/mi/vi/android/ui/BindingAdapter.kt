@@ -22,8 +22,8 @@ fun setDrawableEnd(textView: TextView, drawableResId: Int, tintColorResId: Int) 
 
 @BindingAdapter("android:text")
 fun TextView.setInt(value: Int) {
-    val limit = value.toString()
-    if (limit != text.toString()) text = limit
+    val newValue = value.toString()
+    if (newValue != text.toString()) text = newValue
 }
 
 @InverseBindingAdapter(attribute = "android:text")

@@ -18,17 +18,6 @@ class MatchSummariesAdapter : ListAdapter<MatchSummary>(diffCallback) {
         )
     }
 
-    override fun onBindViewHolder(holder: DataBindingViewHolder, position: Int) {
-        val item = getItem(position)
-        holder.viewModel = item
-        clickListener?.let { listener ->
-            holder.itemView.setOnClickListener { listener(item) }
-        }
-        longClickListener?.let { listener ->
-            holder.itemView.setOnLongClickListener { listener(item) }
-        }
-    }
-
 
     companion object {
         private val diffCallback = object : DiffUtil.ItemCallback<MatchSummary>() {
