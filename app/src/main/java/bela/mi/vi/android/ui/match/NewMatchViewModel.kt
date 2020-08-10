@@ -3,6 +3,7 @@ package bela.mi.vi.android.ui.match
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.*
 import bela.mi.vi.android.R
+import bela.mi.vi.android.ui.settings.BelaSettings
 import bela.mi.vi.data.Player
 import bela.mi.vi.interactor.WithMatch
 import bela.mi.vi.interactor.WithPlayer
@@ -13,7 +14,9 @@ import kotlinx.coroutines.launch
 @ExperimentalCoroutinesApi
 class NewMatchViewModel @ViewModelInject constructor(
     private val withMatch: WithMatch,
-    private val withPlayer: WithPlayer) : ViewModel() {
+    private val withPlayer: WithPlayer,
+    private val belaSettings: BelaSettings
+) : ViewModel() {
     var availablePlayers: MediatorLiveData<List<Player>> = MediatorLiveData()
     private var all: LiveData<List<Player>> = MutableLiveData()
     private val selected: MutableLiveData<List<Player>> = MutableLiveData()
@@ -27,7 +30,7 @@ class NewMatchViewModel @ViewModelInject constructor(
     val teamOnePlayerTwoClear = MutableLiveData(0)
     val teamTwoPlayerOneClear = MutableLiveData(0)
     val teamTwoPlayerTwoClear = MutableLiveData(0)
-    var setLimit: MutableLiveData<Int> = MutableLiveData(1001)
+    var setLimit: MutableLiveData<Int> = MutableLiveData(belaSettings.getSetLimit())
 
     init {
         viewModelScope.launch {
@@ -49,8 +52,8 @@ class NewMatchViewModel @ViewModelInject constructor(
             teamTwoPlayerOne == null -> -1L
             teamTwoPlayerTwo == null -> -1L
             else -> {
-                var limit = setLimit.value ?: 1001
-                if (limit <= 0) limit = 1001
+                var limit = setLimit.value ?: belaSettings.getSetLimit()
+                if (limit <= 0) limit = belaSettings.getSetLimit()
                 withMatch.new(
                     teamOnePlayerOneId = teamOnePlayerOne.id,
                     teamOnePlayerTwoId = teamOnePlayerTwo.id,

@@ -9,7 +9,8 @@ class BelaRepository(
     private val playerDataSource: PlayerDataSource,
     private val matchDataSource: MatchDataSource,
     private val setDataSource: SetDataSource,
-    private val gameDataSource: GameDataSource){
+    private val gameDataSource: GameDataSource,
+    private val settings: Settings){
 
     // Player
     suspend fun add(newPlayer: NewPlayer) = playerDataSource.add(newPlayer)

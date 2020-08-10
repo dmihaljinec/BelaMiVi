@@ -124,7 +124,7 @@
     </fragment>
     <fragment
         android:id="@+id/settings_fragment"
-        android:name="bela.mi.vi.android.ui.player.PlayersFragment"
+        android:name="bela.mi.vi.android.ui.settings.SettingsFragment"
         android:label="@string/title_settings" >
     </fragment>
     <fragment
