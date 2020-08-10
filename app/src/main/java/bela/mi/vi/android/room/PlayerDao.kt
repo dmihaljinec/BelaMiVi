@@ -23,7 +23,7 @@ interface PlayerDao {
     suspend fun update(player: PlayerEntity)
 
     @Query("SELECT * FROM $TABLE_PLAYERS WHERE ${PlayerEntity.ID} = :id")
-    fun get(id: Long): Flow<PlayerEntity>
+    fun get(id: Long): Flow<PlayerEntity?>
 
     @Query("SELECT * FROM $TABLE_PLAYERS ORDER BY ${PlayerEntity.NAME}")
     fun getAll(): Flow<List<PlayerEntity>>

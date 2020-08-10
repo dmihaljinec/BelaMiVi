@@ -1,9 +1,11 @@
 package bela.mi.vi.android.room
 
 import android.database.sqlite.SQLiteConstraintException
+import bela.mi.vi.data.BelaRepository.OperationFailed
 import bela.mi.vi.data.BelaRepository.PlayerOperationFailed
 import bela.mi.vi.data.BelaRepository.PlayerReason.PlayerNameNotUnique
 import bela.mi.vi.data.BelaRepository.PlayerReason.PlayerUsedInMatch
+import bela.mi.vi.data.BelaRepository.Reason.PlayerNotFound
 import bela.mi.vi.data.NewPlayer
 import bela.mi.vi.data.Player
 import bela.mi.vi.data.PlayerDataSource
@@ -25,7 +27,11 @@ class RoomPlayerDataSource(private val db: BelaDatabase) : PlayerDataSource {
         }
     }
 
-    override suspend fun get(id: Long): Flow<Player> = db.playerDao().get(id).map { playerEntity -> playerEntity.toPlayer() }
+    @Throws(OperationFailed::class)
+    override suspend fun get(id: Long): Flow<Player> = db.playerDao().get(id).map { playerEntity ->
+        if (playerEntity == null) throw OperationFailed(PlayerNotFound(id))
+        playerEntity.toPlayer()
+    }
 
     override suspend fun getAll(): Flow<List<Player>> {
         return db.playerDao().getAll().map {

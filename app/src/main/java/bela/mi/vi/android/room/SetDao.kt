@@ -19,7 +19,7 @@ interface SetDao {
     suspend fun removeAll()
 
     @Query("SELECT * FROM $TABLE_SETS WHERE ${SetEntity.ID} = :id")
-    fun get(id: Long): Flow<SetEntity>
+    fun get(id: Long): Flow<SetEntity?>
 
     @Query("SELECT * FROM $TABLE_SETS WHERE ${SetEntity.MATCH_ID} = :matchId")
     fun getAll(matchId: Long): Flow<List<SetEntity>>

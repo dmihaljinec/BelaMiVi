@@ -28,7 +28,7 @@ interface GameDao {
     suspend fun update(game: GameEntity)
 
     @Query("SELECT * FROM $TABLE_GAMES WHERE ${GameEntity.ID} = :id")
-    fun get(id: Long): Flow<GameEntity>
+    fun get(id: Long): Flow<GameEntity?>
 
     @Query("SELECT * FROM $TABLE_GAMES WHERE ${GameEntity.SET_ID} = :setId")
     fun getAll(setId: Long): Flow<List<GameEntity>>

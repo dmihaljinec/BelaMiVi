@@ -1,32 +1,36 @@
 package bela.mi.vi.android.room
 
-import android.util.Log
 import bela.mi.vi.data.*
+import bela.mi.vi.data.BelaRepository.OperationFailed
+import bela.mi.vi.data.BelaRepository.Reason.SetNotFound
 import bela.mi.vi.data.Set
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 
 
+@ExperimentalCoroutinesApi
 class RoomSetDataSource(private val db: BelaDatabase) : SetDataSource {
 
     override suspend fun add(newSet: NewSet): Long = withContext(Dispatchers.IO) {
         db.setDao().add(SetEntity(newSet))
     }
 
+    @Throws(OperationFailed::class)
     override suspend fun get(id: Long): Flow<Set> {
-        Log.d("WTF", "get")
-        return db.setDao().get(id).map { setEntity -> setEntity.toSet(db) }
+        return db.setDao().get(id).map { setEntity ->
+            if (setEntity == null) throw OperationFailed(SetNotFound(id))
+            setEntity.toSet(db)
+        }
     }
 
     override suspend fun getAll(matchId: Long): Flow<List<Set>> {
-        Log.d("WTF", "getAll")
         return db.setDao().getAll(matchId).map { it.map { setEntity -> setEntity.toSet(db) } }
     }
 
     override suspend fun getLastSet(matchId: Long): Flow<Set?> {
-        Log.d("WTF", "getLastSet")
         return db.setDao().getLastSet(matchId).map { setEntity -> setEntity?.toSet(db) }
     }
 

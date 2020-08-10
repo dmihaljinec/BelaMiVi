@@ -47,6 +47,15 @@ class BelaRepository(
     suspend fun update(game: Game) = gameDataSource.update(game)
 
 
+    class OperationFailed(val reason: Reason) : RuntimeException()
+
+    sealed class Reason(val id: Long) {
+        class PlayerNotFound(id: Long) : Reason(id)
+        class MatchNotFound(id: Long) : Reason(id)
+        class SetNotFound(id: Long) : Reason(id)
+        class GameNotFound(id: Long) : Reason(id)
+    }
+
     class PlayerOperationFailed(val reason: PlayerReason) : RuntimeException()
 
     sealed class PlayerReason {

@@ -1,6 +1,7 @@
 package bela.mi.vi.interactor
 
 import bela.mi.vi.data.*
+import bela.mi.vi.data.BelaRepository.OperationFailed
 import bela.mi.vi.data.Set
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
@@ -18,6 +19,14 @@ class WithMatch @Inject constructor(private val belaRepository: BelaRepository) 
                     teamTwoPlayerOneId: Long,
                     teamTwoPlayerTwoId: Long,
                     setLimit: Int): Long {
+        require(teamOnePlayerOneId != teamOnePlayerTwoId &&
+                teamOnePlayerOneId != teamTwoPlayerOneId &&
+                teamOnePlayerOneId != teamTwoPlayerTwoId &&
+                teamOnePlayerTwoId != teamTwoPlayerOneId &&
+                teamOnePlayerTwoId != teamTwoPlayerTwoId &&
+                teamTwoPlayerOneId != teamTwoPlayerTwoId
+        ) { "Match players must be unique $teamOnePlayerOneId, $teamOnePlayerTwoId, $teamTwoPlayerOneId, $teamTwoPlayerTwoId" }
+        require(setLimit > 0) { "Set limit must be greater then zero: $setLimit" }
         return belaRepository.add(
             NewMatch(
                 teamOnePlayerOneId = teamOnePlayerOneId,
@@ -29,6 +38,7 @@ class WithMatch @Inject constructor(private val belaRepository: BelaRepository) 
         )
     }
 
+    @Throws(OperationFailed::class)
     suspend fun get(id: Long): Flow<Match> = flow {
         belaRepository.getMatch(id).collect {
             emit(it)
@@ -38,6 +48,7 @@ class WithMatch @Inject constructor(private val belaRepository: BelaRepository) 
         }
     }
 
+    @Throws(OperationFailed::class)
     suspend fun getAll(): Flow<List<Match>> = belaRepository.getAllMatches()
 
     suspend fun remove(id: Long) {

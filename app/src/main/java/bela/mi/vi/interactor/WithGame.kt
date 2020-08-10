@@ -4,6 +4,7 @@ import android.util.Log
 import bela.mi.vi.data.*
 import bela.mi.vi.data.BelaRepository.GameOperationFailed
 import bela.mi.vi.data.BelaRepository.GameReason.GameNotEditable
+import bela.mi.vi.data.BelaRepository.OperationFailed
 import bela.mi.vi.data.Set
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
@@ -65,6 +66,7 @@ class WithGame @Inject constructor(private val belaRepository: BelaRepository) {
         }
     }
 
+    @Throws(OperationFailed::class)
     suspend fun get(id: Long): Flow<Game> {
         return belaRepository.getGame(id)
     }

@@ -23,7 +23,7 @@ interface MatchDao {
     suspend fun update(matchEntity: MatchEntity)
 
     @Query("SELECT * FROM $TABLE_MATCHES WHERE ${MatchEntity.ID} = :id")
-    fun get(id: Long): Flow<MatchEntity>
+    fun get(id: Long): Flow<MatchEntity?>
 
     @Query("SELECT * FROM $TABLE_MATCHES ORDER BY ${MatchEntity.DATE} DESC, ${MatchEntity.TIME} DESC")
     fun getAll(): Flow<List<MatchEntity>>

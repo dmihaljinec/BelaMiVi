@@ -1,14 +1,18 @@
 package bela.mi.vi.android.room
 
+import bela.mi.vi.data.BelaRepository.OperationFailed
+import bela.mi.vi.data.BelaRepository.Reason.GameNotFound
 import bela.mi.vi.data.Game
 import bela.mi.vi.data.GameDataSource
 import bela.mi.vi.data.TeamOrdinal
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 
 
+@ExperimentalCoroutinesApi
 class RoomGameDataSource(private val db: BelaDatabase) : GameDataSource {
     override suspend fun add(game: Game): Long = withContext(Dispatchers.IO) {
         return@withContext db.gameDao().add(
@@ -18,8 +22,12 @@ class RoomGameDataSource(private val db: BelaDatabase) : GameDataSource {
         )
     }
 
+    @Throws(OperationFailed::class)
     override suspend fun get(id: Long): Flow<Game> {
-        return db.gameDao().get(id).map { gameEntity -> gameEntity.toGame() }
+        return db.gameDao().get(id).map { gameEntity ->
+            if (gameEntity == null) throw OperationFailed(GameNotFound(id))
+            gameEntity.toGame()
+        }
     }
 
     override suspend fun getAll(setId: Long): Flow<List<Game>> {

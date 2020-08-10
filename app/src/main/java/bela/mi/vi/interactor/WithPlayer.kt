@@ -3,6 +3,7 @@ package bela.mi.vi.interactor
 import bela.mi.vi.data.BelaRepository
 import bela.mi.vi.data.BelaRepository.PlayerOperationFailed
 import bela.mi.vi.data.BelaRepository.PlayerReason.InvalidPlayerName
+import bela.mi.vi.data.BelaRepository.OperationFailed
 import bela.mi.vi.data.NewPlayer
 import bela.mi.vi.data.Player
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -19,6 +20,7 @@ class WithPlayer @Inject constructor(private val belaRepository: BelaRepository)
         return belaRepository.add(NewPlayer(name.trim()))
     }
 
+    @Throws(OperationFailed::class)
     suspend fun get(id: Long): Flow<Player> {
         return belaRepository.getPlayer(id)
     }
