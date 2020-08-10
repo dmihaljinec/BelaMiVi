@@ -108,7 +108,9 @@ class NewMatchViewModel @ViewModelInject constructor(
         when {
             allPlayers == null -> Unit
             selectedPlayers == null -> availablePlayers.value = allPlayers
-            else -> availablePlayers.value = allPlayers.minus(selectedPlayers)
+            else -> availablePlayers.value = allPlayers.filterNot { player ->
+                selectedPlayers.map { selectedPlayer -> selectedPlayer.id }.contains(player.id)
+            }
         }
     }
 
@@ -119,9 +121,13 @@ class NewMatchViewModel @ViewModelInject constructor(
             selectedPlayers == null || selectedPlayers.isEmpty() -> Unit // we don't need any update if there is no selected players
             allPlayers == null || allPlayers.isEmpty() -> selected.value = listOf() // remove all selected players if all players is empty
             else -> { // if some selected player is removed from all players list, we need to deselect it
-                val removedSelectedPlayers = selectedPlayers.minus(allPlayers)
+                val removedSelectedPlayers = selectedPlayers.filterNot { selectedPlayer ->
+                    allPlayers.map { player -> player.id }.contains(selectedPlayer.id)
+                }
                 if (removedSelectedPlayers.isNotEmpty()) {
-                    selected.value = selectedPlayers.minus(removedSelectedPlayers)
+                    selected.value = selectedPlayers.filterNot { selectedPlayer ->
+                        removedSelectedPlayers.map { player -> player.id }.contains(selectedPlayer.id)
+                    }
                 }
             }
         }
