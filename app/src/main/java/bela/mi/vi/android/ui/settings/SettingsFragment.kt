@@ -28,11 +28,12 @@ class SettingsFragment : PreferenceFragmentCompat() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        val root = super.onCreateView(inflater, container, savedInstanceState)
         findPreference<EditTextPreference>(getString(R.string.key_settings_game_points))?.configure(belaSettings.gamePoints, viewLifecycleOwner)
         findPreference<EditTextPreference>(getString(R.string.key_settings_all_tricks))?.configure(belaSettings.allTricks, viewLifecycleOwner)
         findPreference<EditTextPreference>(getString(R.string.key_settings_bela_declaration))?.configure(belaSettings.belaDeclaration, viewLifecycleOwner)
         findPreference<EditTextPreference>(getString(R.string.key_settings_set_limit))?.configure(belaSettings.setLimit, viewLifecycleOwner)
-        return super.onCreateView(inflater, container, savedInstanceState)
+        return root
     }
 
     private fun EditTextPreference.configure(liveData: LiveData<Int>, lifecycleOwner: LifecycleOwner) {
@@ -40,9 +41,11 @@ class SettingsFragment : PreferenceFragmentCompat() {
             summary = "$value"
         }
         setOnBindEditTextListener { editText ->
-            editText.inputType = InputType.TYPE_CLASS_NUMBER
-            editText.text = Editable.Factory.getInstance().newEditable(summary)
-            editText.setSelection(editText.text.length)
+            summary?.let {
+                editText.inputType = InputType.TYPE_CLASS_NUMBER
+                editText.text = Editable.Factory.getInstance().newEditable(summary)
+                editText.setSelection(editText.text.length)
+            }
         }
     }
 }

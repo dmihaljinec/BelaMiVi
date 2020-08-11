@@ -1,6 +1,5 @@
 package bela.mi.vi.interactor
 
-import android.util.Log
 import bela.mi.vi.data.*
 import bela.mi.vi.data.BelaRepository.GameOperationFailed
 import bela.mi.vi.data.BelaRepository.GameReason.GameNotEditable
@@ -15,6 +14,7 @@ import javax.inject.Inject
 @ExperimentalCoroutinesApi
 class WithGame @Inject constructor(private val belaRepository: BelaRepository) {
 
+    @Throws(IllegalArgumentException::class)
     suspend fun new(matchId: Long,
                     allTricks: Boolean = false,
                     teamOneDeclarations: Int = 0,
@@ -22,13 +22,13 @@ class WithGame @Inject constructor(private val belaRepository: BelaRepository) {
                     teamOnePoints: Int = 0,
                     teamTwoPoints: Int = 0
     ): Long {
-        Log.d("WTF", "matchId = $matchId")
+        require(teamOneDeclarations >= 0 && teamTwoDeclarations  >= 0) { "Declarations must be >= 0, $teamOneDeclarations $teamTwoDeclarations" }
+        require(teamOnePoints >= 0 && teamTwoPoints >= 0) { "Points must be >= 0, $teamOnePoints $teamTwoPoints" }
         var lastSet = belaRepository.getLastSet(matchId).first()
         if (lastSet == null) {
-            val setId = addSet(matchId)
+            val setId = belaRepository.add(NewSet(matchId))
             lastSet = belaRepository.getSet(setId).first()
         }
-        Log.d("WTF", "setId = ${lastSet.id}")
         val game = Game(
             lastSet.id,
             allTricks,
@@ -42,6 +42,7 @@ class WithGame @Inject constructor(private val belaRepository: BelaRepository) {
         return gameId
     }
 
+    @Throws(GameOperationFailed::class)
     suspend fun update(gameId: Long,
                        allTricks: Boolean,
                        teamOneDeclarations: Int,
@@ -71,6 +72,7 @@ class WithGame @Inject constructor(private val belaRepository: BelaRepository) {
         return belaRepository.getGame(id)
     }
 
+    @Throws(GameOperationFailed::class)
     suspend fun remove(id: Long) {
         requireThatGameIsEditable(id)
         val setId = belaRepository.getGame(id).first().setId
@@ -115,6 +117,4 @@ class WithGame @Inject constructor(private val belaRepository: BelaRepository) {
                 belaRepository.setWinningTeam(set.id, TeamOrdinal.NONE)
         }
     }
-
-    private suspend fun addSet(matchId: Long): Long = belaRepository.add(NewSet(matchId))
 }

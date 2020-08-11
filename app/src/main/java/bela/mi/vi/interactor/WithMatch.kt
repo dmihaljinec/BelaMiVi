@@ -14,6 +14,7 @@ import javax.inject.Inject
 @ExperimentalCoroutinesApi
 class WithMatch @Inject constructor(private val belaRepository: BelaRepository) {
 
+    @Throws(IllegalArgumentException::class)
     suspend fun new(teamOnePlayerOneId: Long,
                     teamOnePlayerTwoId: Long,
                     teamTwoPlayerOneId: Long,
