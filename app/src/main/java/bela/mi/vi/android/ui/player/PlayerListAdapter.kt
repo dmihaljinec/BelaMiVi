@@ -6,10 +6,9 @@ import bela.mi.vi.android.BR
 import bela.mi.vi.android.R
 import bela.mi.vi.android.ui.DataBindingViewHolder
 import bela.mi.vi.android.ui.ListAdapter
-import bela.mi.vi.data.Player
 
 
-class PlayersAdapter : ListAdapter<Player>(diffCallback) {
+class PlayerListAdapter : ListAdapter<PlayerViewModel>(diffCallback) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DataBindingViewHolder {
         return DataBindingViewHolder(
@@ -21,11 +20,11 @@ class PlayersAdapter : ListAdapter<Player>(diffCallback) {
 
 
     companion object {
-        private val diffCallback = object : DiffUtil.ItemCallback<Player>() {
-            override fun areItemsTheSame(oldItem: Player, newItem: Player): Boolean {
+        private val diffCallback = object : DiffUtil.ItemCallback<PlayerViewModel>() {
+            override fun areItemsTheSame(oldItem: PlayerViewModel, newItem: PlayerViewModel): Boolean {
                 return oldItem.id == newItem.id
             }
-            override fun areContentsTheSame(oldItem: Player, newItem: Player): Boolean {
+            override fun areContentsTheSame(oldItem: PlayerViewModel, newItem: PlayerViewModel): Boolean {
                 return oldItem == newItem
             }
         }

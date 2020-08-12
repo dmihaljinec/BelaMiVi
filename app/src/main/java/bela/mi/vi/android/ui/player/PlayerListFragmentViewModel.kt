@@ -1,25 +1,26 @@
 package bela.mi.vi.android.ui.player
 
-import android.util.Log
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
-import bela.mi.vi.data.Player
 import bela.mi.vi.interactor.WithPlayer
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 
 
 @ExperimentalCoroutinesApi
-class PlayersViewModel @ViewModelInject constructor(
+class PlayerListFragmentViewModel @ViewModelInject constructor(
     private val withPlayer: WithPlayer) : ViewModel() {
-    lateinit var players: LiveData<List<Player>>
+    lateinit var players: LiveData<List<PlayerViewModel>>
 
     init {
         viewModelScope.launch {
-            players = withPlayer.getAll().asLiveData(coroutineContext)
+            players = withPlayer.getAll()
+                .map { players -> players.map { player -> player.toPlayerViewModel(coroutineContext) } }
+                .asLiveData(coroutineContext)
         }
     }
 

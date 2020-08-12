@@ -15,7 +15,7 @@ import androidx.navigation.fragment.findNavController
 import bela.mi.vi.android.R
 import bela.mi.vi.android.databinding.FragmentNewMatchBinding
 import bela.mi.vi.android.ui.MainActivity
-import bela.mi.vi.android.ui.player.PlayersAdapter
+import bela.mi.vi.android.ui.player.PlayerListAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
@@ -23,7 +23,7 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 @ExperimentalCoroutinesApi
 @AndroidEntryPoint
 class NewMatchFragment : Fragment(), Toolbar.OnMenuItemClickListener {
-    private val adapter = PlayersAdapter()
+    private val adapter = PlayerListAdapter()
     private val newMatchViewModel: NewMatchViewModel by viewModels()
 
     override fun onCreateView(

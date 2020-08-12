@@ -13,7 +13,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import bela.mi.vi.android.R
-import bela.mi.vi.android.databinding.FragmentPlayersBinding
+import bela.mi.vi.android.databinding.FragmentPlayerListBinding
 import bela.mi.vi.android.ui.MainActivity
 import bela.mi.vi.android.ui.playerCoroutineExceptionHandler
 import bela.mi.vi.data.BelaRepository.PlayerOperationFailed
@@ -25,9 +25,9 @@ import kotlinx.coroutines.launch
 
 @ExperimentalCoroutinesApi
 @AndroidEntryPoint
-class PlayersFragment : Fragment(), Toolbar.OnMenuItemClickListener {
-    private val adapter = PlayersAdapter()
-    private val playersViewModel: PlayersViewModel by viewModels()
+class PlayerListFragment : Fragment(), Toolbar.OnMenuItemClickListener {
+    private val adapter = PlayerListAdapter()
+    private val playersViewModel: PlayerListFragmentViewModel by viewModels()
     private val handler = CoroutineExceptionHandler { _, exception ->
         val context = activity
         if (context != null && exception is PlayerOperationFailed) playerCoroutineExceptionHandler(
@@ -42,22 +42,22 @@ class PlayersFragment : Fragment(), Toolbar.OnMenuItemClickListener {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val binding = DataBindingUtil.inflate<FragmentPlayersBinding>(
+        val binding = DataBindingUtil.inflate<FragmentPlayerListBinding>(
             inflater,
-            R.layout.fragment_players,
+            R.layout.fragment_player_list,
             container,
             false)
         binding.playersRecyclerview.adapter = adapter
         adapter.clickListener = { player ->
             val viewPlayerAction =
-                PlayersFragmentDirections.actionPlayersFragmentToPlayerFragment(
+                PlayerListFragmentDirections.actionPlayerListFragmentToPlayerFragment(
                     player.id
                 )
             findNavController().navigate(viewPlayerAction)
         }
         adapter.longClickListener = { player ->
             val action =
-                PlayersFragmentDirections.actionPlayersFragmentToPlayerActionsDialogFragment(
+                PlayerListFragmentDirections.actionPlayerListFragmentToPlayerActionsDialogFragment(
                     player.id
                 )
             findNavController().navigate(action)
@@ -82,7 +82,7 @@ class PlayersFragment : Fragment(), Toolbar.OnMenuItemClickListener {
 
     private fun newPlayer() {
         val newPlayerAction =
-            PlayersFragmentDirections.actionPlayersFragmentToPlayerFragment()
+            PlayerListFragmentDirections.actionPlayerListFragmentToPlayerFragment()
         findNavController().navigate(newPlayerAction)
     }
 

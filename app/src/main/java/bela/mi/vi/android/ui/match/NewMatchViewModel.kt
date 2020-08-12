@@ -4,13 +4,15 @@ import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.*
 import bela.mi.vi.android.R
 import bela.mi.vi.android.ui.operationFailedCoroutineExceptionHandler
+import bela.mi.vi.android.ui.player.PlayerViewModel
+import bela.mi.vi.android.ui.player.toPlayerViewModel
 import bela.mi.vi.android.ui.settings.BelaSettings
 import bela.mi.vi.data.BelaRepository.OperationFailed
-import bela.mi.vi.data.Player
 import bela.mi.vi.interactor.WithMatch
 import bela.mi.vi.interactor.WithPlayer
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 
 
@@ -20,14 +22,14 @@ class NewMatchViewModel @ViewModelInject constructor(
     private val withPlayer: WithPlayer,
     private val belaSettings: BelaSettings
 ) : ViewModel() {
-    var availablePlayers: MediatorLiveData<List<Player>> = MediatorLiveData()
-    private var all: LiveData<List<Player>> = MutableLiveData()
-    private val selected: MutableLiveData<List<Player>> = MutableLiveData()
+    var availablePlayers: MediatorLiveData<List<PlayerViewModel>> = MediatorLiveData()
+    private var all: LiveData<List<PlayerViewModel>> = MutableLiveData()
+    private val selected: MutableLiveData<List<PlayerViewModel>> = MutableLiveData()
     val clickListener = ::onPlayerClicked
-    val teamOnePlayerOne: MutableLiveData<Player> = MutableLiveData()
-    val teamOnePlayerTwo: MutableLiveData<Player> = MutableLiveData()
-    val teamTwoPlayerOne: MutableLiveData<Player> = MutableLiveData()
-    val teamTwoPlayerTwo: MutableLiveData<Player> = MutableLiveData()
+    val teamOnePlayerOne: MutableLiveData<PlayerViewModel> = MutableLiveData()
+    val teamOnePlayerTwo: MutableLiveData<PlayerViewModel> = MutableLiveData()
+    val teamTwoPlayerOne: MutableLiveData<PlayerViewModel> = MutableLiveData()
+    val teamTwoPlayerTwo: MutableLiveData<PlayerViewModel> = MutableLiveData()
     val drawableTintColor: LiveData<Int> = MutableLiveData(android.R.color.secondary_text_dark)
     val teamOnePlayerOneClear = MutableLiveData(0)
     val teamOnePlayerTwoClear = MutableLiveData(0)
@@ -41,7 +43,9 @@ class NewMatchViewModel @ViewModelInject constructor(
 
     init {
         viewModelScope.launch(handler) {
-            all = withPlayer.getAll().asLiveData(coroutineContext)
+            all = withPlayer.getAll()
+                .map{ players -> players.map { player -> player.toPlayerViewModel(coroutineContext) } }
+                .asLiveData(coroutineContext)
         }
         availablePlayers.addSource(all) { updateAvailablePlayers() }
         availablePlayers.addSource(selected) { updateAvailablePlayers() }
@@ -104,7 +108,7 @@ class NewMatchViewModel @ViewModelInject constructor(
         }
     }
 
-    private fun clearPlayer(player: Player, livePlayer: MutableLiveData<Player>) {
+    private fun clearPlayer(player: PlayerViewModel, livePlayer: MutableLiveData<PlayerViewModel>) {
         livePlayer.value = null
         selected.value = selected.value?.toMutableList()?.also { it.remove(player) }
     }
@@ -140,7 +144,7 @@ class NewMatchViewModel @ViewModelInject constructor(
         }
     }
 
-    private fun onPlayerClicked(player: Player) {
+    private fun onPlayerClicked(player: PlayerViewModel) {
         when {
             teamOnePlayerOne.value == null -> {
                 teamOnePlayerOne.value = player

@@ -1,12 +1,14 @@
 package bela.mi.vi.android.ui
 
+import android.content.res.ColorStateList
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.DrawableCompat
 import androidx.databinding.BindingAdapter
 import androidx.databinding.InverseBindingAdapter
-import java.lang.NumberFormatException
+import bela.mi.vi.android.ui.player.PlayerViewModel
 import kotlin.math.absoluteValue
+
 
 @BindingAdapter(value = ["android:drawableEnd", "android:drawableTint"], requireAll = true)
 fun setDrawableEnd(textView: TextView, drawableResId: Int, tintColorResId: Int) {
@@ -18,6 +20,12 @@ fun setDrawableEnd(textView: TextView, drawableResId: Int, tintColorResId: Int) 
         )
     }
     textView.setCompoundDrawablesRelativeWithIntrinsicBounds(null, null, drawable, null)
+}
+
+@BindingAdapter("backgroundTintFromPlayer")
+fun backgroundTintFromPlayer(textView: TextView, player: PlayerViewModel) {
+    val color = ContextCompat.getColor(textView.context, player.getColorResId())
+    textView.backgroundTintList = ColorStateList.valueOf(color)
 }
 
 @BindingAdapter("android:text")

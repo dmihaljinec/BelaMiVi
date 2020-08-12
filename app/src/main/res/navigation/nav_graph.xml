@@ -15,21 +15,18 @@
             android:id="@+id/action_match_summaries_fragment_to_match_fragment"
             app:destination="@id/match_fragment" />
         <action
-            android:id="@+id/action_match_summaries_fragment_to_players_fragment"
-            app:destination="@id/players_fragment" />
-        <action
             android:id="@+id/action_match_summaries_fragment_to_match_summaries_actions_dialog_fragment"
             app:destination="@id/match_summaries_actions_dialog_fragment"/>
     </fragment>
     <fragment
-        android:id="@+id/players_fragment"
-        android:name="bela.mi.vi.android.ui.player.PlayersFragment"
+        android:id="@+id/player_list_fragment"
+        android:name="bela.mi.vi.android.ui.player.PlayerListFragment"
         android:label="@string/title_list_of_players" >
         <action
-            android:id="@+id/action_players_fragment_to_player_fragment"
+            android:id="@+id/action_player_list_fragment_to_player_fragment"
             app:destination="@id/player_fragment"/>
         <action
-            android:id="@+id/action_players_fragment_to_player_actions_dialog_fragment"
+            android:id="@+id/action_player_list_fragment_to_player_actions_dialog_fragment"
             app:destination="@id/player_actions_dialog_fragment"/>
     </fragment>
     <fragment
@@ -129,7 +126,7 @@
     </fragment>
     <fragment
         android:id="@+id/about_fragment"
-        android:name="bela.mi.vi.android.ui.player.PlayersFragment"
+        android:name="bela.mi.vi.android.ui.player.PlayerListFragment"
         android:label="@string/title_about" >
     </fragment>
     <dialog

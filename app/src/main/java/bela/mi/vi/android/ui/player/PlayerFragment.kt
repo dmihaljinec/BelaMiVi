@@ -25,7 +25,7 @@ import kotlinx.coroutines.launch
 @ExperimentalCoroutinesApi
 @AndroidEntryPoint
 class PlayerFragment : Fragment(), Toolbar.OnMenuItemClickListener {
-    private val playerViewModel: PlayerViewModel by viewModels()
+    private val playerViewModel: PlayerFragmentViewModel by viewModels()
     private val handler = CoroutineExceptionHandler { _, exception ->
         val context = activity
         if (context != null && exception is PlayerOperationFailed) playerCoroutineExceptionHandler(

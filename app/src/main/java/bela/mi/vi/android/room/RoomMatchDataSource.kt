@@ -80,11 +80,11 @@ class RoomMatchDataSource(
             TeamOrdinal.ONE,
             db.playerDao().get(team1Player1Id).map { playerEntity ->
                 if (playerEntity == null) throw OperationFailed(PlayerNotFound(team1Player1Id))
-                playerEntity.toPlayer()
+                playerEntity.toPlayer(db)
             },
             db.playerDao().get(team1Player2Id).map { playerEntity ->
                 if (playerEntity == null) throw OperationFailed(PlayerNotFound(team1Player2Id))
-                playerEntity.toPlayer()
+                playerEntity.toPlayer(db)
             },
             db.setDao().getSetsWon(id, TeamOrdinal.ONE.ordinal),
             db.gameDao().getTeamOneSetPoints(lastSetId)
@@ -93,11 +93,11 @@ class RoomMatchDataSource(
             TeamOrdinal.TWO,
             db.playerDao().get(team2Player1Id).map { playerEntity ->
                 if (playerEntity == null) throw OperationFailed(PlayerNotFound(team2Player1Id))
-                playerEntity.toPlayer()
+                playerEntity.toPlayer(db)
             },
             db.playerDao().get(team2Player2Id).map { playerEntity ->
                 if (playerEntity == null) throw OperationFailed(PlayerNotFound(team2Player2Id))
-                playerEntity.toPlayer()
+                playerEntity.toPlayer(db)
             },
             db.setDao().getSetsWon(id, TeamOrdinal.TWO.ordinal),
             db.gameDao().getTeamTwoSetPoints(lastSetId)

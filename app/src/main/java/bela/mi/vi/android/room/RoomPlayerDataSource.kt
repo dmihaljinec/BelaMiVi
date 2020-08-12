@@ -12,7 +12,6 @@ import bela.mi.vi.data.PlayerDataSource
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 
@@ -30,12 +29,12 @@ class RoomPlayerDataSource(private val db: BelaDatabase) : PlayerDataSource {
     @Throws(OperationFailed::class)
     override suspend fun get(id: Long): Flow<Player> = db.playerDao().get(id).map { playerEntity ->
         if (playerEntity == null) throw OperationFailed(PlayerNotFound(id))
-        playerEntity.toPlayer()
+        playerEntity.toPlayer(db)
     }
 
     override suspend fun getAll(): Flow<List<Player>> {
         return db.playerDao().getAll().map {
-            it.map { playerEntity -> playerEntity.toPlayer() }
+            it.map { playerEntity -> playerEntity.toPlayer(db) }
         }
     }
 
@@ -64,7 +63,11 @@ class RoomPlayerDataSource(private val db: BelaDatabase) : PlayerDataSource {
     }
 }
 
-// TODO: implement correct player sets finished and sets won
-fun PlayerEntity.toPlayer(): Player {
-    return Player(id, name, flowOf(0), flowOf(0))
+fun PlayerEntity.toPlayer(db: BelaDatabase): Player {
+    return Player(
+        id,
+        name,
+        db.playerDao().getSetsFinished(id),
+        db.playerDao().getSetsWon(id)
+    )
 }

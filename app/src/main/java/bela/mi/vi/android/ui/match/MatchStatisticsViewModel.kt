@@ -97,12 +97,12 @@ class MatchStatisticsViewModel @ViewModelInject constructor(
             else -> Unit
         }
     }
+}
 
-    private fun formatPercentage(numerator: Int, denominator: Int): String {
-        var percentage = "0"
-        if (denominator > 0) {
-            percentage = DecimalFormat("0").format((numerator.toDouble() / denominator.toDouble()) * 100)
-        }
-        return "${percentage}% ($numerator/$denominator)"
+fun formatPercentage(numerator: Int, denominator: Int): String {
+    var percentage = "0"
+    if (denominator > 0) {
+        percentage = DecimalFormat("0").format((numerator.toDouble() / denominator.toDouble()) * 100)
     }
+    return "${percentage}% ($numerator/$denominator)"
 }

@@ -11,7 +11,7 @@
             android:title="@string/title_list_of_matches" />
 
         <item
-            android:id="@id/players_fragment"
+            android:id="@id/player_list_fragment"
             android:icon="@drawable/players_tint_24"
             android:title="@string/title_list_of_players" />
 

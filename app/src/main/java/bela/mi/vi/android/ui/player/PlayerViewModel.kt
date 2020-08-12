@@ -1,58 +1,48 @@
 package bela.mi.vi.android.ui.player
 
-import androidx.hilt.Assisted
-import androidx.hilt.lifecycle.ViewModelInject
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.SavedStateHandle
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import bela.mi.vi.android.ui.operationFailedCoroutineExceptionHandler
-import bela.mi.vi.data.BelaRepository.OperationFailed
-import bela.mi.vi.data.BelaRepository.PlayerOperationFailed
-import bela.mi.vi.interactor.WithPlayer
-import kotlinx.coroutines.CoroutineExceptionHandler
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.launch
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MediatorLiveData
+import androidx.lifecycle.asLiveData
+import bela.mi.vi.android.R
+import bela.mi.vi.android.ui.match.formatPercentage
+import bela.mi.vi.data.Player
+import kotlin.coroutines.CoroutineContext
 
 
-@ExperimentalCoroutinesApi
-class PlayerViewModel @ViewModelInject constructor(
-    private val withPlayer: WithPlayer,
-    @Assisted savedStateHandle: SavedStateHandle) : ViewModel() {
-    private val playerId = savedStateHandle.get<Long>("playerId") ?: -1L
-    var name: MutableLiveData<String> = MutableLiveData()
-    private val savePlayer = if(playerId != -1L) ::editPlayer else ::newPlayer
-    private val handler = CoroutineExceptionHandler { _, exception ->
-        if (exception is OperationFailed) operationFailedCoroutineExceptionHandler(exception)
-        else throw exception
-    }
-
+data class PlayerViewModel(
+    val id: Long,
+    val name: String,
+    val setsFinished: LiveData<Int>,
+    val setsWon: LiveData<Int>,
+    val stats: MediatorLiveData<String> = MediatorLiveData()
+) {
     init {
-        if (playerId != -1L) {
-            viewModelScope.launch(handler) {
-                val player = withPlayer.get(playerId).first()
-                name.value = player.name
-            }
-        }
+        stats.addSource(setsFinished) { updateFormat() }
+        stats.addSource(setsWon) { updateFormat() }
     }
 
-    @Throws(PlayerOperationFailed::class)
-    suspend fun save() = savePlayer.invoke()
-
-    @Throws(PlayerOperationFailed::class)
-    suspend fun remove() {
-        if (playerId == -1L) return
-        withPlayer.remove(playerId)
+    fun getColorResId(): Int {
+        val colors = arrayOf(
+            R.color.playerIcon_1, R.color.playerIcon_2, R.color.playerIcon_3, R.color.playerIcon_4,
+            R.color.playerIcon_5, R.color.playerIcon_6, R.color.playerIcon_7, R.color.playerIcon_8
+        )
+        var sum = 0
+        name.forEach { char -> sum += char.toInt() }
+        return colors[sum % colors.size]
     }
 
-    private suspend fun newPlayer() {
-        val playerName = name.value ?: ""
-        withPlayer.new(playerName)
+    private fun updateFormat() {
+        val finished = setsFinished.value ?: 0
+        val won = setsWon.value ?: 0
+        stats.value = formatPercentage(won, finished)
     }
+}
 
-    private suspend fun editPlayer() {
-        val playerName = name.value ?: ""
-        withPlayer.rename(playerId, playerName)
-    }
+fun Player.toPlayerViewModel(coroutineContext: CoroutineContext): PlayerViewModel {
+    return PlayerViewModel(
+        id,
+        name,
+        setsFinished.asLiveData(coroutineContext),
+        setsWon.asLiveData(coroutineContext)
+    )
 }

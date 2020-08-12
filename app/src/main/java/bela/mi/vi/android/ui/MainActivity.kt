@@ -21,7 +21,7 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 @ExperimentalCoroutinesApi
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
-    private val topLevelDestinations = setOf(R.id.match_summaries_fragment, R.id.players_fragment)
+    private val topLevelDestinations = setOf(R.id.match_summaries_fragment, R.id.player_list_fragment)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
