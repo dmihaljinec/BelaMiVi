@@ -2,6 +2,8 @@ package bela.mi.vi.android.ui.settings
 
 import android.content.Context
 import android.content.SharedPreferences
+import android.os.Build
+import androidx.appcompat.app.AppCompatDelegate.*
 import androidx.lifecycle.MutableLiveData
 import androidx.preference.PreferenceManager
 import bela.mi.vi.android.R
@@ -16,10 +18,15 @@ class BelaSettings @Inject constructor(@ApplicationContext context: Context) : S
     var belaDeclaration: MutableLiveData<Int> = MutableLiveData()
     var setLimit: MutableLiveData<Int> = MutableLiveData()
     val listener = SharedPreferences.OnSharedPreferenceChangeListener { sharedPreference, key -> onChanged(sharedPreference, key) }
+    val themeMode: MutableLiveData<Int> = MutableLiveData()
     private val keyGamePoints = context.getString(R.string.key_settings_game_points)
     private val keyAllTricks = context.getString(R.string.key_settings_all_tricks)
     private val keyBelaDeclaration = context.getString(R.string.key_settings_bela_declaration)
     private val keySetLimit = context.getString(R.string.key_settings_set_limit)
+    private val keyTheme = context.getString(R.string.key_settings_theme)
+    private val themeDark = context.getString(R.string.settings_theme_dark)
+    private val themeLight = context.getString(R.string.settings_theme_light)
+    private val themeSystem = context.getString(R.string.settings_theme_system)
 
     init {
         val sharedPreference = PreferenceManager.getDefaultSharedPreferences(context)
@@ -29,6 +36,7 @@ class BelaSettings @Inject constructor(@ApplicationContext context: Context) : S
             allTricks.value = getIntFromString(keyAllTricks, Settings.DEFAULT_ALL_TRICKS)
             belaDeclaration.value = getIntFromString(keyBelaDeclaration, Settings.DEFAULT_BELA_DECLARATION)
             setLimit.value = getIntFromString(keySetLimit, Settings.DEFAULT_SET_LIMIT)
+            themeMode.value = getThemeMode()
         }
     }
 
@@ -43,11 +51,21 @@ class BelaSettings @Inject constructor(@ApplicationContext context: Context) : S
             keyAllTricks -> allTricks.value = sharedPreferences.getIntFromString(key, Settings.DEFAULT_ALL_TRICKS)
             keyBelaDeclaration -> belaDeclaration.value = sharedPreferences.getIntFromString(key, Settings.DEFAULT_BELA_DECLARATION)
             keySetLimit -> setLimit.value = sharedPreferences.getIntFromString(key, Settings.DEFAULT_SET_LIMIT)
+            keyTheme -> themeMode.value = sharedPreferences.getThemeMode()
         }
     }
 
     private fun SharedPreferences.getIntFromString(preferenceKey: String, defaultValue: Int): Int {
         val prefValue = getString(preferenceKey, "$defaultValue")?.toInt() ?: defaultValue
         return if (prefValue <= 0) defaultValue else prefValue
+    }
+
+    private fun SharedPreferences.getThemeMode(): Int {
+        return when (val prefValue = getString(keyTheme, themeDark) ?: themeDark) {
+            themeDark -> MODE_NIGHT_YES
+            themeLight -> MODE_NIGHT_NO
+            themeSystem -> if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q) MODE_NIGHT_AUTO_BATTERY else MODE_NIGHT_FOLLOW_SYSTEM
+            else -> throw IllegalStateException("Settings $prefValue is not expected")
+        }
     }
 }

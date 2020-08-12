@@ -1,11 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#666666</color>
-    <color name="colorPrimaryDark">#000000</color>
-    <color name="colorAccent">#1E90FF</color><!-- red accent #FF4081 -->
-
     <color name="colorWhite">#FFFFFF</color>
     <color name="colorBlack">#000000</color>
     <color name="colorLightGrey">#DDDDDD</color>
     <color name="colorDarkGrey">#666666</color>
+    <color name="colorAccentBlue">#1E90FF</color>
+    <color name="colorAccentRed">#FF4081</color>
+
+    <!-- Colors of player icon -->
+    <color name="playerIcon_1">#CC1C1C</color>
+    <color name="playerIcon_2">#06CB8B</color>
+    <color name="playerIcon_3">#1E90FF</color>
+    <color name="playerIcon_4">#15AB05</color>
+    <color name="playerIcon_5">#FB38AE</color>
+    <color name="playerIcon_6">#08C1CF</color>
+    <color name="playerIcon_7">#FF9933</color>
+    <color name="playerIcon_8">#A033FF</color>
 </resources>

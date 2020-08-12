@@ -16,6 +16,11 @@
     <string name="title_all_tricks">All Tricks</string>
     <string name="title_bela">Belote</string>
     <string name="title_set_limit">Set Limit</string>
+    <string name="title_theme_dark">Dark</string>
+    <string name="title_theme_light">Light</string>
+    <string name="title_theme_system">System default</string>
+    <string name="title_points">Points</string>
+    <string name="title_display">Display</string>
     <string name="action_new_match">New Match</string>
     <string name="action_new_game">New Game</string>
     <string name="action_new_player">New Player</string>
@@ -38,4 +43,9 @@
     <string name="key_settings_all_tricks" translatable="false">allTricksPref</string>
     <string name="key_settings_bela_declaration" translatable="false">belaPref</string>
     <string name="key_settings_set_limit" translatable="false">setLimitPref</string>
+    <string name="key_settings_theme" translatable="false">themePref</string>
+
+    <string name="settings_theme_dark" translatable="false">dark</string>
+    <string name="settings_theme_light" translatable="false">light</string>
+    <string name="settings_theme_system" translatable="false">system</string>
 </resources>
