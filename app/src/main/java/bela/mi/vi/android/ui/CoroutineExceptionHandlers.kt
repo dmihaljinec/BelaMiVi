@@ -21,7 +21,7 @@ fun playerCoroutineExceptionHandler(operationFailed: PlayerOperationFailed, cont
         is InvalidPlayerName ->
             context.getString(R.string.description_operation_failed_player_name_invalid)
     }
-    Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+    Toast.makeText(context, message, Toast.LENGTH_LONG).show()
 }
 
 @ExperimentalCoroutinesApi
@@ -29,8 +29,16 @@ fun gameCoroutineExceptionHandler(operationFailed: GameOperationFailed, context:
     val message = when (operationFailed.reason) {
         is GameNotEditable ->
             context.getString(R.string.description_operation_failed_game_not_editable)
+        is GameReason.InvalidGameData ->
+            context.getString(
+                R.string.description_operation_failed_game_invalid_data,
+                operationFailed.reason.gamePoints,
+                operationFailed.reason.teamOnePoints + operationFailed.reason.teamTwoPoints,
+                operationFailed.reason.teamOnePoints,
+                operationFailed.reason.teamTwoPoints
+            )
     }
-    Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+    Toast.makeText(context, message, Toast.LENGTH_LONG).show()
 }
 
 @ExperimentalCoroutinesApi

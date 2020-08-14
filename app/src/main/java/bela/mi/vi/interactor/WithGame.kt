@@ -3,6 +3,7 @@ package bela.mi.vi.interactor
 import bela.mi.vi.data.*
 import bela.mi.vi.data.BelaRepository.GameOperationFailed
 import bela.mi.vi.data.BelaRepository.GameReason.GameNotEditable
+import bela.mi.vi.data.BelaRepository.GameReason.InvalidGameData
 import bela.mi.vi.data.BelaRepository.OperationFailed
 import bela.mi.vi.data.Set
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -14,7 +15,7 @@ import javax.inject.Inject
 @ExperimentalCoroutinesApi
 class WithGame @Inject constructor(private val belaRepository: BelaRepository) {
 
-    @Throws(IllegalArgumentException::class)
+    @Throws(IllegalArgumentException::class, GameOperationFailed::class)
     suspend fun new(matchId: Long,
                     allTricks: Boolean = false,
                     teamOneDeclarations: Int = 0,
@@ -22,8 +23,6 @@ class WithGame @Inject constructor(private val belaRepository: BelaRepository) {
                     teamOnePoints: Int = 0,
                     teamTwoPoints: Int = 0
     ): Long {
-        require(teamOneDeclarations >= 0 && teamTwoDeclarations  >= 0) { "Declarations must be >= 0, $teamOneDeclarations $teamTwoDeclarations" }
-        require(teamOnePoints >= 0 && teamTwoPoints >= 0) { "Points must be >= 0, $teamOnePoints $teamTwoPoints" }
         var lastSet = belaRepository.getLastSet(matchId).first()
         if (lastSet == null) {
             val setId = belaRepository.add(NewSet(matchId))
@@ -37,12 +36,13 @@ class WithGame @Inject constructor(private val belaRepository: BelaRepository) {
             teamOnePoints,
             teamTwoPoints
         )
+        requireValidGameData(game)
         val gameId = belaRepository.add(game)
         updateSetWinner(lastSet)
         return gameId
     }
 
-    @Throws(GameOperationFailed::class)
+    @Throws(IllegalArgumentException::class, GameOperationFailed::class)
     suspend fun update(gameId: Long,
                        allTricks: Boolean,
                        teamOneDeclarations: Int,
@@ -60,6 +60,7 @@ class WithGame @Inject constructor(private val belaRepository: BelaRepository) {
             teamOnePoints,
             teamTwoPoints
         )
+        requireValidGameData(game)
         if (savedGame != game) {
             belaRepository.update(game)
             val set = belaRepository.getSet(game.setId).first()
@@ -89,11 +90,26 @@ class WithGame @Inject constructor(private val belaRepository: BelaRepository) {
     /**
      * Game is editable if and only if it's part of a last set.
      */
+    @Throws(GameOperationFailed::class)
     private suspend fun requireThatGameIsEditable(id: Long) {
         val game = belaRepository.getGame(id).first()
         val set = belaRepository.getSet(game.setId).first()
         val lastSet = belaRepository.getAllSets(set.matchId).first().maxBy { it.id }
         if (lastSet == null || lastSet.id != set.id) throw GameOperationFailed(GameNotEditable)
+    }
+
+    /**
+     * Game data is valid if game points is equal to sum of team one and team two points.
+     * Game points is calculated according to [Settings] values for game points and all tricks
+     * increased for team one and team two declarations.
+     */
+    @Throws(GameOperationFailed::class)
+    private fun requireValidGameData(game: Game) {
+        var gamePoints = belaRepository.settings.getGamePoints()
+        if (game.allTricks) gamePoints += belaRepository.settings.getAllTricks()
+        gamePoints += (game.teamOneDeclarations + game.teamTwoDeclarations)
+        if (gamePoints != (game.teamOnePoints + game.teamTwoPoints))
+            throw GameOperationFailed(InvalidGameData(gamePoints, game.teamOnePoints, game.teamTwoPoints))
     }
 
     private suspend fun updateSetWinner(set: Set) {

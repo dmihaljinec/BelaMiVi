@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Bela blok MiVi</string>
     <string name="title_list_of_matches">List of Matches</string>
@@ -21,6 +22,10 @@
     <string name="title_theme_system">System default</string>
     <string name="title_points">Points</string>
     <string name="title_display">Display</string>
+    <string name="title_team_one">Team 1</string>
+    <string name="title_team_two">Team 2</string>
+    <string name="title_declarations">Declarations</string>
+    <string name="title_theme">Theme</string>
     <string name="action_new_match">New Match</string>
     <string name="action_new_game">New Game</string>
     <string name="action_new_player">New Player</string>
@@ -32,6 +37,7 @@
     <string name="description_operation_failed_player_name_invalid">Invalid player name</string>
     <string name="description_operation_failed_player_name_not_unique">Player with name %1$s already exists</string>
     <string name="description_operation_failed_game_not_editable">Operation is allowed only for games that belong to last set in the match</string>
+    <string name="description_operation_failed_game_invalid_data">Game points must be equal to sum of team one and team two points: %1$d != %2$d (%3$d + %4$d)</string>
     <string name="hint_new_match">Select player</string>
     <string name="hint_player_name">Player name</string>
 
@@ -48,4 +54,7 @@
     <string name="settings_theme_dark" translatable="false">dark</string>
     <string name="settings_theme_light" translatable="false">light</string>
     <string name="settings_theme_system" translatable="false">system</string>
+
+    <string name="button_add_20" translatable="false">+20</string>
+    <string name="button_add_50" translatable="false">+50</string>
 </resources>

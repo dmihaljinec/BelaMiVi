@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Bela blok MiVi</string>
+    <string name="title_list_of_matches">Lista mečeva</string>
+    <string name="title_list_of_sets">Lista partija</string>
+    <string name="title_list_of_games">Lista igara</string>
+    <string name="title_list_of_players">Lista igrača</string>
+    <string name="title_new_match">Novi meč</string>
+    <string name="title_match">Meč</string>
+    <string name="title_player">Igrač</string>
+    <string name="title_new_game">Nova igra</string>
+    <string name="title_game">Igra</string>
+    <string name="title_settings">Postavke</string>
+    <string name="title_about">O programu</string>
+    <string name="title_match_statistics">Statistika meča</string>
+    <string name="title_game_points">Bodova u igri</string>
+    <string name="title_all_tricks">Štigla</string>
+    <string name="title_bela">Bela</string>
+    <string name="title_set_limit">Partija se igra do</string>
+    <string name="title_theme_dark">Tamna</string>
+    <string name="title_theme_light">Svijetla</string>
+    <string name="title_theme_system">Prati android sustav</string>
+    <string name="title_points">Bodovi</string>
+    <string name="title_display">Prikaz</string>
+    <string name="title_team_one">Mi</string>
+    <string name="title_team_two">Vi</string>
+    <string name="title_declarations">Zvanja</string>
+    <string name="title_theme">Tema</string>
+    <string name="action_new_match">Novi meč</string>
+    <string name="action_new_game">Nova igra</string>
+    <string name="action_new_player">Novi igrač</string>
+    <string name="action_save">Pohrani</string>
+    <string name="action_edit">Uredi</string>
+    <string name="action_delete">Obriši</string>
+    <string name="action_delete_all">Obriši sve</string>
+    <string name="description_operation_failed_player_used_in_match">Nije moguće obrisati igrače koji pripadaju meču</string>
+    <string name="description_operation_failed_player_name_invalid">Igračevo ime nije ispravno</string>
+    <string name="description_operation_failed_player_name_not_unique">Igrač sa imenom %1$s već postoji</string>
+    <string name="description_operation_failed_game_not_editable">Akcija je dozvoljena samo za igre iz posljednje partije u meču</string>
+    <string name="description_operation_failed_game_invalid_data">Broj bodova u igri mora biti jednak zbroju bodova od Mi i Vi: %1$d != %2$d (%3$d + %4$d)</string>
+    <string name="hint_new_match">Odaberi igrača</string>
+    <string name="hint_player_name">Ime igrača</string>
+</resources>

@@ -28,7 +28,7 @@
 
         <ListPreference
             app:key="@string/key_settings_theme"
-            app:title="Theme"
+            app:title="@string/title_theme"
             app:defaultValue="@string/settings_theme_dark"
             app:summary="%s"
             app:entries="@array/theme_option_labels"

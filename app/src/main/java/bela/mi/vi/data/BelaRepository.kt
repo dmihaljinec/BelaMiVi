@@ -10,7 +10,7 @@ class BelaRepository(
     private val matchDataSource: MatchDataSource,
     private val setDataSource: SetDataSource,
     private val gameDataSource: GameDataSource,
-    private val settings: Settings){
+    val settings: Settings){
 
     // Player
     suspend fun add(newPlayer: NewPlayer) = playerDataSource.add(newPlayer)
@@ -68,5 +68,6 @@ class BelaRepository(
 
     sealed class GameReason {
         object GameNotEditable : GameReason()
+        class InvalidGameData(val gamePoints: Int, val teamOnePoints: Int, val teamTwoPoints: Int) : GameReason()
     }
 }

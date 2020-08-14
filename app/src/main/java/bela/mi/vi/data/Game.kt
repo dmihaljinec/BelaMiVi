@@ -9,6 +9,15 @@ data class Game(
     val teamOnePoints: Int = 0,
     val teamTwoPoints: Int = 0
 ) {
+    init {
+        require(teamOneDeclarations >= 0 && teamTwoDeclarations  >= 0) {
+            "Declarations must be >= 0, $teamOneDeclarations $teamTwoDeclarations"
+        }
+        require(teamOnePoints >= 0 && teamTwoPoints >= 0) {
+            "Points must be >= 0, $teamOnePoints $teamTwoPoints"
+        }
+    }
+
     constructor(
         setId: Long,
         allTricks: Boolean = false,
