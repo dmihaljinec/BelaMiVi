@@ -1,17 +1,126 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
     <data>
         <variable
             name="match"
             type="bela.mi.vi.android.ui.match.MatchSummary" />
-
     </data>
 
-    <TextView
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="20dp"
-        android:background="?android:attr/selectableItemBackground"
-        android:text="@{match.teamOnePlayerOne.name + ' ' + match.teamOnePlayerTwo.name + ' ' + match.teamOneSetsWon + '-' + match.teamTwoSetsWon + ' ' + match.teamTwoPlayerOne.name + ' ' + match.teamTwoPlayerTwo.name}"/>
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:background="?android:attr/selectableItemBackground">
+
+        <TextView
+            android:id="@+id/team_one_icon"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:background="@drawable/circle"
+            app:backgroundTintFromTeamPlayerOne="@{match.teamOnePlayerOne}"
+            app:backgroundTintFromTeamPlayerTwo="@{match.teamOnePlayerTwo}"
+            app:tooltip='@{match.teamOnePlayerOne.name + " &amp; " + match.teamOnePlayerTwo.name}'
+            android:gravity="center"
+            android:text='@{match.teamOnePlayerOne.name.substring(0, 1) + match.teamOnePlayerTwo.name.substring(0, 1)}'
+            android:textColor="@color/colorWhite"
+            android:textSize="16sp"/>
+
+        <TextView
+            android:id="@+id/team_one_player_one"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:gravity="start"
+            android:singleLine="true"
+            android:ellipsize="marquee"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toEndOf="@id/team_one_icon"
+            app:layout_constraintEnd_toStartOf="@id/score"
+            app:layout_constraintBottom_toTopOf="@id/team_one_player_two"
+            android:text="@{match.teamOnePlayerOne.name}" />
+
+        <TextView
+            android:id="@+id/team_one_player_two"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:gravity="start"
+            android:singleLine="true"
+            android:ellipsize="marquee"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@id/team_one_icon"
+            app:layout_constraintEnd_toStartOf="@id/score"
+            app:layout_constraintTop_toBottomOf="@id/team_one_player_one"
+            android:text="@{match.teamOnePlayerTwo.name}" />
+
+        <TextView
+            android:id="@+id/score"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@id/team_one_icon"
+            app:layout_constraintEnd_toStartOf="@id/team_two_icon"
+            android:text='@{match.teamOneSetsWon + " - " + match.teamTwoSetsWon}'
+            android:textSize="20sp"/>
+
+        <TextView
+            android:id="@+id/team_two_player_one"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:gravity="end"
+            android:singleLine="true"
+            android:ellipsize="marquee"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toEndOf="@id/score"
+            app:layout_constraintEnd_toStartOf="@id/team_two_icon"
+            app:layout_constraintBottom_toTopOf="@id/team_two_player_two"
+            android:text="@{match.teamTwoPlayerOne.name}" />
+
+        <TextView
+            android:id="@+id/team_two_player_two"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:gravity="end"
+            android:singleLine="true"
+            android:ellipsize="marquee"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@id/score"
+            app:layout_constraintEnd_toStartOf="@id/team_two_icon"
+            app:layout_constraintTop_toBottomOf="@id/team_two_player_one"
+            android:text="@{match.teamTwoPlayerTwo.name}" />
+
+        <TextView
+            android:id="@+id/team_two_icon"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:background="@drawable/circle"
+            app:backgroundTintFromTeamPlayerOne="@{match.teamTwoPlayerOne}"
+            app:backgroundTintFromTeamPlayerTwo="@{match.teamTwoPlayerTwo}"
+            app:tooltip='@{match.teamTwoPlayerOne.name + " &amp; " + match.teamTwoPlayerTwo.name}'
+            android:gravity="center"
+            android:text='@{match.teamTwoPlayerOne.name.substring(0, 1) + match.teamTwoPlayerTwo.name.substring(0, 1)}'
+            android:textColor="@color/colorWhite"
+            android:textSize="16sp"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
 
 </layout>

@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+        <import type="bela.mi.vi.android.R"/>
         <variable
             name="game"
             type="bela.mi.vi.android.ui.game.GameViewModel" />
@@ -263,7 +264,8 @@
                 android:src="@drawable/confirm_tint_24"
                 android:tint="@color/colorWhite"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"/>
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:tooltip="@{R.string.action_save}"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

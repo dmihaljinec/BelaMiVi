@@ -29,11 +29,11 @@
     <string name="action_new_match">Novi meč</string>
     <string name="action_new_game">Nova igra</string>
     <string name="action_new_player">Novi igrač</string>
-    <string name="action_save">Pohrani</string>
+    <string name="action_save">Spremi</string>
     <string name="action_edit">Uredi</string>
-    <string name="action_delete">Obriši</string>
-    <string name="action_delete_all">Obriši sve</string>
-    <string name="description_operation_failed_player_used_in_match">Nije moguće obrisati igrače koji pripadaju meču</string>
+    <string name="action_delete">Izbriši</string>
+    <string name="action_delete_all">Izbriši sve</string>
+    <string name="description_operation_failed_player_used_in_match">Nije moguće izbrisati igrače koji pripadaju meču</string>
     <string name="description_operation_failed_player_name_invalid">Igračevo ime nije ispravno</string>
     <string name="description_operation_failed_player_name_not_unique">Igrač sa imenom %1$s već postoji</string>
     <string name="description_operation_failed_game_not_editable">Akcija je dozvoljena samo za igre iz posljednje partije u meču</string>

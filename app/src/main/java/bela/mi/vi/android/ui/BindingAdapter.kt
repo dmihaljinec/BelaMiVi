@@ -2,8 +2,10 @@ package bela.mi.vi.android.ui
 
 import android.content.res.ColorStateList
 import android.text.Editable
+import android.view.View
 import android.widget.EditText
 import android.widget.TextView
+import androidx.appcompat.widget.TooltipCompat
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.ConstraintSet
 import androidx.core.content.ContextCompat
@@ -12,6 +14,8 @@ import androidx.databinding.BindingAdapter
 import androidx.databinding.InverseBindingAdapter
 import androidx.transition.TransitionManager
 import bela.mi.vi.android.ui.player.PlayerViewModel
+import bela.mi.vi.android.ui.player.getPlayerColorResId
+import bela.mi.vi.data.Player
 import kotlin.math.absoluteValue
 
 
@@ -30,6 +34,18 @@ fun setDrawableEnd(textView: TextView, drawableResId: Int, tintColorResId: Int) 
 @BindingAdapter("backgroundTintFromPlayer")
 fun backgroundTintFromPlayer(textView: TextView, player: PlayerViewModel) {
     val color = ContextCompat.getColor(textView.context, player.getColorResId())
+    textView.backgroundTintList = ColorStateList.valueOf(color)
+}
+
+@BindingAdapter("backgroundTintFromTeamPlayerOne", "backgroundTintFromTeamPlayerTwo", requireAll = true)
+fun backgroundTintFromTeam(textView: TextView, playerOne: Player?, playerTwo: Player?) {
+    val playerOneName = playerOne?.name ?: ""
+    val playerTwoName = playerTwo?.name ?: ""
+    backgroundTintFromTeam(textView, "$playerOneName & $playerTwoName")
+}
+
+private fun backgroundTintFromTeam(textView: TextView, name: String) {
+    val color = ContextCompat.getColor(textView.context, getPlayerColorResId(name))
     textView.backgroundTintList = ColorStateList.valueOf(color)
 }
 
@@ -62,4 +78,14 @@ fun TextView.getInt(): Int? {
     } catch (e: NumberFormatException) {
         null
     }
+}
+
+@BindingAdapter("tooltip")
+fun View.tooltip(tooltipText: String) {
+    TooltipCompat.setTooltipText(this, tooltipText)
+}
+
+@BindingAdapter("tooltip")
+fun View.tooltip(tooltipTextResId: Int) {
+    TooltipCompat.setTooltipText(this, resources.getString(tooltipTextResId))
 }

@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+        <import type="bela.mi.vi.android.R" />
         <variable
             name="match"
             type="bela.mi.vi.android.ui.match.NewMatchViewModel" />
@@ -117,7 +118,8 @@
             android:src="@drawable/confirm_tint_24"
             android:tint="@color/colorWhite"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"/>
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:tooltip="@{R.string.action_save}"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

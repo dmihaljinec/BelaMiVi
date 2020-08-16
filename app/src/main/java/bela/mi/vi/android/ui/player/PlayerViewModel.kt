@@ -21,21 +21,23 @@ data class PlayerViewModel(
         stats.addSource(setsWon) { updateFormat() }
     }
 
-    fun getColorResId(): Int {
-        val colors = arrayOf(
-            R.color.playerIcon_1, R.color.playerIcon_2, R.color.playerIcon_3, R.color.playerIcon_4,
-            R.color.playerIcon_5, R.color.playerIcon_6, R.color.playerIcon_7, R.color.playerIcon_8
-        )
-        var sum = 0
-        name.forEach { char -> sum += char.toInt() }
-        return colors[sum % colors.size]
-    }
+    fun getColorResId(): Int = getPlayerColorResId(name)
 
     private fun updateFormat() {
         val finished = setsFinished.value ?: 0
         val won = setsWon.value ?: 0
         stats.value = formatPercentage(won, finished)
     }
+}
+
+fun getPlayerColorResId(name: String): Int {
+    val colors = arrayOf(
+        R.color.playerIcon_1, R.color.playerIcon_2, R.color.playerIcon_3, R.color.playerIcon_4,
+        R.color.playerIcon_5, R.color.playerIcon_6, R.color.playerIcon_7, R.color.playerIcon_8
+    )
+    var sum = 0
+    name.forEach { char -> sum += char.toInt() }
+    return colors[sum % colors.size]
 }
 
 fun Player.toPlayerViewModel(coroutineContext: CoroutineContext): PlayerViewModel {
