@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="playerOne"
+            type="bela.mi.vi.data.Player" />
+        <variable
+            name="playerTwo"
+            type="bela.mi.vi.data.Player" />
+    </data>
+
+    <TextView
+        android:id="@+id/team_icon"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:background="@drawable/circle"
+        app:backgroundTintFromTeamPlayerOne="@{playerOne}"
+        app:backgroundTintFromTeamPlayerTwo="@{playerTwo}"
+        app:tooltip='@{playerOne.name + " &amp; " + playerTwo.name}'
+        android:gravity="center"
+        android:text='@{(playerOne != null ? playerOne.name.substring(0, 1) : "") + (playerTwo != null ? playerTwo.name.substring(0, 1) : "")}'
+        android:textColor="@color/colorWhite"
+        android:textSize="16sp"/>
+
+</layout>

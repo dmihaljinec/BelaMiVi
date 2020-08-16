@@ -17,21 +17,16 @@
         android:paddingBottom="10dp"
         android:background="?android:attr/selectableItemBackground">
 
-        <TextView
+        <include
             android:id="@+id/team_one_icon"
+            layout="@layout/team_icon"
             android:layout_width="40dp"
             android:layout_height="40dp"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            android:background="@drawable/circle"
-            app:backgroundTintFromTeamPlayerOne="@{match.teamOnePlayerOne}"
-            app:backgroundTintFromTeamPlayerTwo="@{match.teamOnePlayerTwo}"
-            app:tooltip='@{match.teamOnePlayerOne.name + " &amp; " + match.teamOnePlayerTwo.name}'
-            android:gravity="center"
-            android:text='@{match.teamOnePlayerOne.name.substring(0, 1) + match.teamOnePlayerTwo.name.substring(0, 1)}'
-            android:textColor="@color/colorWhite"
-            android:textSize="16sp"/>
+            app:playerOne="@{match.teamOnePlayerOne}"
+            app:playerTwo="@{match.teamOnePlayerTwo}"/>
 
         <TextView
             android:id="@+id/team_one_player_one"
@@ -104,23 +99,17 @@
             app:layout_constraintTop_toBottomOf="@id/team_two_player_one"
             android:text="@{match.teamTwoPlayerTwo.name}" />
 
-        <TextView
+        <include
             android:id="@+id/team_two_icon"
+            layout="@layout/team_icon"
             android:layout_width="40dp"
             android:layout_height="40dp"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            android:background="@drawable/circle"
-            app:backgroundTintFromTeamPlayerOne="@{match.teamTwoPlayerOne}"
-            app:backgroundTintFromTeamPlayerTwo="@{match.teamTwoPlayerTwo}"
-            app:tooltip='@{match.teamTwoPlayerOne.name + " &amp; " + match.teamTwoPlayerTwo.name}'
-            android:gravity="center"
-            android:text='@{match.teamTwoPlayerOne.name.substring(0, 1) + match.teamTwoPlayerTwo.name.substring(0, 1)}'
-            android:textColor="@color/colorWhite"
-            android:textSize="16sp"/>
+            app:playerOne="@{match.teamTwoPlayerOne}"
+            app:playerTwo="@{match.teamTwoPlayerTwo}"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
 
 </layout>

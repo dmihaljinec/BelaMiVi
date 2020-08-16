@@ -11,16 +11,20 @@ import bela.mi.vi.android.ui.operationFailedCoroutineExceptionHandler
 import bela.mi.vi.android.ui.settings.BelaSettings
 import bela.mi.vi.data.BelaRepository.OperationFailed
 import bela.mi.vi.data.Game
+import bela.mi.vi.data.Player
 import bela.mi.vi.data.TeamOrdinal
 import bela.mi.vi.interactor.WithGame
+import bela.mi.vi.interactor.WithMatch
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 
 
 @ExperimentalCoroutinesApi
 class GameViewModel @ViewModelInject constructor(
+    private val withMatch: WithMatch,
     private val withGame: WithGame,
     private val belaSettings: BelaSettings,
     @Assisted savedStateHandle: SavedStateHandle
@@ -34,6 +38,10 @@ class GameViewModel @ViewModelInject constructor(
     var teamTwoBela: MutableLiveData<Boolean> = MutableLiveData(false)
     var gamePoints: MutableLiveData<Int> = MutableLiveData(belaSettings.getGamePoints())
     var constraintSets: MutableLiveData<ArrayList<Int>> = MutableLiveData(arrayListOf(R.xml.game_declarations_none, R.xml.game_save_disabled))
+    var teamOnePlayerOne: MutableLiveData<Player> = MutableLiveData()
+    var teamOnePlayerTwo: MutableLiveData<Player> = MutableLiveData()
+    var teamTwoPlayerOne: MutableLiveData<Player> = MutableLiveData()
+    var teamTwoPlayerTwo: MutableLiveData<Player> = MutableLiveData()
     private val matchId = savedStateHandle.get<Long>("matchId") ?: -1L
     private val gameId = savedStateHandle.get<Long>("gameId") ?: -1L
     private val saveGame = if(gameId != -1L) ::editGame else ::newGame
@@ -44,8 +52,8 @@ class GameViewModel @ViewModelInject constructor(
 
     init {
         initObservers()
-        if (gameId != -1L) {
-            viewModelScope.launch(handler) {
+        viewModelScope.launch(handler) {
+            if (gameId != -1L) {
                 val game = withGame.get(gameId).first()
                 allTricks.value = game.allTricks
                 teamOneDeclarations.value = game.teamOneDeclarations
@@ -53,6 +61,12 @@ class GameViewModel @ViewModelInject constructor(
                 teamOnePoints.value = game.teamOnePoints
                 teamTwoPoints.value = game.teamTwoPoints
                 initBelaCheckboxes()
+            }
+            withMatch.get(matchId).collect { match ->
+                teamOnePlayerOne.value = match.teamOne.playerOne.first()
+                teamOnePlayerTwo.value = match.teamOne.playerTwo.first()
+                teamTwoPlayerOne.value = match.teamTwo.playerOne.first()
+                teamTwoPlayerTwo.value = match.teamTwo.playerTwo.first()
             }
         }
     }

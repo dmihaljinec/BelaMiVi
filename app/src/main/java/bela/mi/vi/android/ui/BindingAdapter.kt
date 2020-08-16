@@ -41,7 +41,8 @@ fun backgroundTintFromPlayer(textView: TextView, player: PlayerViewModel) {
 fun backgroundTintFromTeam(textView: TextView, playerOne: Player?, playerTwo: Player?) {
     val playerOneName = playerOne?.name ?: ""
     val playerTwoName = playerTwo?.name ?: ""
-    backgroundTintFromTeam(textView, "$playerOneName & $playerTwoName")
+    if (playerOneName.isNotEmpty() || playerTwoName.isNotEmpty())
+        backgroundTintFromTeam(textView, "$playerOneName & $playerTwoName")
 }
 
 private fun backgroundTintFromTeam(textView: TextView, name: String) {
