@@ -19,7 +19,8 @@
         android:background="@drawable/circle"
         app:backgroundTintFromTeamPlayerOne="@{playerOne}"
         app:backgroundTintFromTeamPlayerTwo="@{playerTwo}"
-        app:tooltip='@{playerOne.name + " &amp; " + playerTwo.name}'
+        app:tooltipPlayerOne="@{playerOne}"
+        app:tooltipPlayerTwo="@{playerTwo}"
         android:gravity="center"
         android:text='@{(playerOne != null ? playerOne.name.substring(0, 1) : "") + (playerTwo != null ? playerTwo.name.substring(0, 1) : "")}'
         android:textColor="@color/colorWhite"

@@ -37,7 +37,7 @@ class GameViewModel @ViewModelInject constructor(
     var teamOneBela: MutableLiveData<Boolean> = MutableLiveData(false)
     var teamTwoBela: MutableLiveData<Boolean> = MutableLiveData(false)
     var gamePoints: MutableLiveData<Int> = MutableLiveData(belaSettings.getGamePoints())
-    var constraintSets: MutableLiveData<ArrayList<Int>> = MutableLiveData(arrayListOf(R.xml.game_declarations_none, R.xml.game_save_disabled))
+    var constraintSets: MutableLiveData<ArrayList<Int>> = MutableLiveData(arrayListOf(R.xml.game_declarations_none, R.xml.save_disabled, R.xml.team_one_icon_unavailable, R.xml.team_two_icon_unavailable))
     var teamOnePlayerOne: MutableLiveData<Player> = MutableLiveData()
     var teamOnePlayerTwo: MutableLiveData<Player> = MutableLiveData()
     var teamTwoPlayerOne: MutableLiveData<Player> = MutableLiveData()
@@ -110,6 +110,10 @@ class GameViewModel @ViewModelInject constructor(
         gamePoints.observeForever { updateSaveButtonConstraint() }
         teamOneBela.observeForever { addBela(TeamOrdinal.ONE) }
         teamTwoBela.observeForever { addBela(TeamOrdinal.TWO) }
+        teamOnePlayerOne.observeForever { updateTeamOneIconConstraint() }
+        teamOnePlayerTwo.observeForever { updateTeamOneIconConstraint() }
+        teamTwoPlayerOne.observeForever { updateTeamTwoIconConstraint() }
+        teamTwoPlayerTwo.observeForever { updateTeamTwoIconConstraint() }
     }
 
     private fun initBelaCheckboxes() {
@@ -184,8 +188,26 @@ class GameViewModel @ViewModelInject constructor(
         val canSave = (teamOnePoints.value ?: 0) + (teamTwoPoints.value ?: 0) == gamePoints.value ?: belaSettings.getGamePoints()
         constraintSets.set(
             SAVE_INDEX,
-            if (canSave) R.xml.game_save_enabled
-            else R.xml.game_save_disabled
+            if (canSave) R.xml.save_enabled
+            else R.xml.save_disabled
+        )
+    }
+
+    private fun updateTeamOneIconConstraint() {
+        val ready = teamOnePlayerOne.value != null && teamOnePlayerTwo.value != null
+        constraintSets.set(
+            TEAM_ONE_ICON_INDEX,
+            if (ready) R.xml.team_one_icon_available
+            else R.xml.team_one_icon_unavailable
+        )
+    }
+
+    private fun updateTeamTwoIconConstraint() {
+        val ready = teamTwoPlayerOne.value != null && teamTwoPlayerTwo.value != null
+        constraintSets.set(
+            TEAM_TWO_ICON_INDEX,
+            if (ready) R.xml.team_two_icon_available
+            else R.xml.team_two_icon_unavailable
         )
     }
 
@@ -254,6 +276,8 @@ class GameViewModel @ViewModelInject constructor(
     companion object {
         private const val DECLARATIONS_INDEX = 0
         private const val SAVE_INDEX = 1
+        private const val TEAM_ONE_ICON_INDEX = 2
+        private const val TEAM_TWO_ICON_INDEX = 3
     }
 }
 

@@ -42,7 +42,9 @@ fun backgroundTintFromTeam(textView: TextView, playerOne: Player?, playerTwo: Pl
     val playerOneName = playerOne?.name ?: ""
     val playerTwoName = playerTwo?.name ?: ""
     if (playerOneName.isNotEmpty() || playerTwoName.isNotEmpty())
-        backgroundTintFromTeam(textView, "$playerOneName & $playerTwoName")
+        backgroundTintFromTeam(textView, teamName(playerOneName, playerTwoName))
+    else
+        textView.backgroundTintList = null
 }
 
 private fun backgroundTintFromTeam(textView: TextView, name: String) {
@@ -89,4 +91,18 @@ fun View.tooltip(tooltipText: String) {
 @BindingAdapter("tooltip")
 fun View.tooltip(tooltipTextResId: Int) {
     TooltipCompat.setTooltipText(this, resources.getString(tooltipTextResId))
+}
+
+@BindingAdapter("tooltipPlayerOne", "tooltipPlayerTwo", requireAll = true)
+fun View.tooltip(playerOne: Player?, playerTwo: Player?) {
+    TooltipCompat.setTooltipText(this, teamName(playerOne?.name, playerTwo?.name))
+}
+
+private fun teamName(playerOneName: String?, playerTwoName: String?): String {
+    return when {
+        playerOneName != null && playerTwoName != null -> "$playerOneName & $playerTwoName"
+        playerOneName != null -> playerOneName
+        playerTwoName != null -> playerTwoName
+        else -> ""
+    }
 }

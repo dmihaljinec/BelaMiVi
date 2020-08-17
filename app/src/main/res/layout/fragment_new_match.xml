@@ -8,13 +8,36 @@
         <variable
             name="match"
             type="bela.mi.vi.android.ui.match.NewMatchViewModel" />
-
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        app:applyConstraintSets="@{match.constraintSets}">
+
+        <include
+            android:id="@+id/team_one_icon"
+            layout="@layout/team_icon"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="20dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:playerOne="@{match.teamOnePlayerOne}"
+            app:playerTwo="@{match.teamOnePlayerTwo}"/>
+
+        <include
+            android:id="@+id/team_two_icon"
+            layout="@layout/team_icon"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="20dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:playerOne="@{match.teamTwoPlayerOne}"
+            app:playerTwo="@{match.teamTwoPlayerTwo}"/>
 
         <TextView
             android:id="@+id/team_one_player_one"
@@ -28,10 +51,10 @@
             android:clickable="true"
             android:focusable="true"
             android:onClick="@{() -> match.teamOnePlayerOneCleared()}"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/team_one_icon"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toStartOf="@id/team_two_player_one"
-            android:text="@{match.teamOnePlayerOne.name}"
+            android:text="@{match.teamOnePlayerViewModelOne.name}"
             android:hint="@string/hint_new_match"
             tools:text="Alice"/>
 
@@ -47,10 +70,10 @@
             android:clickable="true"
             android:focusable="true"
             android:onClick="@{() -> match.teamTwoPlayerOneCleared()}"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/team_two_icon"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/team_one_player_one"
-            android:text="@{match.teamTwoPlayerOne.name}"
+            android:text="@{match.teamTwoPlayerViewModelOne.name}"
             android:hint="@string/hint_new_match"
             tools:text="Charlie"/>
 
@@ -69,7 +92,7 @@
             app:layout_constraintTop_toBottomOf="@id/team_one_player_one"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toStartOf="@id/team_two_player_two"
-            android:text="@{match.teamOnePlayerTwo.name}"
+            android:text="@{match.teamOnePlayerViewModelTwo.name}"
             android:hint="@string/hint_new_match"
             tools:text="Bob"/>
 
@@ -88,33 +111,63 @@
             app:layout_constraintTop_toBottomOf="@id/team_two_player_one"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/team_one_player_two"
-            android:text="@{match.teamTwoPlayerTwo.name}"
+            android:text="@{match.teamTwoPlayerViewModelTwo.name}"
             android:hint="@string/hint_new_match"
             tools:text="Dane"/>
 
-        <EditText
-            android:id="@+id/set_limit"
-            android:layout_width="match_parent"
+        <TextView
+            android:id="@+id/players"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
             app:layout_constraintTop_toBottomOf="@id/team_one_player_two"
-            android:inputType="number"
-            android:text="@={match.setLimit}" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:text="@string/title_list_of_players"
+            android:textColor="?attr/colorAccent" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/players_recyclerview"
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:requiresFadingEdge="vertical"
+            android:fadingEdge="horizontal"
+            android:fadingEdgeLength="20dp"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_constraintTop_toBottomOf="@id/set_limit"
+            app:layout_constraintTop_toBottomOf="@id/players"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"/>
+            app:layout_constraintBottom_toTopOf="@id/set_limit"/>
+
+        <TextView
+            android:id="@+id/set_limit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            app:layout_constraintTop_toBottomOf="@id/players_recyclerview"
+            app:layout_constraintBottom_toTopOf="@id/set_limit_edittext"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:text="@string/title_set_limit"
+            android:textColor="?attr/colorAccent" />
+
+        <EditText
+            android:id="@+id/set_limit_edittext"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:minWidth="100dp"
+            app:layout_constraintTop_toBottomOf="@id/set_limit"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:inputType="number"
+            android:text="@={match.setLimit}" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/save"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="16dp"
+            android:layout_margin="20dp"
             android:src="@drawable/confirm_tint_24"
             android:tint="@color/colorWhite"
             app:layout_constraintEnd_toEndOf="parent"
