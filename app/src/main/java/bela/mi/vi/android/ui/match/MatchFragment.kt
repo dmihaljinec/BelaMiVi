@@ -65,7 +65,7 @@ class MatchFragment : Fragment(), Toolbar.OnMenuItemClickListener {
         mainActivity.setupToolbarMenu(R.menu.match, this)
         matchViewModel.matchScore.observe(viewLifecycleOwner) { matchScore ->
             matchScore?.let {
-                mainActivity.setToolbarTitle(getString(R.string.title_match_with_score, it))
+                mainActivity.setToolbarTitle(it)
             }
         }
         return binding.root

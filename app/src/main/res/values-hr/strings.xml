@@ -9,6 +9,7 @@
     <string name="title_match">Meč</string>
     <string name="title_match_with_score">Meč %1$s</string>
     <string name="title_player">Igrač</string>
+    <string name="title_sets">Partije</string>
     <string name="title_new_game">Nova igra</string>
     <string name="title_game">Igra</string>
     <string name="title_settings">Postavke</string>
@@ -27,6 +28,8 @@
     <string name="title_team_two">Vi</string>
     <string name="title_declarations">Zvanja</string>
     <string name="title_theme">Tema</string>
+    <string name="title_chosen_trump">Odabran adut</string>
+    <string name="title_passed_games">Prolaznost</string>
     <string name="action_new_match">Novi meč</string>
     <string name="action_new_game">Nova igra</string>
     <string name="action_new_player">Novi igrač</string>
