@@ -7,6 +7,7 @@
     <string name="title_list_of_players">Lista igrača</string>
     <string name="title_new_match">Novi meč</string>
     <string name="title_match">Meč</string>
+    <string name="title_match_with_score">Meč %1$s</string>
     <string name="title_player">Igrač</string>
     <string name="title_new_game">Nova igra</string>
     <string name="title_game">Igra</string>

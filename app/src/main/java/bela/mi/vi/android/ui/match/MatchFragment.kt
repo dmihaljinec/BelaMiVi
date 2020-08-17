@@ -1,11 +1,8 @@
 package bela.mi.vi.android.ui.match
 
 import android.os.Bundle
-import android.util.Log
-import android.view.LayoutInflater
-import android.view.MenuItem
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
+import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -16,8 +13,8 @@ import androidx.lifecycle.observe
 import androidx.navigation.fragment.findNavController
 import bela.mi.vi.android.R
 import bela.mi.vi.android.databinding.FragmentMatchBinding
-import bela.mi.vi.android.ui.MainActivity
 import bela.mi.vi.android.ui.game.GamesAdapter
+import bela.mi.vi.android.ui.requireMainActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.launch
@@ -35,12 +32,14 @@ class MatchFragment : Fragment(), Toolbar.OnMenuItemClickListener {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        val mainActivity = requireMainActivity()
         val binding = DataBindingUtil.inflate<FragmentMatchBinding>(
             inflater,
             R.layout.fragment_match,
             container,
             false)
         binding.gamesRecyclerview.adapter = adapter
+        binding.match = matchViewModel
         binding.lifecycleOwner = viewLifecycleOwner
         adapter.clickListener = { game ->
             editGame(game.id)
@@ -56,9 +55,18 @@ class MatchFragment : Fragment(), Toolbar.OnMenuItemClickListener {
         }
         matchViewModel.games.observe(viewLifecycleOwner, Observer { adapter.submitList(it) })
         binding.newGame.setOnClickListener { newGame() }
-        (activity as? MainActivity)?.setupToolbarMenu(R.menu.match, this)
-        matchViewModel.matchScore.observe(viewLifecycleOwner) { score ->
-            score?.run { (activity as? MainActivity)?.setToolbarTitle(score) }
+        binding.setScore.setOnClickListener {
+            if (matchViewModel.diff.value ?: 0 > 0) {
+                val toast = Toast.makeText(context, matchViewModel.getDiff(), Toast.LENGTH_LONG)
+                toast.setGravity(Gravity.CENTER, 0, 0)
+                toast.show()
+            }
+        }
+        mainActivity.setupToolbarMenu(R.menu.match, this)
+        matchViewModel.matchScore.observe(viewLifecycleOwner) { matchScore ->
+            matchScore?.let {
+                mainActivity.setToolbarTitle(getString(R.string.title_match_with_score, it))
+            }
         }
         return binding.root
     }
@@ -90,7 +98,6 @@ class MatchFragment : Fragment(), Toolbar.OnMenuItemClickListener {
     }
 
     private fun sets() {
-        Log.d("WTF", "Match id=$matchId")
         val action = MatchFragmentDirections.actionMatchFragmentToSetsFragment(matchId)
         findNavController().navigate(action)
     }
