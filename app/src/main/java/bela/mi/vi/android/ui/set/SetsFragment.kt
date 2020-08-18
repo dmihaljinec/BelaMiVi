@@ -36,6 +36,8 @@ class SetsFragment : Fragment() {
             container,
             false)
         binding.setsRecyclerview.adapter = adapter
+        binding.setSets(setsViewModel)
+        binding.lifecycleOwner = viewLifecycleOwner
         adapter.clickListener = { setSummary ->
             val action = SetsFragmentDirections.actionSetsFragmentToGamesFragment(setSummary.id)
             findNavController().navigate(action)
