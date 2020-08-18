@@ -30,6 +30,7 @@
     <string name="title_theme">Tema</string>
     <string name="title_chosen_trump">Odabran adut</string>
     <string name="title_passed_games">Prolaznost</string>
+    <string name="title_player_name">Ime igrača</string>
     <string name="action_new_match">Novi meč</string>
     <string name="action_new_game">Nova igra</string>
     <string name="action_new_player">Novi igrač</string>
@@ -43,5 +44,4 @@
     <string name="description_operation_failed_game_not_editable">Akcija je dozvoljena samo za igre iz posljednje partije u meču</string>
     <string name="description_operation_failed_game_invalid_data">Broj bodova u igri mora biti jednak zbroju bodova od Mi i Vi: %1$d != %2$d (%3$d + %4$d)</string>
     <string name="hint_new_match">Odaberi igrača</string>
-    <string name="hint_player_name">Ime igrača</string>
 </resources>

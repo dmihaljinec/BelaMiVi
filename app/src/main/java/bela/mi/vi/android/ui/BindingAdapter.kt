@@ -31,10 +31,18 @@ fun setDrawableEnd(textView: TextView, drawableResId: Int, tintColorResId: Int) 
     textView.setCompoundDrawablesRelativeWithIntrinsicBounds(null, null, drawable, null)
 }
 
-@BindingAdapter("backgroundTintFromPlayer")
-fun backgroundTintFromPlayer(textView: TextView, player: PlayerViewModel) {
-    val color = ContextCompat.getColor(textView.context, player.getColorResId())
+@BindingAdapter("backgroundTintFromResId")
+fun backgroundTintFromResId(textView: TextView, colorResId: Int) {
+    val color = ContextCompat.getColor(textView.context, colorResId)
     textView.backgroundTintList = ColorStateList.valueOf(color)
+}
+
+@BindingAdapter("backgroundTintFromPlayer")
+fun backgroundTintFromPlayer(textView: TextView, player: PlayerViewModel?) {
+    player?.run {
+        val color = ContextCompat.getColor(textView.context, player.getColorResId())
+        textView.backgroundTintList = ColorStateList.valueOf(color)
+    }
 }
 
 @BindingAdapter("backgroundTintFromTeamPlayerOne", "backgroundTintFromTeamPlayerTwo", requireAll = true)
