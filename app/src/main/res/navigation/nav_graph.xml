@@ -130,7 +130,7 @@
     </fragment>
     <fragment
         android:id="@+id/about_fragment"
-        android:name="bela.mi.vi.android.ui.player.PlayerListFragment"
+        android:name="bela.mi.vi.android.ui.settings.AboutFragment"
         android:label="@string/title_about" >
     </fragment>
     <dialog
