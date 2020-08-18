@@ -36,6 +36,8 @@ class GamesFragment : Fragment() {
             container,
             false)
         binding.gamesRecyclerview.adapter = adapter
+        binding.setGames(gamesViewModel)
+        binding.lifecycleOwner = viewLifecycleOwner
         adapter.clickListener = { game ->
             val action = GamesFragmentDirections.actionGamesFragmentToGameFragment(gameId = game.id)
             findNavController().navigate(action)

@@ -88,6 +88,10 @@
         android:name="bela.mi.vi.android.ui.game.GamesFragment"
         android:label="@string/title_list_of_games">
         <argument
+            android:name="matchId"
+            app:argType="long"
+            android:defaultValue="-1L"/>
+        <argument
             android:name="setId"
             app:argType="long"
             android:defaultValue="-1L"/>

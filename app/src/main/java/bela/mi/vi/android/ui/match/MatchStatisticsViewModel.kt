@@ -3,8 +3,7 @@ package bela.mi.vi.android.ui.match
 import androidx.hilt.Assisted
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.*
-import bela.mi.vi.android.R
-import bela.mi.vi.android.ui.game.set
+import bela.mi.vi.android.ui.TeamIcons
 import bela.mi.vi.android.ui.operationFailedCoroutineExceptionHandler
 import bela.mi.vi.data.BelaRepository.OperationFailed
 import bela.mi.vi.data.Player
@@ -37,7 +36,7 @@ class MatchStatisticsViewModel @ViewModelInject constructor(
     var teamOnePlayerTwo: MutableLiveData<Player> = MutableLiveData()
     var teamTwoPlayerOne: MutableLiveData<Player> = MutableLiveData()
     var teamTwoPlayerTwo: MutableLiveData<Player> = MutableLiveData()
-    var constraintSets: MutableLiveData<ArrayList<Int>> = MutableLiveData(arrayListOf(R.xml.team_one_icon_unavailable, R.xml.team_two_icon_unavailable))
+    val teamIcons = TeamIcons(::areTeamIconsAvailable)
     private var teamOneChosenTrump: LiveData<Int> = MutableLiveData()
     private var teamTwoChosenTrump: LiveData<Int> = MutableLiveData()
     private var teamOnePassedGames: LiveData<Int> = MutableLiveData()
@@ -82,10 +81,10 @@ class MatchStatisticsViewModel @ViewModelInject constructor(
         teamOnePassedGamesString.addSource(teamOnePassedGames) { updatePassedGames(TeamOrdinal.ONE) }
         teamTwoPassedGamesString.addSource(teamTwoChosenTrump) { updatePassedGames(TeamOrdinal.TWO) }
         teamTwoPassedGamesString.addSource(teamTwoPassedGames) { updatePassedGames(TeamOrdinal.TWO) }
-        teamOnePlayerOne.observeForever { updateTeamIconConstraint() }
-        teamOnePlayerTwo.observeForever { updateTeamIconConstraint() }
-        teamTwoPlayerOne.observeForever { updateTeamIconConstraint() }
-        teamTwoPlayerTwo.observeForever { updateTeamIconConstraint() }
+        teamOnePlayerOne.observeForever { teamIcons.updateTeamIconConstraint() }
+        teamOnePlayerTwo.observeForever { teamIcons.updateTeamIconConstraint() }
+        teamTwoPlayerOne.observeForever { teamIcons.updateTeamIconConstraint() }
+        teamTwoPlayerTwo.observeForever { teamIcons.updateTeamIconConstraint() }
     }
 
     private fun updateChosenTrump(teamOrdinal: TeamOrdinal) {
@@ -119,24 +118,9 @@ class MatchStatisticsViewModel @ViewModelInject constructor(
         }
     }
 
-    private fun updateTeamIconConstraint() {
-        val ready = teamOnePlayerOne.value != null && teamOnePlayerTwo.value != null &&
+    private fun areTeamIconsAvailable(): Boolean {
+        return teamOnePlayerOne.value != null && teamOnePlayerTwo.value != null &&
                 teamTwoPlayerOne.value != null && teamTwoPlayerTwo.value != null
-        constraintSets.set(
-            TEAM_ONE_ICON_INDEX,
-            if (ready) R.xml.team_one_icon_available
-            else R.xml.team_one_icon_unavailable
-        )
-        constraintSets.set(
-            TEAM_TWO_ICON_INDEX,
-            if (ready) R.xml.team_two_icon_available
-            else R.xml.team_two_icon_unavailable
-        )
-    }
-
-    companion object {
-        private const val TEAM_ONE_ICON_INDEX = 0
-        private const val TEAM_TWO_ICON_INDEX = 1
     }
 }
 
