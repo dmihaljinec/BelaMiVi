@@ -69,5 +69,5 @@ dependencies {
     kapt "androidx.hilt:hilt-compiler:${versions.hilt}"
 
     // Allows to inspect real database content from browser when debug build is running on device
-    debugImplementation 'com.amitshekhar.android:debug-db:1.0.6'
+    //debugImplementation 'com.amitshekhar.android:debug-db:1.0.6'
 }
