@@ -42,7 +42,7 @@ fun backgroundTintFromTeam(textView: TextView, playerOne: Player?, playerTwo: Pl
     val playerOneName = playerOne?.name ?: ""
     val playerTwoName = playerTwo?.name ?: ""
     if (playerOneName.isNotEmpty() || playerTwoName.isNotEmpty())
-        backgroundTintFromTeam(textView, teamName(playerOneName, playerTwoName))
+        backgroundTintFromTeam(textView, teamName(playerOne?.name, playerTwo?.name))
     else
         textView.backgroundTintList = null
 }

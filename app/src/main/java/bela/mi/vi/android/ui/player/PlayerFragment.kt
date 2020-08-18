@@ -53,7 +53,7 @@ class PlayerFragment : Fragment(), Toolbar.OnMenuItemClickListener {
     }
 
     override fun onMenuItemClick(menuItem: MenuItem): Boolean {
-        when(menuItem.itemId) {
+        when (menuItem.itemId) {
             R.id.save_menu_item -> save()
             R.id.delete_menu_item -> delete()
             else -> return false
