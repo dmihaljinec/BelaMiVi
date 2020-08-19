@@ -73,11 +73,6 @@ class GameViewModel @ViewModelInject constructor(
 
     suspend fun save() = saveGame.invoke()
 
-    suspend fun remove() {
-        require(gameId != -1L)
-        withGame.remove(gameId)
-    }
-
     fun teamOneAddTwenty() = addDeclarations(TeamOrdinal.ONE, 20)
     fun teamOneAddFifty() = addDeclarations(TeamOrdinal.ONE, 50)
 

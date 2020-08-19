@@ -99,8 +99,8 @@ class DeleteActionDialogFragment : BottomSheetDialogFragment() {
 
     private fun deleteGame() {
         lifecycleScope.launch(handler) {
-            //withGame.remove(gameId)
-            Toast.makeText(context, "Delete game", Toast.LENGTH_SHORT).show()
+            withGame.remove(gameId)
+            findNavController().previousBackStackEntry?.savedStateHandle?.set(getString(R.string.key_deleted_game_id), gameId)
             dismiss()
         }
     }

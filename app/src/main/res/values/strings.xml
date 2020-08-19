@@ -53,6 +53,7 @@
     <string name="key_deleted_match_id" translatable="false">deletedMatchId</string>
     <string name="key_set_id" translatable="false">setId</string>
     <string name="key_game_id" translatable="false">gameId</string>
+    <string name="key_deleted_game_id" translatable="false">deletedGameId</string>
     <string name="key_player_id" translatable="false">playerId</string>
     <string name="key_deleted_player_id" translatable="false">deletedPlayerId</string>
     <string name="key_settings_game_points" translatable="false">gamePointsPref</string>

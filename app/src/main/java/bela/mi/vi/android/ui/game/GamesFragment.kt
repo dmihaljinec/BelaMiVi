@@ -43,7 +43,7 @@ class GamesFragment : Fragment() {
             findNavController().navigate(action)
         }
         adapter.longClickListener = { game ->
-            val action = GamesFragmentDirections.actionGamesFragmentToGameActionsDialogFragment(gameId = game.id)
+            val action = GamesFragmentDirections.actionGamesFragmentToDeleteActionDialogFragment(gameId = game.id)
             findNavController().navigate(action)
             true
         }

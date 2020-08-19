@@ -65,9 +65,6 @@
             android:id="@+id/action_match_fragment_to_game_fragment"
             app:destination="@id/game_fragment" />
         <action
-            android:id="@+id/action_match_fragment_to_game_actions_dialog_fragment"
-            app:destination="@id/game_actions_dialog_fragment"/>
-        <action
             android:id="@+id/action_match_fragment_to_match_statistics_fragment"
             app:destination="@id/match_statistics_fragment" />
         <action
@@ -88,6 +85,9 @@
             android:name="gameId"
             app:argType="long"
             android:defaultValue="-1L"/>
+        <action
+            android:id="@+id/action_game_fragment_to_delete_action_dialog_fragment"
+            app:destination="@id/delete_action_dialog_fragment" />
     </fragment>
     <fragment
         android:id="@+id/games_fragment"
@@ -105,8 +105,8 @@
             android:id="@+id/action_games_fragment_to_game_fragment"
             app:destination="@id/game_fragment" />
         <action
-            android:id="@+id/action_games_fragment_to_game_actions_dialog_fragment"
-            app:destination="@id/game_actions_dialog_fragment" />
+            android:id="@+id/action_games_fragment_to_delete_action_dialog_fragment"
+            app:destination="@id/delete_action_dialog_fragment" />
     </fragment>
     <fragment
         android:id="@+id/sets_fragment"
@@ -154,20 +154,5 @@
             android:name="gameId"
             app:argType="long"
             android:defaultValue="-1L"/>
-    </dialog>
-    <dialog
-        android:id="@+id/game_actions_dialog_fragment"
-        android:name="bela.mi.vi.android.ui.game.GameActionsDialogFragment">
-        <argument
-            android:name="matchId"
-            app:argType="long"
-            android:defaultValue="-1L"/>
-        <argument
-            android:name="gameId"
-            app:argType="long"
-            android:defaultValue="-1L"/>
-        <action
-            android:id="@+id/action_game_actions_dialog_fragment_to_game_fragment"
-            app:destination="@id/game_fragment" />
     </dialog>
 </navigation>

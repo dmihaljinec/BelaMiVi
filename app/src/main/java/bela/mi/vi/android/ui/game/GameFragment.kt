@@ -9,10 +9,13 @@ import androidx.appcompat.widget.Toolbar
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import bela.mi.vi.android.R
 import bela.mi.vi.android.databinding.FragmentGameBinding
+import bela.mi.vi.android.ui.DeleteActionDialogFragment
 import bela.mi.vi.android.ui.MainActivity
 import bela.mi.vi.android.ui.gameCoroutineExceptionHandler
 import bela.mi.vi.data.BelaRepository.GameOperationFailed
@@ -25,6 +28,7 @@ import kotlinx.coroutines.launch
 @ExperimentalCoroutinesApi
 @AndroidEntryPoint
 class GameFragment : Fragment(), Toolbar.OnMenuItemClickListener {
+    private val gameId: Long by lazy { arguments?.getLong(getString(R.string.key_game_id), -1L) ?: -1L }
     private val gameViewModel: GameViewModel by viewModels()
     private val title: String by lazy {
         if (hasGameId) getString(R.string.title_game)
@@ -34,7 +38,7 @@ class GameFragment : Fragment(), Toolbar.OnMenuItemClickListener {
         if (hasGameId) R.menu.edit_game
         else R.menu.new_game
     }
-    private val hasGameId: Boolean by lazy { arguments?.getLong(getString(R.string.key_game_id), -1L) != -1L }
+    private val hasGameId: Boolean by lazy { gameId != -1L }
     private val handler = CoroutineExceptionHandler { _, exception ->
         val context = activity
         if (context != null && exception is GameOperationFailed) gameCoroutineExceptionHandler(
@@ -65,6 +69,30 @@ class GameFragment : Fragment(), Toolbar.OnMenuItemClickListener {
         return binding.root
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        /**
+         * We observe NavBackStackEntry lifecycle of this fragment to catch deleted game id set from
+         * [DeleteActionDialogFragment]. If this game was deleted we need to close this fragment.
+         */
+        val navBackStackEntry = findNavController().getBackStackEntry(R.id.game_fragment)
+        val deletedGameIdKey = getString(R.string.key_deleted_game_id)
+        val observer = LifecycleEventObserver { _, event ->
+            if (event == Lifecycle.Event.ON_RESUME && navBackStackEntry.savedStateHandle.contains(deletedGameIdKey)) {
+                val deletedGameId = navBackStackEntry.savedStateHandle.get<Long>(deletedGameIdKey)
+                if (deletedGameId != null && hasGameId && deletedGameId == gameId) {
+                    findNavController().navigateUp()
+                }
+            }
+        }
+        navBackStackEntry.lifecycle.addObserver(observer)
+        viewLifecycleOwner.lifecycle.addObserver(LifecycleEventObserver { _, event ->
+            if (event == Lifecycle.Event.ON_DESTROY) {
+                navBackStackEntry.lifecycle.removeObserver(observer)
+            }
+        })
+    }
+
     override fun onMenuItemClick(menuItem: MenuItem): Boolean {
         when(menuItem.itemId) {
             R.id.save_menu_item -> save()
@@ -82,9 +110,7 @@ class GameFragment : Fragment(), Toolbar.OnMenuItemClickListener {
     }
 
     private fun delete() {
-        lifecycleScope.launch(handler) {
-            gameViewModel.remove()
-            findNavController().navigateUp()
-        }
+        val action = GameFragmentDirections.actionGameFragmentToDeleteActionDialogFragment(gameId = gameId)
+        findNavController().navigate(action)
     }
 }

@@ -47,9 +47,8 @@ class MatchFragment : Fragment(), Toolbar.OnMenuItemClickListener {
         }
         adapter.longClickListener = { game ->
             val action =
-                MatchFragmentDirections.actionMatchFragmentToGameActionsDialogFragment(
-                    matchId,
-                    game.id
+                MatchFragmentDirections.actionMatchFragmentToDeleteActionDialogFragment(
+                    gameId = game.id
                 )
             findNavController().navigate(action)
             true
