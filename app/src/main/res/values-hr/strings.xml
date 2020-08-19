@@ -44,5 +44,8 @@
     <string name="description_operation_failed_game_not_editable">Akcija je dozvoljena samo za igre iz posljednje partije u meču</string>
     <string name="description_operation_failed_game_invalid_data">Broj bodova u igri mora biti jednak zbroju bodova od Mi i Vi: %1$d != %2$d (%3$d + %4$d)</string>
     <string name="description_delete_action">Želite li izbrisati %1$s? Ova akcija se ne može poništiti.</string>
+    <string name="description_delete_action_player">igrača</string>
+    <string name="description_delete_action_match">meč</string>
+    <string name="description_delete_action_game">igru</string>
     <string name="hint_new_match">Odaberi igrača</string>
 </resources>

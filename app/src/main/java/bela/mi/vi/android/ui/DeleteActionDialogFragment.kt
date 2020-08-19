@@ -21,7 +21,6 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.launch
-import java.util.*
 import javax.inject.Inject
 
 
@@ -77,8 +76,8 @@ class DeleteActionDialogFragment : BottomSheetDialogFragment() {
 
     private fun deletePlayer() {
         lifecycleScope.launch(handler) {
-            //withPlayer.remove(playerId)
-            Toast.makeText(context, "Delete player", Toast.LENGTH_SHORT).show()
+            withPlayer.remove(playerId)
+            findNavController().previousBackStackEntry?.savedStateHandle?.set(getString(R.string.key_deleted_player_id), playerId)
             dismiss()
         }
     }
@@ -111,22 +110,22 @@ class DeleteActionDialogFragment : BottomSheetDialogFragment() {
         when {
             playerId != -1L -> {
                 actionDelete = ::deletePlayer
-                subject = getString(R.string.title_player)
+                subject = getString(R.string.description_delete_action_player)
             }
             matchId != -1L -> {
                 actionDelete = ::deleteMatch
-                subject = getString(R.string.title_match)
+                subject = getString(R.string.description_delete_action_match)
             }
             gameId != -1L -> {
                 actionDelete = ::deleteGame
-                subject = getString(R.string.title_game)
+                subject = getString(R.string.description_delete_action_game)
             }
             else -> {
                 actionDelete = ::dismiss
                 subject = ""
             }
         }
-        question = getString(R.string.description_delete_action, subject.toLowerCase(Locale.getDefault()))
+        question = getString(R.string.description_delete_action, subject)
     }
 
     override fun onStart() {

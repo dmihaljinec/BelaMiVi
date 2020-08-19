@@ -27,7 +27,7 @@ import kotlinx.coroutines.launch
 @AndroidEntryPoint
 class PlayerListFragment : Fragment(), Toolbar.OnMenuItemClickListener {
     private val adapter = PlayerListAdapter()
-    private val playersViewModel: PlayerListFragmentViewModel by viewModels()
+    private val playerListFragmentViewModel: PlayerListFragmentViewModel by viewModels()
     private val handler = CoroutineExceptionHandler { _, exception ->
         val context = activity
         if (context != null && exception is PlayerOperationFailed) playerCoroutineExceptionHandler(
@@ -57,13 +57,13 @@ class PlayerListFragment : Fragment(), Toolbar.OnMenuItemClickListener {
         }
         adapter.longClickListener = { player ->
             val action =
-                PlayerListFragmentDirections.actionPlayerListFragmentToPlayerActionsDialogFragment(
+                PlayerListFragmentDirections.actionPlayerListFragmentToDeleteActionDialogFragment(
                     player.id
                 )
             findNavController().navigate(action)
             true
         }
-        playersViewModel.players.observe(viewLifecycleOwner, Observer { adapter.submitList(it) })
+        playerListFragmentViewModel.players.observe(viewLifecycleOwner, Observer { adapter.submitList(it) })
         binding.newPlayer.setOnClickListener {
             newPlayer()
         }
@@ -88,7 +88,7 @@ class PlayerListFragment : Fragment(), Toolbar.OnMenuItemClickListener {
 
     private fun deleteAll() {
         lifecycleScope.launch(handler) {
-            playersViewModel.removeAll()
+            playerListFragmentViewModel.removeAll()
         }
     }
 }

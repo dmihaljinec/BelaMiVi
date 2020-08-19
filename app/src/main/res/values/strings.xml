@@ -44,6 +44,9 @@
     <string name="description_operation_failed_game_not_editable">Operation is allowed only for games that belong to last set in the match</string>
     <string name="description_operation_failed_game_invalid_data">Game points must be equal to sum of team one and team two points: %1$d != %2$d (%3$d + %4$d)</string>
     <string name="description_delete_action">Are you sure that you want to delete %1$s? This operation is irreversible.</string>
+    <string name="description_delete_action_player">player</string>
+    <string name="description_delete_action_match">match</string>
+    <string name="description_delete_action_game">game</string>
     <string name="hint_new_match">Select player</string>
 
     <string name="key_match_id" translatable="false">matchId</string>
@@ -51,6 +54,7 @@
     <string name="key_set_id" translatable="false">setId</string>
     <string name="key_game_id" translatable="false">gameId</string>
     <string name="key_player_id" translatable="false">playerId</string>
+    <string name="key_deleted_player_id" translatable="false">deletedPlayerId</string>
     <string name="key_settings_game_points" translatable="false">gamePointsPref</string>
     <string name="key_settings_all_tricks" translatable="false">allTricksPref</string>
     <string name="key_settings_bela_declaration" translatable="false">belaPref</string>

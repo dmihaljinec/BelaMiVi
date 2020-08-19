@@ -47,12 +47,6 @@ class PlayerFragmentViewModel @ViewModelInject constructor(
     @Throws(PlayerOperationFailed::class)
     suspend fun save() = savePlayer.invoke()
 
-    @Throws(PlayerOperationFailed::class)
-    suspend fun remove() {
-        if (playerId == -1L) return
-        withPlayer.remove(playerId)
-    }
-
     private suspend fun newPlayer() {
         val playerName = name.value ?: ""
         withPlayer.new(playerName)

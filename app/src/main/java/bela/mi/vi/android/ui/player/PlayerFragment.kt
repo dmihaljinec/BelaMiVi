@@ -9,10 +9,13 @@ import androidx.appcompat.widget.Toolbar
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import bela.mi.vi.android.R
 import bela.mi.vi.android.databinding.FragmentPlayerBinding
+import bela.mi.vi.android.ui.DeleteActionDialogFragment
 import bela.mi.vi.android.ui.MainActivity
 import bela.mi.vi.android.ui.playerCoroutineExceptionHandler
 import bela.mi.vi.data.BelaRepository.PlayerOperationFailed
@@ -25,7 +28,8 @@ import kotlinx.coroutines.launch
 @ExperimentalCoroutinesApi
 @AndroidEntryPoint
 class PlayerFragment : Fragment(), Toolbar.OnMenuItemClickListener {
-    private val playerViewModel: PlayerFragmentViewModel by viewModels()
+    private val playerId: Long by lazy { arguments?.getLong(getString(R.string.key_player_id), -1L) ?: -1L }
+    private val playerFragmentViewModel: PlayerFragmentViewModel by viewModels()
     private val handler = CoroutineExceptionHandler { _, exception ->
         val context = activity
         if (context != null && exception is PlayerOperationFailed) playerCoroutineExceptionHandler(
@@ -46,10 +50,34 @@ class PlayerFragment : Fragment(), Toolbar.OnMenuItemClickListener {
             container,
             false)
         binding.save.setOnClickListener { save() }
-        binding.player = playerViewModel
+        binding.player = playerFragmentViewModel
         binding.lifecycleOwner = viewLifecycleOwner
         (activity as? MainActivity)?.setupToolbarMenu(R.menu.player, this)
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        /**
+         * We observe NavBackStackEntry lifecycle of this fragment to catch deleted player id set from
+         * [DeleteActionDialogFragment]. If this player was deleted we need to close this fragment.
+         */
+        val navBackStackEntry = findNavController().getBackStackEntry(R.id.player_fragment)
+        val deletedPlayerIdKey = getString(R.string.key_deleted_player_id)
+        val observer = LifecycleEventObserver { _, event ->
+            if (event == Lifecycle.Event.ON_RESUME && navBackStackEntry.savedStateHandle.contains(deletedPlayerIdKey)) {
+                val deletedPlayerId = navBackStackEntry.savedStateHandle.get<Long>(deletedPlayerIdKey)
+                if (deletedPlayerId != null && playerId != -1L && deletedPlayerId == playerId) {
+                    findNavController().navigateUp()
+                }
+            }
+        }
+        navBackStackEntry.lifecycle.addObserver(observer)
+        viewLifecycleOwner.lifecycle.addObserver(LifecycleEventObserver { _, event ->
+            if (event == Lifecycle.Event.ON_DESTROY) {
+                navBackStackEntry.lifecycle.removeObserver(observer)
+            }
+        })
     }
 
     override fun onMenuItemClick(menuItem: MenuItem): Boolean {
@@ -63,15 +91,14 @@ class PlayerFragment : Fragment(), Toolbar.OnMenuItemClickListener {
 
     private fun save() {
         lifecycleScope.launch(handler) {
-            playerViewModel.save()
+            playerFragmentViewModel.save()
             findNavController().navigateUp()
         }
     }
 
     private fun delete() {
-        lifecycleScope.launch(handler) {
-            playerViewModel.remove()
-            findNavController().navigateUp()
-        }
+        if (playerId == -1L) return
+        val action = PlayerFragmentDirections.actionPlayerFragmentToDeleteActionDialogFragment(playerId = playerId)
+        findNavController().navigate(action)
     }
 }

@@ -26,8 +26,8 @@
             android:id="@+id/action_player_list_fragment_to_player_fragment"
             app:destination="@id/player_fragment"/>
         <action
-            android:id="@+id/action_player_list_fragment_to_player_actions_dialog_fragment"
-            app:destination="@id/player_actions_dialog_fragment"/>
+            android:id="@+id/action_player_list_fragment_to_delete_action_dialog_fragment"
+            app:destination="@id/delete_action_dialog_fragment"/>
     </fragment>
     <fragment
         android:id="@+id/player_fragment"
@@ -37,6 +37,9 @@
             android:name="playerId"
             app:argType="long"
             android:defaultValue="-1L"/>
+        <action
+            android:id="@+id/action_player_fragment_to_delete_action_dialog_fragment"
+            app:destination="@id/delete_action_dialog_fragment"/>
     </fragment>
     <fragment
         android:id="@+id/new_match_fragment"
@@ -166,16 +169,5 @@
         <action
             android:id="@+id/action_game_actions_dialog_fragment_to_game_fragment"
             app:destination="@id/game_fragment" />
-    </dialog>
-    <dialog
-        android:id="@+id/player_actions_dialog_fragment"
-        android:name="bela.mi.vi.android.ui.player.PlayerActionsDialogFragment">
-        <argument
-            android:name="playerId"
-            app:argType="long"
-            android:defaultValue="-1L"/>
-        <action
-            android:id="@+id/action_player_actions_dialog_fragment_to_player_fragment"
-            app:destination="@id/player_fragment" />
     </dialog>
 </navigation>
