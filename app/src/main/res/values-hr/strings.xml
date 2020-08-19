@@ -43,5 +43,6 @@
     <string name="description_operation_failed_player_name_not_unique">Igrač sa imenom %1$s već postoji</string>
     <string name="description_operation_failed_game_not_editable">Akcija je dozvoljena samo za igre iz posljednje partije u meču</string>
     <string name="description_operation_failed_game_invalid_data">Broj bodova u igri mora biti jednak zbroju bodova od Mi i Vi: %1$d != %2$d (%3$d + %4$d)</string>
+    <string name="description_delete_action">Želite li izbrisati %1$s? Ova akcija se ne može poništiti.</string>
     <string name="hint_new_match">Odaberi igrača</string>
 </resources>

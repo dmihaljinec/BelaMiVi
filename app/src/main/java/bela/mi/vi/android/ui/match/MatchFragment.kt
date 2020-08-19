@@ -7,17 +7,18 @@ import androidx.appcompat.widget.Toolbar
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.Observer
-import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.observe
 import androidx.navigation.fragment.findNavController
 import bela.mi.vi.android.R
 import bela.mi.vi.android.databinding.FragmentMatchBinding
+import bela.mi.vi.android.ui.DeleteActionDialogFragment
 import bela.mi.vi.android.ui.game.GamesAdapter
 import bela.mi.vi.android.ui.requireMainActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.launch
 
 
 @ExperimentalCoroutinesApi
@@ -71,6 +72,30 @@ class MatchFragment : Fragment(), Toolbar.OnMenuItemClickListener {
         return binding.root
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        /**
+         * We observe NavBackStackEntry lifecycle of this fragment to catch deleted match id set from
+         * [DeleteActionDialogFragment]. If this match was deleted we need to close this fragment.
+         */
+        val navBackStackEntry = findNavController().getBackStackEntry(R.id.match_fragment)
+        val deletedMatchIdKey = getString(R.string.key_deleted_match_id)
+        val observer = LifecycleEventObserver { _, event ->
+            if (event == Lifecycle.Event.ON_RESUME && navBackStackEntry.savedStateHandle.contains(deletedMatchIdKey)) {
+                val deletedMatchId = navBackStackEntry.savedStateHandle.get<Long>(deletedMatchIdKey)
+                if (deletedMatchId != null && deletedMatchId == matchId) {
+                    findNavController().navigateUp()
+                }
+            }
+        }
+        navBackStackEntry.lifecycle.addObserver(observer)
+        viewLifecycleOwner.lifecycle.addObserver(LifecycleEventObserver { _, event ->
+            if (event == Lifecycle.Event.ON_DESTROY) {
+                navBackStackEntry.lifecycle.removeObserver(observer)
+            }
+        })
+    }
+
     override fun onMenuItemClick(menuItem: MenuItem): Boolean {
         when(menuItem.itemId) {
             R.id.new_game_menu_item -> newGame()
@@ -103,9 +128,7 @@ class MatchFragment : Fragment(), Toolbar.OnMenuItemClickListener {
     }
 
     private fun delete() {
-        lifecycleScope.launch {
-            matchViewModel.delete()
-            findNavController().navigateUp()
-        }
+        val action = MatchFragmentDirections.actionMatchFragmentToDeleteActionDialogFragment(matchId = matchId)
+        findNavController().navigate(action)
     }
 }

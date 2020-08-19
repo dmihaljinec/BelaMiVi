@@ -50,10 +50,6 @@ class MatchViewModel @ViewModelInject constructor(
 
     fun getDiff(): String = diff.value?.toString() ?: "0"
 
-    suspend fun delete() {
-        withMatch.remove(matchId)
-    }
-
     private fun updateSetScore() {
         val teamOnePointsWon = matchSummary.value?.teamOnePointsWon?.value ?: 0
         val teamTwoPointsWon = matchSummary.value?.teamTwoPointsWon?.value ?: 0

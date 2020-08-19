@@ -44,11 +44,11 @@ class MatchSummariesFragment : Fragment(), Toolbar.OnMenuItemClickListener {
             findNavController().navigate(matchAction)
         }
         adapter.longClickListener = { matchSummary ->
-            val editGameAction =
-                MatchSummariesFragmentDirections.actionMatchSummariesFragmentToMatchSummariesActionsDialogFragment(
-                    matchSummary.matchId
+            val deleteAction =
+                MatchSummariesFragmentDirections.actionMatchSummariesFragmentToDeleteActionDialogFragment(
+                    matchId = matchSummary.matchId
                 )
-            findNavController().navigate(editGameAction)
+            findNavController().navigate(deleteAction)
             true
         }
         matchSummariesViewModel.matchSummaries.observe(viewLifecycleOwner) { adapter.submitList(it) }

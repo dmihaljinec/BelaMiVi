@@ -15,8 +15,8 @@
             android:id="@+id/action_match_summaries_fragment_to_match_fragment"
             app:destination="@id/match_fragment" />
         <action
-            android:id="@+id/action_match_summaries_fragment_to_match_summaries_actions_dialog_fragment"
-            app:destination="@id/match_summaries_actions_dialog_fragment"/>
+            android:id="@+id/action_match_summaries_fragment_to_delete_action_dialog_fragment"
+            app:destination="@id/delete_action_dialog_fragment" />
     </fragment>
     <fragment
         android:id="@+id/player_list_fragment"
@@ -70,6 +70,9 @@
         <action
             android:id="@+id/action_match_fragment_to_sets_fragment"
             app:destination="@id/sets_fragment" />
+        <action
+            android:id="@+id/action_match_fragment_to_delete_action_dialog_fragment"
+            app:destination="@id/delete_action_dialog_fragment" />
     </fragment>
     <fragment
         android:id="@+id/game_fragment"
@@ -134,15 +137,20 @@
         android:label="@string/title_about" >
     </fragment>
     <dialog
-        android:id="@+id/match_summaries_actions_dialog_fragment"
-        android:name="bela.mi.vi.android.ui.match.MatchSummariesActionsDialogFragment">
+        android:id="@+id/delete_action_dialog_fragment"
+        android:name="bela.mi.vi.android.ui.DeleteActionDialogFragment">
+        <argument
+            android:name="playerId"
+            app:argType="long"
+            android:defaultValue="-1L"/>
         <argument
             android:name="matchId"
             app:argType="long"
             android:defaultValue="-1L"/>
-        <action
-            android:id="@+id/action_match_summaries_actions_dialog_fragment_to_match_fragment"
-            app:destination="@id/match_fragment" />
+        <argument
+            android:name="gameId"
+            app:argType="long"
+            android:defaultValue="-1L"/>
     </dialog>
     <dialog
         android:id="@+id/game_actions_dialog_fragment"

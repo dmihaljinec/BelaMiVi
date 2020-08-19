@@ -6,6 +6,7 @@
         <item name="colorAccent">@color/colorAccentBlue</item>
         <item name="android:windowBackground">@color/colorWhite</item>
         <item name="android:windowLightStatusBar">true</item>
+        <item name="bottomSheetDialogTheme">@style/BottomSheetDialogFragment</item>
     </style>
 
     <style name="AppTheme.NavigationView" parent="Widget.Design.NavigationView">
@@ -14,6 +15,16 @@
         <item name="itemTextColor">@color/nav_item</item>
         <item name="itemIconTint">@color/nav_item</item>
         <item name="itemBackground">@drawable/ripple_nav_item</item>
+    </style>
+
+    <!-- "Widget.Design.BottomSheet.Modal" -->
+    <style name="BottomSheetDialogFragment" parent="Theme.MaterialComponents.Light.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/BottomSheetDialogStyle</item>
+        <item name="colorAccent">@color/colorAccentBlue</item>
+    </style>
+
+    <style name="BottomSheetDialogStyle" parent="Widget.Design.BottomSheet.Modal">
+        <item name="android:background">@drawable/rounded_bg</item>
     </style>
 
 </resources>
