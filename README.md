@@ -1,1 +1,1 @@
-# BelaMiVi version 3.0
+# BelaMiVi version 2.0
