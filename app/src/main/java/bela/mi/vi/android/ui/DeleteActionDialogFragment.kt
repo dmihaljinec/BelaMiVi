@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -28,13 +27,16 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class DeleteActionDialogFragment : BottomSheetDialogFragment() {
     private val playerId: Long by lazy { arguments?.getLong(getString(R.string.key_player_id), -1L) ?: -1L }
+    private val allPlayers: Boolean by lazy { arguments?.getBoolean(getString(R.string.key_all_players), false) ?: false }
     private val matchId: Long by lazy { arguments?.getLong(getString(R.string.key_match_id), -1L) ?: -1L }
+    private val allMatches: Boolean by lazy { arguments?.getBoolean(getString(R.string.key_all_matches), false) ?: false }
     private val gameId: Long by lazy { arguments?.getLong(getString(R.string.key_game_id), -1L) ?: -1L }
     @Inject lateinit var withPlayer: WithPlayer
     @Inject lateinit var withMatch: WithMatch
     @Inject lateinit var withGame: WithGame
     private lateinit var actionDelete: () -> Unit
     private lateinit var question: String
+    private lateinit var deleteLabel: String
     private val handler = CoroutineExceptionHandler { _, exception ->
         val context = activity
         when {
@@ -63,6 +65,7 @@ class DeleteActionDialogFragment : BottomSheetDialogFragment() {
         )
         initAction()
         binding.question.text = question
+        binding.actionDelete.text = deleteLabel
         binding.actionDelete.setOnClickListener { actionDelete() }
         return binding.root
     }
@@ -107,14 +110,25 @@ class DeleteActionDialogFragment : BottomSheetDialogFragment() {
 
     private fun initAction() {
         val subject: String
+        deleteLabel = getString(R.string.action_delete)
         when {
             playerId != -1L -> {
                 actionDelete = ::deletePlayer
                 subject = getString(R.string.description_delete_action_player)
             }
+            allPlayers -> {
+                actionDelete = ::deleteAllPlayers
+                subject = getString(R.string.description_delete_action_all_players)
+                deleteLabel = getString(R.string.action_delete_all)
+            }
             matchId != -1L -> {
                 actionDelete = ::deleteMatch
                 subject = getString(R.string.description_delete_action_match)
+            }
+            allMatches -> {
+                actionDelete = ::deleteAllMatches
+                subject = getString(R.string.description_delete_action_all_matches)
+                deleteLabel = getString(R.string.action_delete_all)
             }
             gameId != -1L -> {
                 actionDelete = ::deleteGame

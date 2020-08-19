@@ -75,6 +75,7 @@ class MatchSummariesFragment : Fragment(), Toolbar.OnMenuItemClickListener {
     }
 
     private fun deleteAll() {
-        matchSummariesViewModel.removeAll()
+        val action = MatchSummariesFragmentDirections.actionMatchSummariesFragmentToDeleteActionDialogFragment(allMatches = true)
+        findNavController().navigate(action)
     }
 }

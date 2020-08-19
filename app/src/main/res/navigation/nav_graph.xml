@@ -147,9 +147,17 @@
             app:argType="long"
             android:defaultValue="-1L"/>
         <argument
+            android:name="allPlayers"
+            app:argType="boolean"
+            android:defaultValue="false"/>
+        <argument
             android:name="matchId"
             app:argType="long"
             android:defaultValue="-1L"/>
+        <argument
+            android:name="allMatches"
+            app:argType="boolean"
+            android:defaultValue="false"/>
         <argument
             android:name="gameId"
             app:argType="long"

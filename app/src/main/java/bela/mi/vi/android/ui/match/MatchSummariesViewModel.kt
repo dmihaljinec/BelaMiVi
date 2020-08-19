@@ -27,10 +27,4 @@ class MatchSummariesViewModel @ViewModelInject constructor(
                 .asLiveData(coroutineContext)
         }
     }
-
-    fun removeAll() {
-        viewModelScope.launch(handler) {
-            withMatch.removeAll()
-        }
-    }
 }

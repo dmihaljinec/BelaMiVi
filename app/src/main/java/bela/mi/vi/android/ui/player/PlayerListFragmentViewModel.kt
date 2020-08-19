@@ -23,8 +23,4 @@ class PlayerListFragmentViewModel @ViewModelInject constructor(
                 .asLiveData(coroutineContext)
         }
     }
-
-    suspend fun removeAll() {
-        withPlayer.removeAll()
-    }
 }

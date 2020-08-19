@@ -10,17 +10,12 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import bela.mi.vi.android.R
 import bela.mi.vi.android.databinding.FragmentPlayerListBinding
 import bela.mi.vi.android.ui.MainActivity
-import bela.mi.vi.android.ui.playerCoroutineExceptionHandler
-import bela.mi.vi.data.BelaRepository.PlayerOperationFailed
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.launch
 
 
 @ExperimentalCoroutinesApi
@@ -28,14 +23,6 @@ import kotlinx.coroutines.launch
 class PlayerListFragment : Fragment(), Toolbar.OnMenuItemClickListener {
     private val adapter = PlayerListAdapter()
     private val playerListFragmentViewModel: PlayerListFragmentViewModel by viewModels()
-    private val handler = CoroutineExceptionHandler { _, exception ->
-        val context = activity
-        if (context != null && exception is PlayerOperationFailed) playerCoroutineExceptionHandler(
-            exception,
-            context
-        )
-        else throw exception
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -87,8 +74,7 @@ class PlayerListFragment : Fragment(), Toolbar.OnMenuItemClickListener {
     }
 
     private fun deleteAll() {
-        lifecycleScope.launch(handler) {
-            playerListFragmentViewModel.removeAll()
-        }
+        val action = PlayerListFragmentDirections.actionPlayerListFragmentToDeleteActionDialogFragment(allPlayers = true)
+        findNavController().navigate(action)
     }
 }
