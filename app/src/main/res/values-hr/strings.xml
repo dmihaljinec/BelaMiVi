@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Bela blok MiVi</string>
+    <string name="app_name">Bela blok</string>
     <string name="title_list_of_matches">Lista mečeva</string>
     <string name="title_list_of_sets">Lista partija</string>
     <string name="title_list_of_games">Lista igara</string>
