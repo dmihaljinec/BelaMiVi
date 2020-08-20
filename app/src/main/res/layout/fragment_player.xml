@@ -67,11 +67,7 @@
             app:layout_constraintStart_toEndOf="@id/player_icon_stub"
             app:layout_constraintEnd_toEndOf="parent"
             android:inputType="textCapWords"
-            android:text="@={player.name}">
-
-            <requestFocus/>
-
-        </EditText>
+            android:text="@={player.name}" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/save"

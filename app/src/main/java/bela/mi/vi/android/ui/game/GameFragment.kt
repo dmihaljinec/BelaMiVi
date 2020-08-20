@@ -17,7 +17,6 @@ import bela.mi.vi.android.databinding.FragmentGameBinding
 import bela.mi.vi.android.ui.DeleteActionDialogFragment
 import bela.mi.vi.android.ui.MainActivity
 import bela.mi.vi.android.ui.gameCoroutineExceptionHandler
-import bela.mi.vi.android.ui.hideKeyboard
 import bela.mi.vi.data.BelaRepository.GameOperationFailed
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineExceptionHandler
@@ -60,12 +59,11 @@ class GameFragment : Fragment(), Toolbar.OnMenuItemClickListener {
             false)
         binding.save.setOnClickListener { save() }
         binding.game = gameViewModel
-        val editorListener: (textView: TextView?, actionId: Int, keyEvent: KeyEvent?) -> Boolean = { textView, actionId, keyEvent ->
+        val editorListener: (textView: TextView?, actionId: Int, keyEvent: KeyEvent?) -> Boolean = { _, actionId, keyEvent ->
             if (keyEvent != null && keyEvent.keyCode == KeyEvent.KEYCODE_ENTER || actionId == EditorInfo.IME_ACTION_DONE) {
                 save()
-                textView?.hideKeyboard(context)
-                true
-            } else false
+            }
+            false
         }
         binding.teamOnePoints.setOnEditorActionListener(editorListener)
         binding.teamTwoPoints.setOnEditorActionListener(editorListener)
