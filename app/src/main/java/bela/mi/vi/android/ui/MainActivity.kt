@@ -1,9 +1,11 @@
 package bela.mi.vi.android.ui
 
+import android.app.Activity
 import android.content.Context
 import android.graphics.Rect
 import android.os.Bundle
 import android.view.MotionEvent
+import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
@@ -22,7 +24,10 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 @ExperimentalCoroutinesApi
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
-    private val topLevelDestinations = setOf(R.id.match_summaries_fragment, R.id.player_list_fragment)
+    private val topLevelDestinations = setOf(
+        R.id.match_summaries_fragment,
+        R.id.player_list_fragment
+    )
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -83,4 +88,9 @@ class MainActivity : AppCompatActivity() {
 fun Fragment.requireMainActivity(): MainActivity {
     val mainActivity = activity as? MainActivity
     return mainActivity ?: throw IllegalStateException("Fragment $this not attached to MainActivity.")
+}
+
+fun View.hideKeyboard(context: Context?) {
+    val imm = context?.getSystemService(Activity.INPUT_METHOD_SERVICE) as? InputMethodManager
+    imm?.hideSoftInputFromWindow(windowToken, 0)
 }
