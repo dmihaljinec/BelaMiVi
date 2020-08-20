@@ -37,7 +37,7 @@ class NewMatchViewModel @ViewModelInject constructor(
     val teamTwoPlayerOne: MutableLiveData<Player> = MutableLiveData()
     val teamTwoPlayerViewModelTwo: MutableLiveData<PlayerViewModel> = MutableLiveData()
     val teamTwoPlayerTwo: MutableLiveData<Player> = MutableLiveData()
-    val drawableTintColor: LiveData<Int> = MutableLiveData(android.R.color.secondary_text_dark)
+    val drawableTintColor: LiveData<Int> = MutableLiveData(android.R.color.tab_indicator_text)
     val teamOnePlayerOneClear = MutableLiveData(0)
     val teamOnePlayerTwoClear = MutableLiveData(0)
     val teamTwoPlayerOneClear = MutableLiveData(0)
