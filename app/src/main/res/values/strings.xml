@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Bela blok</string>
+    <string name="app_name" translatable="false">Bela blok</string>
     <string name="title_list_of_matches">List of Matches</string>
     <string name="title_list_of_sets">List of Sets</string>
     <string name="title_list_of_games">List of Games</string>
@@ -31,6 +31,7 @@
     <string name="title_chosen_trump">Chosen Trump</string>
     <string name="title_passed_games">Passed Games</string>
     <string name="title_player_name">Player name</string>
+    <string name="title_nav_header" translatable="false">MI\u0020\u0020VI</string>
     <string name="action_new_match">New Match</string>
     <string name="action_new_game">New Game</string>
     <string name="action_new_player">New Player</string>

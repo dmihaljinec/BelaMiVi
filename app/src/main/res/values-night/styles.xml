@@ -9,12 +9,4 @@
         <item name="bottomSheetDialogTheme">@style/BottomSheetDialogFragment</item>
     </style>
 
-    <style name="AppTheme.NavigationView" parent="Widget.Design.NavigationView">
-        <item name="android:background">@android:color/transparent</item>
-        <item name="android:listDivider">@color/colorLightGrey</item>
-        <item name="itemTextColor">@color/nav_item</item>
-        <item name="itemIconTint">@color/nav_item</item>
-        <item name="itemBackground">@drawable/ripple_nav_item</item>
-    </style>
-
 </resources>
