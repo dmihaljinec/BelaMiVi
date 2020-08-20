@@ -90,6 +90,15 @@ fun Fragment.requireMainActivity(): MainActivity {
     return mainActivity ?: throw IllegalStateException("Fragment $this not attached to MainActivity.")
 }
 
+fun View.showKeyboard() {
+    post {
+        if (this.requestFocus()) {
+            val imm = context?.getSystemService(Activity.INPUT_METHOD_SERVICE) as? InputMethodManager
+            imm?.showSoftInput(this, InputMethodManager.SHOW_IMPLICIT)
+        }
+    }
+}
+
 fun View.hideKeyboard(context: Context?) {
     val imm = context?.getSystemService(Activity.INPUT_METHOD_SERVICE) as? InputMethodManager
     imm?.hideSoftInputFromWindow(windowToken, 0)

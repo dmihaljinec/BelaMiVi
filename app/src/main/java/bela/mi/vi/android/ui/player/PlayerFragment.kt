@@ -1,10 +1,9 @@
 package bela.mi.vi.android.ui.player
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.MenuItem
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
+import android.view.inputmethod.EditorInfo
+import android.widget.TextView
 import androidx.appcompat.widget.Toolbar
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -12,12 +11,11 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.observe
 import androidx.navigation.fragment.findNavController
 import bela.mi.vi.android.R
 import bela.mi.vi.android.databinding.FragmentPlayerBinding
-import bela.mi.vi.android.ui.DeleteActionDialogFragment
-import bela.mi.vi.android.ui.MainActivity
-import bela.mi.vi.android.ui.playerCoroutineExceptionHandler
+import bela.mi.vi.android.ui.*
 import bela.mi.vi.data.BelaRepository.PlayerOperationFailed
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineExceptionHandler
@@ -50,8 +48,21 @@ class PlayerFragment : Fragment(), Toolbar.OnMenuItemClickListener {
             container,
             false)
         binding.save.setOnClickListener { save() }
+        binding.playerNameEdittext.setOnEditorActionListener { textView, actionId, keyEvent ->
+            if (keyEvent != null && keyEvent.keyCode == KeyEvent.KEYCODE_ENTER || actionId == EditorInfo.IME_ACTION_DONE) {
+                save()
+                textView?.hideKeyboard(context)
+                true
+            } else false
+        }
         binding.player = playerFragmentViewModel
         binding.lifecycleOwner = viewLifecycleOwner
+        playerFragmentViewModel.name.observe(viewLifecycleOwner) {
+            if (it != null && it.isNotEmpty()) {
+                binding.playerNameEdittext.setSelection(binding.playerNameEdittext.text?.toString()?.length ?: 0)
+                binding.playerNameEdittext.showKeyboard()
+            }
+        }
         (activity as? MainActivity)?.setupToolbarMenu(R.menu.player, this)
         return binding.root
     }
