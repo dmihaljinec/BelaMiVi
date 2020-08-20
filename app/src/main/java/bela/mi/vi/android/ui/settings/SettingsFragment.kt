@@ -12,9 +12,13 @@ import androidx.lifecycle.observe
 import androidx.preference.EditTextPreference
 import androidx.preference.PreferenceFragmentCompat
 import bela.mi.vi.android.R
+import bela.mi.vi.android.ui.requireMainActivity
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import javax.inject.Inject
 
+
+@ExperimentalCoroutinesApi
 @AndroidEntryPoint
 class SettingsFragment : PreferenceFragmentCompat() {
     @Inject lateinit var belaSettings: BelaSettings
@@ -28,11 +32,13 @@ class SettingsFragment : PreferenceFragmentCompat() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        val mainActivity = requireMainActivity()
         val root = super.onCreateView(inflater, container, savedInstanceState)
         findPreference<EditTextPreference>(getString(R.string.key_settings_game_points))?.configure(belaSettings.gamePoints, viewLifecycleOwner)
         findPreference<EditTextPreference>(getString(R.string.key_settings_all_tricks))?.configure(belaSettings.allTricks, viewLifecycleOwner)
         findPreference<EditTextPreference>(getString(R.string.key_settings_bela_declaration))?.configure(belaSettings.belaDeclaration, viewLifecycleOwner)
         findPreference<EditTextPreference>(getString(R.string.key_settings_set_limit))?.configure(belaSettings.setLimit, viewLifecycleOwner)
+        mainActivity.clearToolbarMenu()
         return root
     }
 
