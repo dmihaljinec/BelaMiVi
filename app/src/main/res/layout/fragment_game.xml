@@ -263,6 +263,7 @@
                 android:layout_margin="20dp"
                 android:src="@drawable/confirm_tint_24"
                 android:tint="@color/colorWhite"
+                android:contentDescription="@string/action_save"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:tooltip="@{R.string.action_save}"/>
