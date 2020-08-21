@@ -7,6 +7,7 @@
         <item name="android:windowBackground">@color/colorWhite</item>
         <item name="android:windowLightStatusBar">true</item>
         <item name="bottomSheetDialogTheme">@style/BottomSheetDialogFragment</item>
+        <item name="editTextStyle">@style/EditTextStyle</item>
     </style>
 
     <style name="AppTheme.NavigationView" parent="Widget.Design.NavigationView">
@@ -25,6 +26,10 @@
 
     <style name="BottomSheetDialogStyle" parent="Widget.Design.BottomSheet.Modal">
         <item name="android:background">@drawable/rounded_bg</item>
+    </style>
+
+    <style name="EditTextStyle" parent="Widget.AppCompat.EditText">
+        <item name="android:minHeight">48dp</item>
     </style>
 
 </resources>
