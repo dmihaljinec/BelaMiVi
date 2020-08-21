@@ -19,7 +19,7 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 @ExperimentalCoroutinesApi
 @AndroidEntryPoint
 class SetsFragment : Fragment() {
-    private val adapter = SetsAdapter()
+    private val adapter = SetsAdapter(true)
     val matchId: Long by lazy {
         arguments?.getLong(getString(R.string.key_match_id), -1L) ?: -1L
     }

@@ -7,15 +7,21 @@ import bela.mi.vi.android.R
 import bela.mi.vi.android.ui.DataBindingViewHolder
 import bela.mi.vi.android.ui.ListAdapter
 
-class SetsAdapter : ListAdapter<SetSummary>(diffCallback) {
+
+class SetsAdapter(usesFooter: Boolean = false) : ListAdapter<SetSummary>(diffCallback, usesFooter) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DataBindingViewHolder {
-        return DataBindingViewHolder(
-            parent,
-            R.layout.listitem_set,
-            BR.set
-        )
+        return when (viewType) {
+            TYPE_SET_SUMMARY -> DataBindingViewHolder(
+                parent,
+                R.layout.listitem_set,
+                BR.set
+            )
+            else -> super.onCreateViewHolder(parent, viewType)
+        }
     }
+
+    override fun getViewType(position: Int): Int = TYPE_SET_SUMMARY
 
 
     companion object {
@@ -27,5 +33,6 @@ class SetsAdapter : ListAdapter<SetSummary>(diffCallback) {
                 return oldItem == newItem
             }
         }
+        const val TYPE_SET_SUMMARY = TYPE_OTHER + 1
     }
 }

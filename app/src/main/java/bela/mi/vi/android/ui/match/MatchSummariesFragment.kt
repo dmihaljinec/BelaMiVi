@@ -21,7 +21,7 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 @ExperimentalCoroutinesApi
 @AndroidEntryPoint
 class MatchSummariesFragment : Fragment(), Toolbar.OnMenuItemClickListener {
-    private val adapter = MatchSummariesAdapter()
+    private val adapter = MatchSummariesAdapter(true)
     private val matchSummariesViewModel: MatchSummariesViewModel by viewModels()
 
     override fun onCreateView(

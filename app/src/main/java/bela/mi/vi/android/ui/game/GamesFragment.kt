@@ -19,7 +19,7 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 @ExperimentalCoroutinesApi
 @AndroidEntryPoint
 class GamesFragment : Fragment() {
-    private val adapter = GamesAdapter()
+    private val adapter = GamesAdapter(true)
     val setId: Long by lazy {
         arguments?.getLong(getString(R.string.key_set_id), -1L) ?: -1L
     }

@@ -24,7 +24,7 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 @ExperimentalCoroutinesApi
 @AndroidEntryPoint
 class MatchFragment : Fragment(), Toolbar.OnMenuItemClickListener {
-    private val adapter = GamesAdapter()
+    private val adapter = GamesAdapter(true)
     private val matchId: Long by lazy { arguments?.getLong(getString(R.string.key_match_id), -1L) ?: -1L }
     private val matchViewModel: MatchViewModel by viewModels()
 

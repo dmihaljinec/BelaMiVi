@@ -9,15 +9,20 @@ import bela.mi.vi.android.ui.ListAdapter
 import bela.mi.vi.data.Game
 
 
-class GamesAdapter : ListAdapter<Game>(diffCallback) {
+class GamesAdapter(usesFooter: Boolean = false) : ListAdapter<Game>(diffCallback, usesFooter) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DataBindingViewHolder {
-        return DataBindingViewHolder(
-            parent,
-            R.layout.listitem_game,
-            BR.game
-        )
+        return when (viewType) {
+            TYPE_GAME -> DataBindingViewHolder(
+                parent,
+                R.layout.listitem_game,
+                BR.game
+            )
+            else -> super.onCreateViewHolder(parent, viewType)
+        }
     }
+
+    override fun getViewType(position: Int): Int = TYPE_GAME
 
 
     companion object {
@@ -29,5 +34,6 @@ class GamesAdapter : ListAdapter<Game>(diffCallback) {
                 return oldItem == newItem
             }
         }
+        const val TYPE_GAME = TYPE_OTHER + 1
     }
 }

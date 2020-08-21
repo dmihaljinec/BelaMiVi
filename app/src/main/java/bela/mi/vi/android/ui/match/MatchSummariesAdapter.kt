@@ -8,15 +8,20 @@ import bela.mi.vi.android.ui.DataBindingViewHolder
 import bela.mi.vi.android.ui.ListAdapter
 
 
-class MatchSummariesAdapter : ListAdapter<MatchSummary>(diffCallback) {
+class MatchSummariesAdapter(usesFooter: Boolean = false) : ListAdapter<MatchSummary>(diffCallback, usesFooter) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DataBindingViewHolder {
-        return DataBindingViewHolder(
-            parent,
-            R.layout.listitem_match_summary,
-            BR.match
-        )
+        return when (viewType) {
+            TYPE_MATCH_SUMMARY -> DataBindingViewHolder(
+                parent,
+                R.layout.listitem_match_summary,
+                BR.match
+            )
+            else -> super.onCreateViewHolder(parent, viewType)
+        }
     }
+
+    override fun getViewType(position: Int): Int = TYPE_MATCH_SUMMARY
 
 
     companion object {
@@ -29,5 +34,6 @@ class MatchSummariesAdapter : ListAdapter<MatchSummary>(diffCallback) {
                 return oldItem == newItem
             }
         }
+        const val TYPE_MATCH_SUMMARY = TYPE_OTHER + 1
     }
 }

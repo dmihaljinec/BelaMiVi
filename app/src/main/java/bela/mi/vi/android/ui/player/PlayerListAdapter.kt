@@ -8,15 +8,20 @@ import bela.mi.vi.android.ui.DataBindingViewHolder
 import bela.mi.vi.android.ui.ListAdapter
 
 
-class PlayerListAdapter : ListAdapter<PlayerViewModel>(diffCallback) {
+class PlayerListAdapter(usesFooter: Boolean = false) : ListAdapter<PlayerViewModel>(diffCallback, usesFooter) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DataBindingViewHolder {
-        return DataBindingViewHolder(
-            parent,
-            R.layout.listitem_player,
-            BR.player
-        )
+        return when (viewType) {
+            TYPE_PLAYER_VIEW_MODEL -> DataBindingViewHolder(
+                parent,
+                R.layout.listitem_player,
+                BR.player
+            )
+            else -> super.onCreateViewHolder(parent, viewType)
+        }
     }
+
+    override fun getViewType(position: Int): Int = TYPE_PLAYER_VIEW_MODEL
 
 
     companion object {
@@ -28,5 +33,6 @@ class PlayerListAdapter : ListAdapter<PlayerViewModel>(diffCallback) {
                 return oldItem == newItem
             }
         }
+        const val TYPE_PLAYER_VIEW_MODEL = TYPE_OTHER + 1
     }
 }

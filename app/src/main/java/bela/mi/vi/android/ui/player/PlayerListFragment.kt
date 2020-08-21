@@ -21,7 +21,7 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 @ExperimentalCoroutinesApi
 @AndroidEntryPoint
 class PlayerListFragment : Fragment(), Toolbar.OnMenuItemClickListener {
-    private val adapter = PlayerListAdapter()
+    private val adapter = PlayerListAdapter(true)
     private val playerListFragmentViewModel: PlayerListFragmentViewModel by viewModels()
 
     override fun onCreateView(
