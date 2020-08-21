@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -59,7 +60,10 @@ class NewMatchFragment : Fragment(), Toolbar.OnMenuItemClickListener {
     private fun save() {
         lifecycleScope.launchWhenResumed {
             val matchId = newMatchViewModel.createNewMatch()
-            if (matchId == -1L) return@launchWhenResumed
+            if (matchId == -1L) {
+                Toast.makeText(context, R.string.description_operation_failed_new_match_missing_player, Toast.LENGTH_LONG).show()
+                return@launchWhenResumed
+            }
             val matchAction =
                 NewMatchFragmentDirections.actionNewMatchFragmentToMatchFragment(
                     matchId

@@ -44,6 +44,7 @@
     <string name="description_operation_failed_player_name_not_unique">Player with name %1$s already exists</string>
     <string name="description_operation_failed_game_not_editable">Operation is allowed only for games that belong to last set in the match</string>
     <string name="description_operation_failed_game_invalid_data">Game points must be equal to sum of team one and team two points: %1$d != %2$d (%3$d + %4$d)</string>
+    <string name="description_operation_failed_new_match_missing_player">Match requires that four players are selected</string>
     <string name="description_delete_action">Are you sure that you want to delete %1$s? This operation is irreversible.</string>
     <string name="description_delete_action_player">player</string>
     <string name="description_delete_action_all_players">all players</string>
