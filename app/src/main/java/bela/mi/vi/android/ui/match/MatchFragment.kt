@@ -56,11 +56,9 @@ class MatchFragment : Fragment(), Toolbar.OnMenuItemClickListener {
         matchViewModel.games.observe(viewLifecycleOwner, Observer { adapter.submitList(it) })
         binding.newGame.setOnClickListener { newGame() }
         binding.setScore.setOnClickListener {
-            if (matchViewModel.diff.value ?: 0 > 0) {
-                val toast = Toast.makeText(context, matchViewModel.getDiff(), Toast.LENGTH_LONG)
-                toast.setGravity(Gravity.CENTER, 0, 0)
-                toast.show()
-            }
+            val toast = Toast.makeText(context, matchViewModel.getDiff(), Toast.LENGTH_SHORT)
+            toast.setGravity(Gravity.CENTER, 0, 0)
+            toast.show()
         }
         mainActivity.setupToolbarMenu(R.menu.match, this)
         matchViewModel.matchScore.observe(viewLifecycleOwner) { matchScore ->
