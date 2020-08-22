@@ -52,10 +52,22 @@ interface GameDao {
     }
 
     @Query("SELECT SUM(${GameEntity.TEAM1_POINTS}) FROM $TABLE_CONNECTED WHERE $TABLE_MATCHES.${MatchEntity.ID} = :matchId")
-    fun getTeamOneMatchPoints(matchId: Long): Flow<Int>
+    fun getTeam1MatchPoints(matchId: Long): Flow<Int?>
+
+    fun getTeamOneMatchPoints(matchId: Long): Flow<Int> = flow {
+        getTeam1MatchPoints(matchId).collect { points ->
+            emit(points ?: 0)
+        }
+    }
 
     @Query("SELECT SUM(${GameEntity.TEAM1_DECLARATIONS}) FROM $TABLE_CONNECTED WHERE $TABLE_MATCHES.${MatchEntity.ID} = :matchId")
-    fun getTeamOneMatchDeclarations(matchId: Long): Flow<Int>
+    fun getTeam1MatchDeclarations(matchId: Long): Flow<Int?>
+
+    fun getTeamOneMatchDeclarations(matchId: Long): Flow<Int> = flow {
+        getTeam1MatchDeclarations(matchId).collect { points ->
+            emit(points ?: 0)
+        }
+    }
 
     @Query("SELECT COUNT(${GameEntity.ALL_TRICKS}) FROM $TABLE_CONNECTED WHERE $TABLE_MATCHES.${MatchEntity.ID} = :matchId AND $TABLE_GAMES.${GameEntity.ALL_TRICKS} = 1 AND $TABLE_GAMES.${GameEntity.TEAM1_POINTS} > 0")
     fun getTeamOneMatchAllTricks(matchId: Long): Flow<Int>
@@ -76,10 +88,22 @@ interface GameDao {
     }
 
     @Query("SELECT SUM(${GameEntity.TEAM2_POINTS}) FROM $TABLE_CONNECTED WHERE $TABLE_MATCHES.${MatchEntity.ID} = :matchId")
-    fun getTeamTwoMatchPoints(matchId: Long): Flow<Int>
+    fun getTeam2MatchPoints(matchId: Long): Flow<Int?>
+
+    fun getTeamTwoMatchPoints(matchId: Long): Flow<Int> = flow {
+        getTeam2MatchPoints(matchId).collect { points ->
+            emit(points ?: 0)
+        }
+    }
 
     @Query("SELECT SUM(${GameEntity.TEAM2_DECLARATIONS}) FROM $TABLE_CONNECTED WHERE $TABLE_MATCHES.${MatchEntity.ID} = :matchId")
-    fun getTeamTwoMatchDeclarations(matchId: Long): Flow<Int>
+    fun getTeam2MatchDeclarations(matchId: Long): Flow<Int?>
+
+    fun getTeamTwoMatchDeclarations(matchId: Long): Flow<Int> = flow {
+        getTeam2MatchDeclarations(matchId).collect { points ->
+            emit(points ?: 0)
+        }
+    }
 
     @Query("SELECT COUNT(${GameEntity.ALL_TRICKS}) FROM $TABLE_CONNECTED WHERE $TABLE_MATCHES.${MatchEntity.ID} = :matchId AND $TABLE_GAMES.${GameEntity.ALL_TRICKS} = 1 AND $TABLE_GAMES.${GameEntity.TEAM2_POINTS} > 0")
     fun getTeamTwoMatchAllTricks(matchId: Long): Flow<Int>
