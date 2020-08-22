@@ -34,8 +34,9 @@ class MatchSummariesFragment : Fragment(), Toolbar.OnMenuItemClickListener {
             R.layout.fragment_match_summaries,
             container,
             false)
-        binding.matchSummariesRecyclerview.adapter = adapter
+        binding.list.adapter = adapter
         binding.lifecycleOwner = viewLifecycleOwner
+        binding.match = matchSummariesViewModel
         adapter.clickListener = { matchSummary ->
             val matchAction =
                 MatchSummariesFragmentDirections.actionMatchSummariesFragmentToMatchFragment(
@@ -55,6 +56,7 @@ class MatchSummariesFragment : Fragment(), Toolbar.OnMenuItemClickListener {
         binding.newMatch.setOnClickListener {
             newMatch()
         }
+        adapter.attachedViews.observe(viewLifecycleOwner) { matchSummariesViewModel.listConstraint.update() }
         (activity as? MainActivity)?.setupToolbarMenu(R.menu.match_summaries, this)
         return binding.root
     }

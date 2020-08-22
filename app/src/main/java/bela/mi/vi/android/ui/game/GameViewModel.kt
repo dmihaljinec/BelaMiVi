@@ -6,7 +6,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import bela.mi.vi.android.R
+import bela.mi.vi.android.ui.Constraint
+import bela.mi.vi.android.ui.ConstraintSetsBuilder
 import bela.mi.vi.android.ui.operationFailedCoroutineExceptionHandler
 import bela.mi.vi.android.ui.settings.BelaSettings
 import bela.mi.vi.data.BelaRepository.OperationFailed
@@ -37,7 +38,11 @@ class GameViewModel @ViewModelInject constructor(
     var teamOneBela: MutableLiveData<Boolean> = MutableLiveData(false)
     var teamTwoBela: MutableLiveData<Boolean> = MutableLiveData(false)
     var gamePoints: MutableLiveData<Int> = MutableLiveData(belaSettings.getGamePoints())
-    var constraintSets: MutableLiveData<ArrayList<Int>> = MutableLiveData(arrayListOf(R.xml.game_declarations_none, R.xml.save_disabled, R.xml.team_one_icon_unavailable, R.xml.team_two_icon_unavailable))
+    val constraintSets: MutableLiveData<ArrayList<Int>>
+    private val gameDeclarationsConstraint: Constraint.GameDeclarations
+    private val saveConstraint: Constraint.Save
+    private val teamOneIconConstraint: Constraint.TeamOneIcon
+    private val teamTwoIconConstraint: Constraint.TeamTwoIcon
     var teamOnePlayerOne: MutableLiveData<Player> = MutableLiveData()
     var teamOnePlayerTwo: MutableLiveData<Player> = MutableLiveData()
     var teamTwoPlayerOne: MutableLiveData<Player> = MutableLiveData()
@@ -51,7 +56,15 @@ class GameViewModel @ViewModelInject constructor(
     }
 
     init {
+        val constraintSetsBuilder = ConstraintSetsBuilder()
+        gameDeclarationsConstraint = constraintSetsBuilder.addGameDeclarationsConstraint(::getTeamOrdinal)
+        saveConstraint = constraintSetsBuilder.addSaveConstraint(::canSave)
+        teamOneIconConstraint = constraintSetsBuilder.addTeamOneIconConstraint(::isTeamOneIconAvailable)
+        teamTwoIconConstraint = constraintSetsBuilder.addTeamTwoIconConstraint(::isTeamTwoIconAvailable)
+        constraintSets = constraintSetsBuilder.build()
+
         initObservers()
+
         viewModelScope.launch(handler) {
             if (gameId != -1L) {
                 val game = withGame.get(gameId).first()
@@ -88,27 +101,27 @@ class GameViewModel @ViewModelInject constructor(
         allTricks.observeForever { updateGamePoints() }
         teamOneDeclarations.observeForever {
             updateGamePoints()
-            updateDeclarationButtons()
+            gameDeclarationsConstraint.update()
         }
         teamTwoDeclarations.observeForever {
             updateGamePoints()
-            updateDeclarationButtons()
+            gameDeclarationsConstraint.update()
         }
         teamOnePoints.observeForever {
-            updateSaveButtonConstraint()
+            saveConstraint.update()
             autoUpdateOtherTeamPoints(TeamOrdinal.TWO)
         }
         teamTwoPoints.observeForever {
-            updateSaveButtonConstraint()
+            saveConstraint.update()
             autoUpdateOtherTeamPoints(TeamOrdinal.ONE)
         }
-        gamePoints.observeForever { updateSaveButtonConstraint() }
+        gamePoints.observeForever { saveConstraint.update() }
         teamOneBela.observeForever { addBela(TeamOrdinal.ONE) }
         teamTwoBela.observeForever { addBela(TeamOrdinal.TWO) }
-        teamOnePlayerOne.observeForever { updateTeamOneIconConstraint() }
-        teamOnePlayerTwo.observeForever { updateTeamOneIconConstraint() }
-        teamTwoPlayerOne.observeForever { updateTeamTwoIconConstraint() }
-        teamTwoPlayerTwo.observeForever { updateTeamTwoIconConstraint() }
+        teamOnePlayerOne.observeForever { teamOneIconConstraint.update() }
+        teamOnePlayerTwo.observeForever { teamOneIconConstraint.update() }
+        teamTwoPlayerOne.observeForever { teamTwoIconConstraint.update() }
+        teamTwoPlayerTwo.observeForever { teamTwoIconConstraint.update() }
     }
 
     private fun initBelaCheckboxes() {
@@ -157,10 +170,10 @@ class GameViewModel @ViewModelInject constructor(
         this.gamePoints.value = gamePoints
     }
 
-    private fun updateDeclarationButtons() {
+    private fun getTeamOrdinal(): TeamOrdinal {
         val teamOneDeclarations = this.teamOneDeclarations.value ?: 0
         val teamTwoDeclarations = this.teamTwoDeclarations.value ?: 0
-        updateDeclarationButtonsConstraint(when {
+        return when {
             teamOneDeclarations > teamTwoDeclarations -> TeamOrdinal.ONE
             teamTwoDeclarations > teamOneDeclarations -> TeamOrdinal.TWO
             teamOneDeclarations > 0 && teamOneDeclarations == teamTwoDeclarations -> {
@@ -168,42 +181,19 @@ class GameViewModel @ViewModelInject constructor(
                 else TeamOrdinal.ONE
             }
             else -> TeamOrdinal.NONE
-        })
+        }
     }
 
-    private fun updateDeclarationButtonsConstraint(teamOrdinal: TeamOrdinal) {
-        constraintSets.set(DECLARATIONS_INDEX, when (teamOrdinal) {
-            TeamOrdinal.ONE -> R.xml.game_declarations_team_one
-            TeamOrdinal.TWO -> R.xml.game_declarations_team_two
-            TeamOrdinal.NONE -> R.xml.game_declarations_none
-        })
+    private fun canSave(): Boolean {
+        return (teamOnePoints.value ?: 0) + (teamTwoPoints.value ?: 0) == gamePoints.value ?: belaSettings.getGamePoints()
     }
 
-    private fun updateSaveButtonConstraint() {
-        val canSave = (teamOnePoints.value ?: 0) + (teamTwoPoints.value ?: 0) == gamePoints.value ?: belaSettings.getGamePoints()
-        constraintSets.set(
-            SAVE_INDEX,
-            if (canSave) R.xml.save_enabled
-            else R.xml.save_disabled
-        )
+    private fun isTeamOneIconAvailable(): Boolean {
+        return teamOnePlayerOne.value != null && teamOnePlayerTwo.value != null
     }
 
-    private fun updateTeamOneIconConstraint() {
-        val ready = teamOnePlayerOne.value != null && teamOnePlayerTwo.value != null
-        constraintSets.set(
-            TEAM_ONE_ICON_INDEX,
-            if (ready) R.xml.team_one_icon_available
-            else R.xml.team_one_icon_unavailable
-        )
-    }
-
-    private fun updateTeamTwoIconConstraint() {
-        val ready = teamTwoPlayerOne.value != null && teamTwoPlayerTwo.value != null
-        constraintSets.set(
-            TEAM_TWO_ICON_INDEX,
-            if (ready) R.xml.team_two_icon_available
-            else R.xml.team_two_icon_unavailable
-        )
+    private fun isTeamTwoIconAvailable(): Boolean {
+        return teamTwoPlayerOne.value != null && teamTwoPlayerTwo.value != null
     }
 
     private fun addDeclarations(teamOrdinal: TeamOrdinal, amount: Int) {
@@ -265,21 +255,5 @@ class GameViewModel @ViewModelInject constructor(
             teamOnePoints.value ?: 0,
             teamTwoPoints.value ?: 0
         )
-    }
-
-
-    companion object {
-        private const val DECLARATIONS_INDEX = 0
-        private const val SAVE_INDEX = 1
-        private const val TEAM_ONE_ICON_INDEX = 2
-        private const val TEAM_TWO_ICON_INDEX = 3
-    }
-}
-
-fun MutableLiveData<ArrayList<Int>>.set(index: Int, value: Int) {
-    val arrayList = this.value
-    arrayList?.let {
-        arrayList[index] = value
-        this.value = arrayList
     }
 }

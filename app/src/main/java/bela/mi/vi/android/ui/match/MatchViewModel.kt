@@ -3,7 +3,8 @@ package bela.mi.vi.android.ui.match
 import androidx.hilt.Assisted
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.*
-import bela.mi.vi.android.ui.TeamIcons
+import bela.mi.vi.android.ui.Constraint
+import bela.mi.vi.android.ui.ConstraintSetsBuilder
 import bela.mi.vi.android.ui.operationFailedCoroutineExceptionHandler
 import bela.mi.vi.data.BelaRepository.OperationFailed
 import bela.mi.vi.data.Game
@@ -24,7 +25,10 @@ class MatchViewModel @ViewModelInject constructor(
     val setScore: MediatorLiveData<String> = MediatorLiveData<String>().apply { value = "0 : 0" }
     val matchScore: MediatorLiveData<String> = MediatorLiveData<String>().apply{ value = "0 - 0" }
     val diff: MutableLiveData<Int> = MutableLiveData(0)
-    val teamIcons = TeamIcons(::areTeamIconsAvailable)
+    val constraintSets: MutableLiveData<ArrayList<Int>>
+    private val teamOneIconConstraint: Constraint.TeamOneIcon
+    private val teamTwoIconConstraint: Constraint.TeamTwoIcon
+    val listConstraint: Constraint.ListWithTopLabel
     private val matchId = savedStateHandle.get<Long>("matchId") ?: -1L
     var games: LiveData<List<Game>> = MutableLiveData()
     private val handler = CoroutineExceptionHandler { _, exception ->
@@ -34,6 +38,13 @@ class MatchViewModel @ViewModelInject constructor(
 
     init {
         require(matchId != -1L) { "Invalid match id, $matchId" }
+
+        val constraintSetsBuilder = ConstraintSetsBuilder()
+        teamOneIconConstraint = constraintSetsBuilder.addTeamOneIconConstraint(::areTeamIconsAvailable)
+        teamTwoIconConstraint = constraintSetsBuilder.addTeamTwoIconConstraint(::areTeamIconsAvailable)
+        listConstraint = constraintSetsBuilder.addListWithTopLabelConstraint { games.value?.size ?: 0 > 0 }
+        constraintSets = constraintSetsBuilder.build()
+
         viewModelScope.launch(handler) {
             games = withMatch.getAllGamesFromLastSet(matchId).asLiveData(coroutineContext)
             withMatch.get(matchId).collect { match ->
@@ -43,7 +54,10 @@ class MatchViewModel @ViewModelInject constructor(
                 setScore.addSource(summary.teamTwoPointsWon) { updateSetScore() }
                 matchScore.addSource(summary.teamOneSetsWon) { updateMatchScore() }
                 matchScore.addSource(summary.teamTwoSetsWon) { updateMatchScore() }
-                matchSummary.observeForever { teamIcons.updateTeamIconConstraint() }
+                matchSummary.observeForever {
+                    teamOneIconConstraint.update()
+                    teamTwoIconConstraint.update()
+                }
             }
         }
     }

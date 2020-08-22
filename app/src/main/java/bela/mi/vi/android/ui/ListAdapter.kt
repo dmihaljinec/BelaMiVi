@@ -1,6 +1,7 @@
 package bela.mi.vi.android.ui
 
 import android.view.ViewGroup
+import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import bela.mi.vi.android.R
@@ -12,6 +13,7 @@ abstract class ListAdapter<T>(
 ) : ListAdapter<T, DataBindingViewHolder>(diffCallbak) {
     var clickListener: ((T) -> Unit)? = null
     var longClickListener: ((T) -> Boolean)? = null
+    var attachedViews: MutableLiveData<Int> = MutableLiveData(0)
     private var footerCount = 0
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DataBindingViewHolder {
@@ -54,11 +56,13 @@ abstract class ListAdapter<T>(
 
     override fun onViewAttachedToWindow(holder: DataBindingViewHolder) {
         super.onViewAttachedToWindow(holder)
+        attachedViews.value = attachedViews.value?.inc() ?: 1
         holder.markAttached()
     }
 
     override fun onViewDetachedFromWindow(holder: DataBindingViewHolder) {
         super.onViewDetachedFromWindow(holder)
+        attachedViews.value = attachedViews.value?.dec() ?: 0
         holder.markDetached()
     }
 

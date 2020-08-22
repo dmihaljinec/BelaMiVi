@@ -9,7 +9,7 @@ import androidx.appcompat.widget.Toolbar
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
+import androidx.lifecycle.observe
 import androidx.navigation.fragment.findNavController
 import bela.mi.vi.android.R
 import bela.mi.vi.android.databinding.FragmentPlayerListBinding
@@ -34,7 +34,9 @@ class PlayerListFragment : Fragment(), Toolbar.OnMenuItemClickListener {
             R.layout.fragment_player_list,
             container,
             false)
-        binding.playersRecyclerview.adapter = adapter
+        binding.list.adapter = adapter
+        binding.lifecycleOwner = viewLifecycleOwner
+        binding.player = playerListFragmentViewModel
         adapter.clickListener = { player ->
             val viewPlayerAction =
                 PlayerListFragmentDirections.actionPlayerListFragmentToPlayerFragment(
@@ -50,7 +52,8 @@ class PlayerListFragment : Fragment(), Toolbar.OnMenuItemClickListener {
             findNavController().navigate(action)
             true
         }
-        playerListFragmentViewModel.players.observe(viewLifecycleOwner, Observer { adapter.submitList(it) })
+        adapter.attachedViews.observe(viewLifecycleOwner) { playerListFragmentViewModel.listConstraint.update() }
+        playerListFragmentViewModel.players.observe(viewLifecycleOwner) { adapter.submitList(it) }
         binding.newPlayer.setOnClickListener {
             newPlayer()
         }

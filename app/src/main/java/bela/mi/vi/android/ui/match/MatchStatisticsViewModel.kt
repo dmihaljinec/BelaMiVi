@@ -3,7 +3,8 @@ package bela.mi.vi.android.ui.match
 import androidx.hilt.Assisted
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.*
-import bela.mi.vi.android.ui.TeamIcons
+import bela.mi.vi.android.ui.Constraint
+import bela.mi.vi.android.ui.ConstraintSetsBuilder
 import bela.mi.vi.android.ui.operationFailedCoroutineExceptionHandler
 import bela.mi.vi.data.BelaRepository.OperationFailed
 import bela.mi.vi.data.Player
@@ -36,7 +37,9 @@ class MatchStatisticsViewModel @ViewModelInject constructor(
     var teamOnePlayerTwo: MutableLiveData<Player> = MutableLiveData()
     var teamTwoPlayerOne: MutableLiveData<Player> = MutableLiveData()
     var teamTwoPlayerTwo: MutableLiveData<Player> = MutableLiveData()
-    val teamIcons = TeamIcons(::areTeamIconsAvailable)
+    val constraintSets: MutableLiveData<ArrayList<Int>>
+    private val teamOneIconConstraint: Constraint.TeamOneIcon
+    private val teamTwoIconConstraint: Constraint.TeamTwoIcon
     private var teamOneChosenTrump: LiveData<Int> = MutableLiveData()
     private var teamTwoChosenTrump: LiveData<Int> = MutableLiveData()
     private var teamOnePassedGames: LiveData<Int> = MutableLiveData()
@@ -51,6 +54,11 @@ class MatchStatisticsViewModel @ViewModelInject constructor(
     }
 
     init {
+        val constraintSetsBuilder = ConstraintSetsBuilder()
+        teamOneIconConstraint = constraintSetsBuilder.addTeamOneIconConstraint(::isTeamOneIconAvailable)
+        teamTwoIconConstraint = constraintSetsBuilder.addTeamTwoIconConstraint(::isTeamTwoIconAvailable)
+        constraintSets = constraintSetsBuilder.build()
+
         viewModelScope.launch(handler) {
             val matchStatistics = withMatch.getMatchStatistics(matchId)
             gamesCount = matchStatistics.gamesCount.asLiveData(coroutineContext)
@@ -81,10 +89,10 @@ class MatchStatisticsViewModel @ViewModelInject constructor(
         teamOnePassedGamesString.addSource(teamOnePassedGames) { updatePassedGames(TeamOrdinal.ONE) }
         teamTwoPassedGamesString.addSource(teamTwoChosenTrump) { updatePassedGames(TeamOrdinal.TWO) }
         teamTwoPassedGamesString.addSource(teamTwoPassedGames) { updatePassedGames(TeamOrdinal.TWO) }
-        teamOnePlayerOne.observeForever { teamIcons.updateTeamIconConstraint() }
-        teamOnePlayerTwo.observeForever { teamIcons.updateTeamIconConstraint() }
-        teamTwoPlayerOne.observeForever { teamIcons.updateTeamIconConstraint() }
-        teamTwoPlayerTwo.observeForever { teamIcons.updateTeamIconConstraint() }
+        teamOnePlayerOne.observeForever { teamOneIconConstraint.update() }
+        teamOnePlayerTwo.observeForever { teamOneIconConstraint.update() }
+        teamTwoPlayerOne.observeForever { teamTwoIconConstraint.update() }
+        teamTwoPlayerTwo.observeForever { teamTwoIconConstraint.update() }
     }
 
     private fun updateChosenTrump(teamOrdinal: TeamOrdinal) {
@@ -118,9 +126,12 @@ class MatchStatisticsViewModel @ViewModelInject constructor(
         }
     }
 
-    private fun areTeamIconsAvailable(): Boolean {
-        return teamOnePlayerOne.value != null && teamOnePlayerTwo.value != null &&
-                teamTwoPlayerOne.value != null && teamTwoPlayerTwo.value != null
+    private fun isTeamOneIconAvailable(): Boolean {
+        return teamOnePlayerOne.value != null && teamOnePlayerTwo.value != null
+    }
+
+    private fun isTeamTwoIconAvailable(): Boolean {
+        return teamTwoPlayerOne.value != null && teamTwoPlayerTwo.value != null
     }
 }
 

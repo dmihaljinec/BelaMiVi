@@ -35,13 +35,14 @@ class SetsFragment : Fragment() {
             R.layout.fragment_sets,
             container,
             false)
-        binding.setsRecyclerview.adapter = adapter
+        binding.list.adapter = adapter
         binding.setSets(setsViewModel)
         binding.lifecycleOwner = viewLifecycleOwner
         adapter.clickListener = { setSummary ->
             val action = SetsFragmentDirections.actionSetsFragmentToGamesFragment(matchId, setSummary.id)
             findNavController().navigate(action)
         }
+        adapter.attachedViews.observe(viewLifecycleOwner) { setsViewModel.listConstraint.update() }
         setsViewModel.sets.observe(viewLifecycleOwner) { adapter.submitList(it) }
         (activity as? MainActivity)?.clearToolbarMenu()
         return binding.root

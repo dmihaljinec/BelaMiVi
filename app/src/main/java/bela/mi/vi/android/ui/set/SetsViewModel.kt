@@ -3,7 +3,8 @@ package bela.mi.vi.android.ui.set
 import androidx.hilt.Assisted
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.*
-import bela.mi.vi.android.ui.TeamIcons
+import bela.mi.vi.android.ui.Constraint
+import bela.mi.vi.android.ui.ConstraintSetsBuilder
 import bela.mi.vi.android.ui.operationFailedCoroutineExceptionHandler
 import bela.mi.vi.data.BelaRepository.OperationFailed
 import bela.mi.vi.data.Player
@@ -27,14 +28,24 @@ class SetsViewModel @ViewModelInject constructor(
     var teamOnePlayerTwo: MutableLiveData<Player> = MutableLiveData()
     var teamTwoPlayerOne: MutableLiveData<Player> = MutableLiveData()
     var teamTwoPlayerTwo: MutableLiveData<Player> = MutableLiveData()
-    val teamIcons = TeamIcons(::areTeamIconsAvailable)
+    val constraintSets: MutableLiveData<ArrayList<Int>>
+    private val teamOneIconConstraint: Constraint.TeamOneIcon
+    private val teamTwoIconConstraint: Constraint.TeamTwoIcon
+    val listConstraint: Constraint.ListWithTopLabel
     private val handler = CoroutineExceptionHandler { _, exception ->
         if (exception is OperationFailed) operationFailedCoroutineExceptionHandler(exception)
         else throw exception
     }
 
     init {
+        val constraintSetsBuilder = ConstraintSetsBuilder()
+        teamOneIconConstraint = constraintSetsBuilder.addTeamOneIconConstraint(::isTeamOneIconAvailable)
+        teamTwoIconConstraint = constraintSetsBuilder.addTeamTwoIconConstraint(::isTeamTwoIconAvailable)
+        listConstraint = constraintSetsBuilder.addListWithTopLabelConstraint { sets.value?.size ?: 0 > 0 }
+        constraintSets = constraintSetsBuilder.build()
+
         initObservers()
+
         viewModelScope.launch(handler) {
             sets = withMatch.getAllSets(matchId)
                 .map { list -> list.map { set -> set.toSetSummary(coroutineContext) } }
@@ -49,14 +60,17 @@ class SetsViewModel @ViewModelInject constructor(
     }
 
     private fun initObservers() {
-        teamOnePlayerOne.observeForever { teamIcons.updateTeamIconConstraint() }
-        teamOnePlayerTwo.observeForever { teamIcons.updateTeamIconConstraint() }
-        teamTwoPlayerOne.observeForever { teamIcons.updateTeamIconConstraint() }
-        teamTwoPlayerTwo.observeForever { teamIcons.updateTeamIconConstraint() }
+        teamOnePlayerOne.observeForever { teamOneIconConstraint.update() }
+        teamOnePlayerTwo.observeForever { teamOneIconConstraint.update() }
+        teamTwoPlayerOne.observeForever { teamTwoIconConstraint.update() }
+        teamTwoPlayerTwo.observeForever { teamTwoIconConstraint.update() }
     }
 
-    private fun areTeamIconsAvailable(): Boolean {
-        return teamOnePlayerOne.value != null && teamOnePlayerTwo.value != null &&
-                teamTwoPlayerOne.value != null && teamTwoPlayerTwo.value != null
+    private fun isTeamOneIconAvailable(): Boolean {
+        return teamOnePlayerOne.value != null && teamOnePlayerTwo.value != null
+    }
+
+    private fun isTeamTwoIconAvailable(): Boolean {
+        return  teamTwoPlayerOne.value != null && teamTwoPlayerTwo.value != null
     }
 }

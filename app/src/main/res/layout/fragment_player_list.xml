@@ -4,14 +4,18 @@
 
     <data>
         <import type="bela.mi.vi.android.R" />
+        <variable
+            name="player"
+            type="bela.mi.vi.android.ui.player.PlayerListFragmentViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        app:applyConstraintSets="@{player.constraintSets}">
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/players_recyclerview"
+            android:id="@+id/list"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:requiresFadingEdge="vertical"

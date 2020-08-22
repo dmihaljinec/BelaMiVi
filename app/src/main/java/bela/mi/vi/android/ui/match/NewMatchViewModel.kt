@@ -3,7 +3,8 @@ package bela.mi.vi.android.ui.match
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.*
 import bela.mi.vi.android.R
-import bela.mi.vi.android.ui.game.set
+import bela.mi.vi.android.ui.Constraint
+import bela.mi.vi.android.ui.ConstraintSetsBuilder
 import bela.mi.vi.android.ui.operationFailedCoroutineExceptionHandler
 import bela.mi.vi.android.ui.player.PlayerViewModel
 import bela.mi.vi.android.ui.player.toPlayerViewModel
@@ -43,13 +44,22 @@ class NewMatchViewModel @ViewModelInject constructor(
     val teamTwoPlayerOneClear = MutableLiveData(0)
     val teamTwoPlayerTwoClear = MutableLiveData(0)
     var setLimit: MutableLiveData<Int> = MutableLiveData(belaSettings.getSetLimit())
-    var constraintSets: MutableLiveData<ArrayList<Int>> = MutableLiveData(arrayListOf(R.xml.team_one_icon_unavailable, R.xml.team_two_icon_unavailable, R.xml.save_disabled))
+    val constraintSets: MutableLiveData<ArrayList<Int>>
+    private val teamOneIconConstraint: Constraint.TeamOneIcon
+    private val teamTwoIconConstraint: Constraint.TeamTwoIcon
+    private val saveConstraint: Constraint.Save
     private val handler = CoroutineExceptionHandler { _, exception ->
         if (exception is OperationFailed) operationFailedCoroutineExceptionHandler(exception)
         else throw exception
     }
 
     init {
+        val constraintSetsBuilder = ConstraintSetsBuilder()
+        teamOneIconConstraint = constraintSetsBuilder.addTeamOneIconConstraint(::isTeamOneIconAvailable)
+        teamTwoIconConstraint = constraintSetsBuilder.addTeamTwoIconConstraint(::isTeamTwoIconAvailable)
+        saveConstraint = constraintSetsBuilder.addSaveConstraint(::canSave)
+        constraintSets = constraintSetsBuilder.build()
+
         initObservers()
         viewModelScope.launch(handler) {
             all = withPlayer.getAll()
@@ -179,23 +189,23 @@ class NewMatchViewModel @ViewModelInject constructor(
         availablePlayers.addSource(selected) { updateAvailablePlayers() }
         teamOnePlayerViewModelOne.observeForever {
             updatePlayer(teamOnePlayerOne, it)
-            updateSaveButtonConstraint()
-            updateTeamOneIconConstraint()
+            saveConstraint.update()
+            teamOneIconConstraint.update()
         }
         teamOnePlayerViewModelTwo.observeForever {
             updatePlayer(teamOnePlayerTwo, it)
-            updateSaveButtonConstraint()
-            updateTeamOneIconConstraint()
+            saveConstraint.update()
+            teamOneIconConstraint.update()
         }
         teamTwoPlayerViewModelOne.observeForever {
             updatePlayer(teamTwoPlayerOne, it)
-            updateSaveButtonConstraint()
-            updateTeamTwoIconConstraint()
+            saveConstraint.update()
+            teamTwoIconConstraint.update()
         }
         teamTwoPlayerViewModelTwo.observeForever {
             updatePlayer(teamTwoPlayerTwo, it)
-            updateSaveButtonConstraint()
-            updateTeamTwoIconConstraint()
+            saveConstraint.update()
+            teamTwoIconConstraint.update()
         }
     }
 
@@ -206,37 +216,16 @@ class NewMatchViewModel @ViewModelInject constructor(
         }
     }
 
-    private fun updateSaveButtonConstraint() {
-        val canSave = teamOnePlayerViewModelOne.value != null && teamOnePlayerViewModelTwo.value != null &&
+    private fun canSave(): Boolean {
+        return teamOnePlayerViewModelOne.value != null && teamOnePlayerViewModelTwo.value != null &&
                 teamTwoPlayerViewModelOne.value != null && teamTwoPlayerViewModelTwo.value != null
-        constraintSets.set(
-            SAVE_INDEX,
-            if (canSave) R.xml.save_enabled
-            else R.xml.save_disabled
-        )
     }
 
-    private fun updateTeamOneIconConstraint() {
-        val haveMembers = teamOnePlayerViewModelOne.value != null || teamOnePlayerViewModelTwo.value != null
-        constraintSets.set(
-            TEAM_ONE_ICON_INDEX,
-            if (haveMembers) R.xml.team_one_icon_available
-            else R.xml.team_one_icon_unavailable
-        )
+    private fun isTeamOneIconAvailable(): Boolean {
+        return teamOnePlayerViewModelOne.value != null || teamOnePlayerViewModelTwo.value != null
     }
 
-    private fun updateTeamTwoIconConstraint() {
-        val haveMembers = teamTwoPlayerViewModelOne.value != null || teamTwoPlayerViewModelTwo.value != null
-        constraintSets.set(
-            TEAM_TWO_ICON_INDEX,
-            if (haveMembers) R.xml.team_two_icon_available
-            else R.xml.team_two_icon_unavailable
-        )
-    }
-
-    companion object {
-        private const val TEAM_ONE_ICON_INDEX = 0
-        private const val TEAM_TWO_ICON_INDEX = 1
-        private const val SAVE_INDEX = 2
+    private fun isTeamTwoIconAvailable(): Boolean {
+        return teamTwoPlayerViewModelOne.value != null || teamTwoPlayerViewModelTwo.value != null
     }
 }

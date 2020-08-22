@@ -35,7 +35,7 @@ class GamesFragment : Fragment() {
             R.layout.fragment_games,
             container,
             false)
-        binding.gamesRecyclerview.adapter = adapter
+        binding.list.adapter = adapter
         binding.setGames(gamesViewModel)
         binding.lifecycleOwner = viewLifecycleOwner
         adapter.clickListener = { game ->
@@ -47,6 +47,7 @@ class GamesFragment : Fragment() {
             findNavController().navigate(action)
             true
         }
+        adapter.attachedViews.observe(viewLifecycleOwner) { gamesViewModel.listConstraint.update() }
         gamesViewModel.games.observe(viewLifecycleOwner) { adapter.submitList(it) }
         (activity as? MainActivity)?.clearToolbarMenu()
         return binding.root

@@ -16,7 +16,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:applyConstraintSets="@{match.teamIcons.constraintSets}" >
+            app:applyConstraintSets="@{match.constraintSets}" >
 
             <include
                 android:id="@+id/team_one_icon"

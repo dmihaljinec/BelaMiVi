@@ -9,7 +9,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
-import androidx.lifecycle.Observer
 import androidx.lifecycle.observe
 import androidx.navigation.fragment.findNavController
 import bela.mi.vi.android.R
@@ -39,7 +38,7 @@ class MatchFragment : Fragment(), Toolbar.OnMenuItemClickListener {
             R.layout.fragment_match,
             container,
             false)
-        binding.gamesRecyclerview.adapter = adapter
+        binding.list.adapter = adapter
         binding.match = matchViewModel
         binding.lifecycleOwner = viewLifecycleOwner
         adapter.clickListener = { game ->
@@ -53,7 +52,8 @@ class MatchFragment : Fragment(), Toolbar.OnMenuItemClickListener {
             findNavController().navigate(action)
             true
         }
-        matchViewModel.games.observe(viewLifecycleOwner, Observer { adapter.submitList(it) })
+        adapter.attachedViews.observe(viewLifecycleOwner) { matchViewModel.listConstraint.update() }
+        matchViewModel.games.observe(viewLifecycleOwner) { adapter.submitList(it) }
         binding.newGame.setOnClickListener { newGame() }
         binding.setScore.setOnClickListener {
             val toast = Toast.makeText(context, matchViewModel.getDiff(), Toast.LENGTH_SHORT)

@@ -4,14 +4,18 @@
 
     <data>
         <import type="bela.mi.vi.android.R" />
+        <variable
+            name="match"
+            type="bela.mi.vi.android.ui.match.MatchSummariesViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        app:applyConstraintSets="@{match.constraintSets}">
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/match_summaries_recyclerview"
+            android:id="@+id/list"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:requiresFadingEdge="vertical"

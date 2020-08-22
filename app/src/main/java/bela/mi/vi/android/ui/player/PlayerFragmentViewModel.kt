@@ -7,7 +7,8 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import bela.mi.vi.android.R
-import bela.mi.vi.android.ui.game.set
+import bela.mi.vi.android.ui.Constraint
+import bela.mi.vi.android.ui.ConstraintSetsBuilder
 import bela.mi.vi.android.ui.operationFailedCoroutineExceptionHandler
 import bela.mi.vi.data.BelaRepository.OperationFailed
 import bela.mi.vi.data.BelaRepository.PlayerOperationFailed
@@ -26,7 +27,8 @@ class PlayerFragmentViewModel @ViewModelInject constructor(
     private val playerId = savedStateHandle.get<Long>("playerId") ?: -1L
     var name: MutableLiveData<String> = MutableLiveData("")
     var colorResId: MutableLiveData<Int> = MutableLiveData(R.color.playerIcon_1)
-    var constraintSets: MutableLiveData<ArrayList<Int>> = MutableLiveData(arrayListOf(R.xml.player_icon_unavailable))
+    val constraintSets: MutableLiveData<ArrayList<Int>>
+    private val playerIconConstraint: Constraint.PlayerIcon
     private val savePlayer = if(playerId != -1L) ::editPlayer else ::newPlayer
     private val handler = CoroutineExceptionHandler { _, exception ->
         if (exception is OperationFailed) operationFailedCoroutineExceptionHandler(exception)
@@ -34,9 +36,13 @@ class PlayerFragmentViewModel @ViewModelInject constructor(
     }
 
     init {
+        val constraintSetsBuilder = ConstraintSetsBuilder()
+        playerIconConstraint = constraintSetsBuilder.addPlayerIconConstraint { name.value?.isNotEmpty() ?: false }
+        constraintSets = constraintSetsBuilder.build()
+
         name.observeForever {
             it?.run { colorResId.value = getPlayerColorResId(this) }
-            updatePlayerIconConstraint()
+            playerIconConstraint.update()
         }
         if (playerId != -1L) {
             viewModelScope.launch(handler) {
@@ -49,15 +55,6 @@ class PlayerFragmentViewModel @ViewModelInject constructor(
 
     @Throws(PlayerOperationFailed::class)
     suspend fun save() = savePlayer.invoke()
-
-    private fun updatePlayerIconConstraint() {
-        val available = name.value?.isNotEmpty() ?: false
-        constraintSets.set(
-            0,
-            if (available) R.xml.player_icon_available
-            else R.xml.player_icon_unavailable
-        )
-    }
 
     private suspend fun newPlayer() {
         val playerName = name.value ?: ""
