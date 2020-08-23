@@ -16,6 +16,7 @@ class BelaRepository(
     suspend fun add(newPlayer: NewPlayer) = playerDataSource.add(newPlayer)
     suspend fun getPlayer(id: Long): Flow<Player> = playerDataSource.get(id)
     suspend fun getAllPlayers() = playerDataSource.getAll()
+    suspend fun getQuickMatchPlayers() = playerDataSource.getQuickMatchPlayers()
     suspend fun removePlayer(id: Long) = playerDataSource.remove(id)
     suspend fun removeAllPlayers() = playerDataSource.removeAll()
     suspend fun renamePlayer(id: Long, name: String) = playerDataSource.rename(id, name)

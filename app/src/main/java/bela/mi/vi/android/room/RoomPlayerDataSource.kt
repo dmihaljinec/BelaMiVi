@@ -12,6 +12,7 @@ import bela.mi.vi.data.PlayerDataSource
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 
@@ -30,6 +31,12 @@ class RoomPlayerDataSource(private val db: BelaDatabase) : PlayerDataSource {
     override suspend fun get(id: Long): Flow<Player> = db.playerDao().get(id).map { playerEntity ->
         if (playerEntity == null) throw OperationFailed(PlayerNotFound(id))
         playerEntity.toPlayer(db)
+    }
+
+    override suspend fun getQuickMatchPlayers(): Flow<List<Player>> {
+        return db.playerDao().getHiddenPlayers().map {
+            it.map { playerEntity -> playerEntity.toPlayer(db) }
+        }
     }
 
     override suspend fun getAll(): Flow<List<Player>> {
@@ -56,7 +63,9 @@ class RoomPlayerDataSource(private val db: BelaDatabase) : PlayerDataSource {
 
     override suspend fun rename(id: Long, name: String) = withContext(Dispatchers.IO) {
         try {
-            db.playerDao().update(PlayerEntity(id, name))
+            val player = db.playerDao().get(id).first()
+            val hidden = player?.hidden ?: false
+            db.playerDao().update(PlayerEntity(id, name, hidden))
         } catch (e: SQLiteConstraintException) {
             throw PlayerOperationFailed(PlayerNameNotUnique(name))
         }

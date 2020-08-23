@@ -37,7 +37,7 @@ class NewMatchFragment : Fragment(), Toolbar.OnMenuItemClickListener {
             R.layout.fragment_new_match,
             container,
             false)
-        binding.playersRecyclerview.adapter = adapter
+        binding.list.adapter = adapter
         binding.lifecycleOwner = viewLifecycleOwner
         binding.match = newMatchViewModel
         binding.save.setOnClickListener { save() }

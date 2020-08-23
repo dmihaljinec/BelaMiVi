@@ -13,6 +13,7 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import javax.inject.Singleton
 
+
 @Module
 @InstallIn(ApplicationComponent::class)
 object ApplicationModule {
@@ -28,7 +29,9 @@ object ApplicationModule {
             context,
             BelaDatabase::class.java,
             BelaDatabase.DB_NAME
-        ).build()
+        )
+            .createFromAsset("${BelaDatabase.DB_ASSETS_SUBFOLDER}/${BelaDatabase.DB_DEFAULT}")
+            .build()
         return BelaRepository(
             RoomPlayerDataSource(db),
             RoomMatchDataSource(db),

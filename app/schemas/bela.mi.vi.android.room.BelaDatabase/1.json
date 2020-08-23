@@ -1,0 +1,337 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 1,
+    "identityHash": "1514566e9ad21723f83428a4597fdcb1",
+    "entities": [
+      {
+        "tableName": "players",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT NOT NULL COLLATE NOCASE, `hidden` INTEGER NOT NULL)",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "name",
+            "columnName": "name",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "hidden",
+            "columnName": "hidden",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "_id"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [
+          {
+            "name": "index_players_name",
+            "unique": true,
+            "columnNames": [
+              "name"
+            ],
+            "createSql": "CREATE UNIQUE INDEX IF NOT EXISTS `index_players_name` ON `${TABLE_NAME}` (`name`)"
+          }
+        ],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "games",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `set_id` INTEGER NOT NULL, `all_tricks` INTEGER NOT NULL, `team1_declarations` INTEGER NOT NULL, `team2_declarations` INTEGER NOT NULL, `team1_points` INTEGER NOT NULL, `team2_points` INTEGER NOT NULL, FOREIGN KEY(`set_id`) REFERENCES `sets`(`_id`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "setId",
+            "columnName": "set_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "allTricks",
+            "columnName": "all_tricks",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "team1Declarations",
+            "columnName": "team1_declarations",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "team2Declarations",
+            "columnName": "team2_declarations",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "team1Points",
+            "columnName": "team1_points",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "team2Points",
+            "columnName": "team2_points",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "_id"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [
+          {
+            "name": "index_games_set_id",
+            "unique": false,
+            "columnNames": [
+              "set_id"
+            ],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_games_set_id` ON `${TABLE_NAME}` (`set_id`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "sets",
+            "onDelete": "CASCADE",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "set_id"
+            ],
+            "referencedColumns": [
+              "_id"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "sets",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `match_id` INTEGER NOT NULL, `winning_team` INTEGER NOT NULL, FOREIGN KEY(`match_id`) REFERENCES `matches`(`_id`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "matchId",
+            "columnName": "match_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "winningTeam",
+            "columnName": "winning_team",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "_id"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [
+          {
+            "name": "index_sets_match_id",
+            "unique": false,
+            "columnNames": [
+              "match_id"
+            ],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_sets_match_id` ON `${TABLE_NAME}` (`match_id`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "matches",
+            "onDelete": "CASCADE",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "match_id"
+            ],
+            "referencedColumns": [
+              "_id"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "matches",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `date` TEXT NOT NULL, `time` TEXT NOT NULL, `team1_player1_id` INTEGER NOT NULL, `team1_player2_id` INTEGER NOT NULL, `team2_player1_id` INTEGER NOT NULL, `team2_player2_id` INTEGER NOT NULL, `set_limit` INTEGER NOT NULL, FOREIGN KEY(`team1_player1_id`) REFERENCES `players`(`_id`) ON UPDATE NO ACTION ON DELETE NO ACTION , FOREIGN KEY(`team1_player2_id`) REFERENCES `players`(`_id`) ON UPDATE NO ACTION ON DELETE NO ACTION , FOREIGN KEY(`team2_player1_id`) REFERENCES `players`(`_id`) ON UPDATE NO ACTION ON DELETE NO ACTION , FOREIGN KEY(`team2_player2_id`) REFERENCES `players`(`_id`) ON UPDATE NO ACTION ON DELETE NO ACTION )",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "date",
+            "columnName": "date",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "time",
+            "columnName": "time",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "team1Player1Id",
+            "columnName": "team1_player1_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "team1Player2Id",
+            "columnName": "team1_player2_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "team2Player1Id",
+            "columnName": "team2_player1_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "team2Player2Id",
+            "columnName": "team2_player2_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "setLimit",
+            "columnName": "set_limit",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "_id"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [
+          {
+            "name": "index_matches__id_team1_player1_id_team1_player2_id_team2_player1_id_team2_player2_id",
+            "unique": false,
+            "columnNames": [
+              "_id",
+              "team1_player1_id",
+              "team1_player2_id",
+              "team2_player1_id",
+              "team2_player2_id"
+            ],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_matches__id_team1_player1_id_team1_player2_id_team2_player1_id_team2_player2_id` ON `${TABLE_NAME}` (`_id`, `team1_player1_id`, `team1_player2_id`, `team2_player1_id`, `team2_player2_id`)"
+          },
+          {
+            "name": "index_matches_team1_player1_id",
+            "unique": false,
+            "columnNames": [
+              "team1_player1_id"
+            ],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_matches_team1_player1_id` ON `${TABLE_NAME}` (`team1_player1_id`)"
+          },
+          {
+            "name": "index_matches_team1_player2_id",
+            "unique": false,
+            "columnNames": [
+              "team1_player2_id"
+            ],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_matches_team1_player2_id` ON `${TABLE_NAME}` (`team1_player2_id`)"
+          },
+          {
+            "name": "index_matches_team2_player1_id",
+            "unique": false,
+            "columnNames": [
+              "team2_player1_id"
+            ],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_matches_team2_player1_id` ON `${TABLE_NAME}` (`team2_player1_id`)"
+          },
+          {
+            "name": "index_matches_team2_player2_id",
+            "unique": false,
+            "columnNames": [
+              "team2_player2_id"
+            ],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_matches_team2_player2_id` ON `${TABLE_NAME}` (`team2_player2_id`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "players",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "team1_player1_id"
+            ],
+            "referencedColumns": [
+              "_id"
+            ]
+          },
+          {
+            "table": "players",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "team1_player2_id"
+            ],
+            "referencedColumns": [
+              "_id"
+            ]
+          },
+          {
+            "table": "players",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "team2_player1_id"
+            ],
+            "referencedColumns": [
+              "_id"
+            ]
+          },
+          {
+            "table": "players",
+            "onDelete": "NO ACTION",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "team2_player2_id"
+            ],
+            "referencedColumns": [
+              "_id"
+            ]
+          }
+        ]
+      }
+    ],
+    "views": [],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '1514566e9ad21723f83428a4597fdcb1')"
+    ]
+  }
+}

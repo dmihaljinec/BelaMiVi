@@ -9,6 +9,7 @@ import androidx.appcompat.widget.Toolbar
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.observe
 import androidx.navigation.fragment.findNavController
 import bela.mi.vi.android.R
@@ -63,6 +64,7 @@ class MatchSummariesFragment : Fragment(), Toolbar.OnMenuItemClickListener {
 
     override fun onMenuItemClick(menuItem: MenuItem): Boolean {
         when(menuItem.itemId) {
+            R.id.new_quick_match_menu_item -> newQuickMatch()
             R.id.new_match_menu_item -> newMatch()
             R.id.delete_all_menu_item -> deleteAll()
             else -> return false
@@ -74,6 +76,16 @@ class MatchSummariesFragment : Fragment(), Toolbar.OnMenuItemClickListener {
         val newMatchAction =
             MatchSummariesFragmentDirections.actionMatchSummariesFragmentToNewMatchFragment()
         findNavController().navigate(newMatchAction)
+    }
+
+    private fun newQuickMatch() {
+        lifecycleScope.launchWhenResumed {
+            val matchId = matchSummariesViewModel.quickMatch()
+            if (matchId != -1L) {
+                val action = MatchSummariesFragmentDirections.actionMatchSummariesFragmentToMatchFragment(matchId)
+                findNavController().navigate(action)
+            }
+        }
     }
 
     private fun deleteAll() {

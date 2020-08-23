@@ -67,6 +67,13 @@ fun applyConstraintSets(constraintLayout: ConstraintLayout, ids: List<Int>) {
     constraintSets.forEach { constraintSet -> constraintSet.applyTo(constraintLayout) }
 }
 
+@BindingAdapter("textResource")
+fun TextView.setTextResource(resId: Int?) {
+    resId?.run {
+        if (this > 0) setText(this)
+    }
+}
+
 @BindingAdapter("android:text")
 fun TextView.setInt(value: Int?) {
     val newValue = value?.toString() ?: ""

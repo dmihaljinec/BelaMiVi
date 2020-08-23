@@ -16,10 +16,10 @@ interface PlayerDao {
     @Insert
     suspend fun add(player: PlayerEntity): Long
 
-    @Query("DELETE FROM ${TABLE_PLAYERS} WHERE ${PlayerEntity.ID} = :id")
+    @Query("DELETE FROM ${TABLE_PLAYERS} WHERE ${PlayerEntity.ID} = :id AND ${PlayerEntity.HIDDEN} = 0")
     suspend fun remove(id: Long)
 
-    @Query("DELETE FROM $TABLE_PLAYERS")
+    @Query("DELETE FROM $TABLE_PLAYERS WHERE ${PlayerEntity.HIDDEN} = 0")
     suspend fun removeAll()
 
     @Update
@@ -28,7 +28,10 @@ interface PlayerDao {
     @Query("SELECT * FROM $TABLE_PLAYERS WHERE ${PlayerEntity.ID} = :id")
     fun get(id: Long): Flow<PlayerEntity?>
 
-    @Query("SELECT * FROM $TABLE_PLAYERS ORDER BY ${PlayerEntity.NAME}")
+    @Query("SELECT * FROM $TABLE_PLAYERS WHERE ${PlayerEntity.HIDDEN} != 0")
+    fun getHiddenPlayers(): Flow<List<PlayerEntity>>
+
+    @Query("SELECT * FROM $TABLE_PLAYERS WHERE ${PlayerEntity.HIDDEN} = 0 ORDER BY ${PlayerEntity.NAME}")
     fun getAll(): Flow<List<PlayerEntity>>
 
     @Query("SELECT COUNT(DISTINCT $TABLE_SETS.${SetEntity.ID}) FROM $TABLE_CONNECTED WHERE (($TABLE_MATCHES.${MatchEntity.TEAM1_PLAYER1} = :id OR $TABLE_MATCHES.${MatchEntity.TEAM1_PLAYER2} = :id OR $TABLE_MATCHES.${MatchEntity.TEAM2_PLAYER1} = :id OR $TABLE_MATCHES.${MatchEntity.TEAM2_PLAYER2} = :id) AND ($TABLE_SETS.${SetEntity.WINNING_TEAM} != 0))")

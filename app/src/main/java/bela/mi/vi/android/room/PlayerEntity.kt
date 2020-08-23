@@ -14,14 +14,17 @@ data class PlayerEntity(
     @ColumnInfo(name = ID)
     val id: Long,
     @ColumnInfo(name = NAME, collate = NOCASE)
-    val name: String
+    val name: String,
+    @ColumnInfo(name = HIDDEN)
+    val hidden: Boolean
 )
 {
     @Ignore
-    constructor(newPlayer: NewPlayer) : this(0, newPlayer.name)
+    constructor(newPlayer: NewPlayer) : this(0, newPlayer.name, false)
 
     companion object {
         const val ID = "_id"
         const val NAME = "name"
+        const val HIDDEN = "hidden"
     }
 }

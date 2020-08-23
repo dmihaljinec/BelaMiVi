@@ -4,6 +4,7 @@
 
     <data>
         <import type="bela.mi.vi.android.R" />
+
         <variable
             name="match"
             type="bela.mi.vi.android.ui.match.MatchSummariesViewModel" />
@@ -13,6 +14,18 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:applyConstraintSets="@{match.constraintSets}">
+
+        <include
+            android:id="@+id/empty_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            layout="@layout/empty_list"
+            app:emptyList="@{match.emptyList}"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/list"

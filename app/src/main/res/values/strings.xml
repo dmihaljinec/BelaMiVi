@@ -33,6 +33,7 @@
     <string name="title_player_name">Player name</string>
     <string name="title_nav_header" translatable="false">MI\u0020\u0020VI</string>
     <string name="action_new_match">New Match</string>
+    <string name="action_new_quick_match">Quick Match</string>
     <string name="action_new_game">New Game</string>
     <string name="action_new_player">New Player</string>
     <string name="action_save">Save</string>
@@ -51,6 +52,9 @@
     <string name="description_delete_action_match">match</string>
     <string name="description_delete_action_all_matches">all matches</string>
     <string name="description_delete_action_game">game</string>
+    <string name="description_empty_match_list">Click the add button below to create a new match</string>
+    <string name="description_empty_player_list">Click the add button below to create a new player</string>
+    <string name="description_empty_available_player_list">No available players, add more from the menu</string>
     <string name="hint_new_match">Select player</string>
 
     <string name="key_match_id" translatable="false">matchId</string>

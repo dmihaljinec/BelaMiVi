@@ -18,6 +18,8 @@ abstract class BelaDatabase : RoomDatabase() {
 
     companion object {
         const val DB_NAME = "Bela.db"
+        const val DB_DEFAULT = "Default.db"
+        const val DB_ASSETS_SUBFOLDER = "databases"
         const val DB_VERSION = 1
         const val TABLE_PLAYERS = "players"
         const val TABLE_MATCHES = "matches"

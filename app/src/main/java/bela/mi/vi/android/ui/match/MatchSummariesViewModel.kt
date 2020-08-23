@@ -4,8 +4,10 @@ import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import bela.mi.vi.android.R
 import bela.mi.vi.android.ui.Constraint
 import bela.mi.vi.android.ui.ConstraintSetsBuilder
+import bela.mi.vi.android.ui.EmptyListViewModel
 import bela.mi.vi.android.ui.operationFailedCoroutineExceptionHandler
 import bela.mi.vi.data.BelaRepository.OperationFailed
 import bela.mi.vi.interactor.WithMatch
@@ -19,9 +21,10 @@ import kotlinx.coroutines.launch
 @ExperimentalCoroutinesApi
 class MatchSummariesViewModel @ViewModelInject constructor(
     private val withMatch: WithMatch) : ViewModel() {
-    var matchSummaries: MutableLiveData<List<MatchSummary>> = MutableLiveData()
+    val matchSummaries: MutableLiveData<List<MatchSummary>> = MutableLiveData()
     val constraintSets: MutableLiveData<ArrayList<Int>>
     val listConstraint: Constraint.List
+    val emptyList: EmptyListViewModel
     private val handler = CoroutineExceptionHandler { _, exception ->
         if (exception is OperationFailed) operationFailedCoroutineExceptionHandler(exception)
         else throw exception
@@ -32,6 +35,15 @@ class MatchSummariesViewModel @ViewModelInject constructor(
         listConstraint = constraintSetsBuilder.addListConstraint { matchSummaries.value?.size ?: 0 > 0 }
         constraintSets = constraintSetsBuilder.build()
 
+        emptyList = EmptyListViewModel().apply {
+            icon.value = R.drawable.matches_tint_24
+            text.value = R.string.description_empty_match_list
+        }
+
+        matchSummaries.observeForever {
+            emptyList.visibility.value = it?.size ?: 0 == 0
+        }
+
         viewModelScope.launch(handler) {
             withMatch.getAll()
                 .map { matches -> matches.map { match -> match.toMatchSummary(coroutineContext) } }
@@ -40,4 +52,6 @@ class MatchSummariesViewModel @ViewModelInject constructor(
                 }
         }
     }
+
+    suspend fun quickMatch(): Long = withMatch.quick()
 }

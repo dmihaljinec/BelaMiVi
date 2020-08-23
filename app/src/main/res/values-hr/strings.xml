@@ -31,6 +31,7 @@
     <string name="title_passed_games">Prolaznost</string>
     <string name="title_player_name">Ime igrača</string>
     <string name="action_new_match">Novi meč</string>
+    <string name="action_new_quick_match">Brzi meč</string>
     <string name="action_new_game">Nova igra</string>
     <string name="action_new_player">Novi igrač</string>
     <string name="action_save">Spremi</string>
@@ -49,5 +50,8 @@
     <string name="description_delete_action_match">meč</string>
     <string name="description_delete_action_all_matches">sve mečeve</string>
     <string name="description_delete_action_game">igru</string>
+    <string name="description_empty_match_list">Pritisni dodaj gumb i započni novi meč</string>
+    <string name="description_empty_player_list">Pritisni dodaj gumb i stvori novog igrača</string>
+    <string name="description_empty_available_player_list">Nema dostupnih igrača, dodaj preko izbornika</string>
     <string name="hint_new_match">Odaberi igrača</string>
 </resources>

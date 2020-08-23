@@ -5,6 +5,7 @@ import androidx.lifecycle.*
 import bela.mi.vi.android.R
 import bela.mi.vi.android.ui.Constraint
 import bela.mi.vi.android.ui.ConstraintSetsBuilder
+import bela.mi.vi.android.ui.EmptyListViewModel
 import bela.mi.vi.android.ui.operationFailedCoroutineExceptionHandler
 import bela.mi.vi.android.ui.player.PlayerViewModel
 import bela.mi.vi.android.ui.player.toPlayerViewModel
@@ -44,6 +45,7 @@ class NewMatchViewModel @ViewModelInject constructor(
     val teamTwoPlayerOneClear = MutableLiveData(0)
     val teamTwoPlayerTwoClear = MutableLiveData(0)
     var setLimit: MutableLiveData<Int> = MutableLiveData(belaSettings.getSetLimit())
+    val emptyList: EmptyListViewModel
     val constraintSets: MutableLiveData<ArrayList<Int>>
     private val teamOneIconConstraint: Constraint.TeamOneIcon
     private val teamTwoIconConstraint: Constraint.TeamTwoIcon
@@ -59,6 +61,11 @@ class NewMatchViewModel @ViewModelInject constructor(
         teamTwoIconConstraint = constraintSetsBuilder.addTeamTwoIconConstraint(::isTeamTwoIconAvailable)
         saveConstraint = constraintSetsBuilder.addSaveConstraint(::canSave)
         constraintSets = constraintSetsBuilder.build()
+
+        emptyList = EmptyListViewModel().apply {
+            icon.value = R.drawable.players_tint_24
+            text.value = R.string.description_empty_available_player_list
+        }
 
         initObservers()
         viewModelScope.launch(handler) {
@@ -206,6 +213,9 @@ class NewMatchViewModel @ViewModelInject constructor(
             updatePlayer(teamTwoPlayerTwo, it)
             saveConstraint.update()
             teamTwoIconConstraint.update()
+        }
+        availablePlayers.observeForever {
+            emptyList.visibility.value = availablePlayers.value?.size ?: 0 == 0
         }
     }
 

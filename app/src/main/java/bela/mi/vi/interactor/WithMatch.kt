@@ -39,6 +39,20 @@ class WithMatch @Inject constructor(private val belaRepository: BelaRepository) 
         )
     }
 
+    suspend fun quick(): Long {
+        val quickMatchPlayers = belaRepository.getQuickMatchPlayers().first()
+        if (quickMatchPlayers.size < 4) return -1L
+        return belaRepository.add(
+            NewMatch(
+                teamOnePlayerOneId = quickMatchPlayers[0].id,
+                teamOnePlayerTwoId = quickMatchPlayers[1].id,
+                teamTwoPlayerOneId = quickMatchPlayers[2].id,
+                teamTwoPlayerTwoId = quickMatchPlayers[3].id,
+                setLimit = belaRepository.settings.getSetLimit()
+            )
+        )
+    }
+
     @Throws(OperationFailed::class)
     suspend fun get(id: Long): Flow<Match> = flow {
         belaRepository.getMatch(id).collect {
