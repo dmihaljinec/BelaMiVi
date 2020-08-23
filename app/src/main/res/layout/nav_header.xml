@@ -12,7 +12,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/ubuntu"
-        android:text="@string/title_nav_header"
+        android:text="@string/title_mi_vi"
         android:textColor="@color/colorLightGreen"
         android:textSize="30sp"
         app:layout_constraintBottom_toBottomOf="parent"
