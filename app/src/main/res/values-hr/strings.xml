@@ -31,6 +31,7 @@
     <string name="title_passed_games">Prolaznost</string>
     <string name="title_player_name">Ime igrača</string>
     <string name="title_version">Verzija</string>
+    <string name="title_source_code">Izvorni kôd</string>
     <string name="action_new_match">Novi meč</string>
     <string name="action_new_quick_match">Brzi meč</string>
     <string name="action_new_game">Nova igra</string>

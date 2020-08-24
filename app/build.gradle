@@ -16,11 +16,11 @@ android {
         minSdkVersion 23
         targetSdkVersion 29
         versionCode 17
-        versionName "2.0"
+        versionName "2.0.0"
     }
 
     applicationVariants.all { variant ->
-        variant.resValue "string", "versionName", variant.versionName
+        variant.resValue "string", "versionName", variant.versionName + "." + variant.versionCode
     }
 
     buildTypes {

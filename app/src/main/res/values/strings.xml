@@ -34,6 +34,7 @@
     <string name="title_mi_vi" translatable="false">MI\u0020\u0020VI</string>
     <string name="title_version">Version</string>
     <string name="title_copyright" translatable="false">\u00A9 2011-2020 Damir Mihaljinec</string>
+    <string name="title_source_code">Source code</string>
     <string name="action_new_match">New Match</string>
     <string name="action_new_quick_match">Quick Match</string>
     <string name="action_new_game">New Game</string>
@@ -80,4 +81,6 @@
 
     <string name="button_add_20" translatable="false">+20</string>
     <string name="button_add_50" translatable="false">+50</string>
+
+    <string name="link_source_code" translatable="false">https://github.com/dmihaljinec/BelaMiVi</string>
 </resources>
