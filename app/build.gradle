@@ -15,7 +15,7 @@ android {
         applicationId "bela.mi.vi.blok"
         minSdkVersion 23
         targetSdkVersion 29
-        versionCode 17
+        versionCode 18
         versionName "2.0.0"
     }
 
@@ -25,7 +25,8 @@ android {
 
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
+            shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
