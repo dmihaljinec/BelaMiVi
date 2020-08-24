@@ -6,6 +6,7 @@ import java.util.*
 
 data class Match(
     val id: Long,
+    val isQuickMatch: Boolean,
     val date: String,
     val time: String,
     val teamOne: Team,

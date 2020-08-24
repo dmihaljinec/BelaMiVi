@@ -41,7 +41,7 @@
             app:layout_constraintStart_toEndOf="@id/team_one_icon"
             app:layout_constraintEnd_toStartOf="@id/score"
             app:layout_constraintBottom_toTopOf="@id/team_one_player_two"
-            android:text="@{match.teamOnePlayerOne.name}" />
+            android:text='@{match.quickMatch ? "" : match.teamOnePlayerOne.name}' />
 
         <TextView
             android:id="@+id/team_one_player_two"
@@ -56,7 +56,7 @@
             app:layout_constraintStart_toEndOf="@id/team_one_icon"
             app:layout_constraintEnd_toStartOf="@id/score"
             app:layout_constraintTop_toBottomOf="@id/team_one_player_one"
-            android:text="@{match.teamOnePlayerTwo.name}" />
+            android:text='@{match.quickMatch ? "" : match.teamOnePlayerTwo.name}' />
 
         <TextView
             android:id="@+id/score"
@@ -82,7 +82,7 @@
             app:layout_constraintStart_toEndOf="@id/score"
             app:layout_constraintEnd_toStartOf="@id/team_two_icon"
             app:layout_constraintBottom_toTopOf="@id/team_two_player_two"
-            android:text="@{match.teamTwoPlayerOne.name}" />
+            android:text='@{match.quickMatch ? "" : match.teamTwoPlayerOne.name}' />
 
         <TextView
             android:id="@+id/team_two_player_two"
@@ -97,7 +97,7 @@
             app:layout_constraintStart_toEndOf="@id/score"
             app:layout_constraintEnd_toStartOf="@id/team_two_icon"
             app:layout_constraintTop_toBottomOf="@id/team_two_player_one"
-            android:text="@{match.teamTwoPlayerTwo.name}" />
+            android:text='@{match.quickMatch ? "" : match.teamTwoPlayerTwo.name}' />
 
         <include
             android:id="@+id/team_two_icon"

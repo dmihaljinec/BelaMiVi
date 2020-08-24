@@ -104,6 +104,7 @@ class RoomMatchDataSource(
         )
         return Match(
             id,
+            containsHiddenPlayers(db.playerDao().getHiddenPlayers().first()),
             date,
             time,
             teamOne,

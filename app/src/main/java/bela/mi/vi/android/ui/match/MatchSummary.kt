@@ -9,6 +9,7 @@ import kotlin.coroutines.CoroutineContext
 
 data class MatchSummary(
     val matchId: Long,
+    val isQuickMatch: Boolean,
     var teamOnePlayerOne: LiveData<Player>,
     var teamOnePlayerTwo: LiveData<Player>,
     var teamOneSetsWon: LiveData<Int>,
@@ -23,6 +24,7 @@ data class MatchSummary(
 fun Match.toMatchSummary(coroutineContext: CoroutineContext): MatchSummary {
     return MatchSummary(
         id,
+        isQuickMatch,
         teamOne.playerOne.asLiveData(coroutineContext),
         teamOne.playerTwo.asLiveData(coroutineContext),
         teamOne.setsWonInMatch.asLiveData(coroutineContext),

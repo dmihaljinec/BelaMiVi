@@ -61,6 +61,12 @@ data class MatchEntity(
                 newMatch.setLimit
             )
 
+    fun containsHiddenPlayers(hiddenPlayers: List<PlayerEntity>):Boolean {
+        return hiddenPlayers
+            .map { playerEntity -> playerEntity.id }
+            .containsAll(arrayListOf(team1Player1Id, team1Player2Id, team2Player1Id, team2Player2Id))
+    }
+
     companion object {
         const val ID = "_id"
         const val DATE = "date"
