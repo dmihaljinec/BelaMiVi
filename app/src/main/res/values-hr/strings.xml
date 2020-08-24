@@ -14,6 +14,7 @@
     <string name="title_settings">Postavke</string>
     <string name="title_about">O programu</string>
     <string name="title_match_statistics">Statistika meča</string>
+    <string name="title_player_statistics">Statistika igrača</string>
     <string name="title_game_points">Bodova u igri</string>
     <string name="title_all_tricks">Štigla</string>
     <string name="title_bela">Bela</string>
@@ -32,6 +33,8 @@
     <string name="title_player_name">Ime igrača</string>
     <string name="title_version">Verzija</string>
     <string name="title_source_code">Izvorni kôd</string>
+    <string name="title_sets_finished">Odigrano partija</string>
+    <string name="title_winning_rate">Postotak dobivenih partija</string>
     <string name="action_new_match">Novi meč</string>
     <string name="action_new_quick_match">Brzi meč</string>
     <string name="action_new_game">Nova igra</string>

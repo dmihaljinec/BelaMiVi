@@ -25,7 +25,8 @@ class PlayerFragmentViewModel @ViewModelInject constructor(
     @Assisted savedStateHandle: SavedStateHandle
 ) : ViewModel() {
     private val playerId = savedStateHandle.get<Long>("playerId") ?: -1L
-    var name: MutableLiveData<String> = MutableLiveData("")
+    val name: MutableLiveData<String> = MutableLiveData("")
+    val playerViewModel: MutableLiveData<PlayerViewModel> = MutableLiveData()
     var colorResId: MutableLiveData<Int> = MutableLiveData(R.color.playerIcon_1)
     val constraintSets: MutableLiveData<ArrayList<Int>>
     private val playerIconConstraint: Constraint.PlayerIcon
@@ -46,8 +47,9 @@ class PlayerFragmentViewModel @ViewModelInject constructor(
         }
         if (playerId != -1L) {
             viewModelScope.launch(handler) {
-                withPlayer.get(playerId).collect {
-                    name.value = it.name
+                withPlayer.get(playerId).collect { player ->
+                    name.value = player.name
+                    playerViewModel.value = player.toPlayerViewModel(coroutineContext)
                 }
             }
         }

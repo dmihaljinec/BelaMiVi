@@ -9,78 +9,148 @@
             type="bela.mi.vi.android.ui.player.PlayerFragmentViewModel" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:applyConstraintSets="@{player.constraintSets}">
+        android:fillViewport="true">
 
-        <TextView
-            android:id="@+id/player_name"
-            android:layout_width="wrap_content"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:text="@string/title_player_name"
-            android:textColor="?attr/colorAccent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
+            app:applyConstraintSets="@{player.constraintSets}">
 
-        <TextView
-            android:id="@+id/player_icon_stub"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_marginStart="20dp"
-            android:visibility="invisible"
-            app:layout_constraintTop_toTopOf="@id/player_name_edittext"
-            app:layout_constraintBottom_toBottomOf="@id/player_name_edittext"
-            app:layout_constraintStart_toStartOf="parent"
-            android:background="@drawable/circle"
-            app:backgroundTintFromResId="@{player.colorResId}"
-            android:gravity="center"
-            android:text='@{player.name.isEmpty() ? "" : player.name.substring(0, 1)}'
-            android:textColor="@color/colorWhite"
-            android:textSize="20sp"/>
+            <TextView
+                android:id="@+id/player_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="@string/title_player_name"
+                android:textColor="?attr/colorAccent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
 
-        <TextView
-            android:id="@+id/player_icon"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_marginStart="20dp"
-            app:layout_constraintTop_toTopOf="@id/player_name_edittext"
-            app:layout_constraintBottom_toBottomOf="@id/player_name_edittext"
-            app:layout_constraintStart_toStartOf="parent"
-            android:background="@drawable/circle"
-            app:backgroundTintFromResId="@{player.colorResId}"
-            android:gravity="center"
-            android:text='@{player.name.isEmpty() ? "" : player.name.substring(0, 1)}'
-            android:textColor="@color/colorWhite"
-            android:textSize="20sp"/>
+            <TextView
+                android:id="@+id/player_icon_stub"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginStart="20dp"
+                android:visibility="invisible"
+                app:layout_constraintTop_toTopOf="@id/player_name_edittext"
+                app:layout_constraintBottom_toBottomOf="@id/player_name_edittext"
+                app:layout_constraintStart_toStartOf="parent"
+                android:background="@drawable/circle"
+                app:backgroundTintFromResId="@{player.colorResId}"
+                android:gravity="center"
+                android:text='@{player.name.isEmpty() ? "" : player.name.substring(0, 1)}'
+                android:textColor="@color/colorWhite"
+                android:textSize="20sp"/>
 
-        <EditText
-            android:id="@+id/player_name_edittext"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:layout_marginStart="20dp"
-            android:layout_marginEnd="20dp"
-            app:layout_constraintTop_toBottomOf="@id/player_name"
-            app:layout_constraintStart_toEndOf="@id/player_icon_stub"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:inputType="textCapWords"
-            android:text="@={player.name}" />
+            <TextView
+                android:id="@+id/player_icon"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginStart="20dp"
+                app:layout_constraintTop_toTopOf="@id/player_name_edittext"
+                app:layout_constraintBottom_toBottomOf="@id/player_name_edittext"
+                app:layout_constraintStart_toStartOf="parent"
+                android:background="@drawable/circle"
+                app:backgroundTintFromResId="@{player.colorResId}"
+                android:gravity="center"
+                android:text='@{player.name.isEmpty() ? "" : player.name.substring(0, 1)}'
+                android:textColor="@color/colorWhite"
+                android:textSize="20sp"/>
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/save"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="20dp"
-            android:src="@drawable/confirm_tint_24"
-            android:tint="@color/colorWhite"
-            android:contentDescription="@string/action_save"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:tooltip="@{R.string.action_save}"/>
+            <EditText
+                android:id="@+id/player_name_edittext"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp"
+                app:layout_constraintTop_toBottomOf="@id/player_name"
+                app:layout_constraintStart_toEndOf="@id/player_icon_stub"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:inputType="textCapWords"
+                android:text="@={player.name}" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <TextView
+                android:id="@+id/player_stats"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="40dp"
+                android:text="@string/title_player_statistics"
+                android:textColor="?attr/colorAccent"
+                app:layout_constraintTop_toBottomOf="@id/player_name_edittext"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+            <TextView
+                android:id="@+id/player_sets_finished_label"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:gravity="center"
+                android:text="@string/title_sets_finished"
+                app:layout_constraintTop_toTopOf="@id/player_sets_finished"
+                app:layout_constraintBottom_toBottomOf="@id/player_sets_finished"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <TextView
+                android:id="@+id/player_sets_finished"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:text="@{player.playerViewModel.setsFinished}"
+                android:textSize="20sp"
+                app:layout_constraintTop_toBottomOf="@id/player_stats"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+            <TextView
+                android:id="@+id/player_winning_rate_label"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:gravity="center"
+                android:text="@string/title_winning_rate"
+                app:layout_constraintTop_toTopOf="@id/player_winning_rate"
+                app:layout_constraintBottom_toBottomOf="@id/player_winning_rate"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <TextView
+                android:id="@+id/player_winning_rate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:text="@{player.playerViewModel.stats}"
+                android:textSize="20sp"
+                app:layout_constraintTop_toBottomOf="@id/player_sets_finished"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+            <Space
+                android:id="@+id/space"
+                android:layout_width="match_parent"
+                android:layout_height="88dp"
+                app:layout_constraintTop_toBottomOf="@id/player_winning_rate"/>
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/save"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp"
+                android:src="@drawable/confirm_tint_24"
+                android:tint="@color/colorWhite"
+                android:contentDescription="@string/action_save"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:tooltip="@{R.string.action_save}"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
 
 </layout>
