@@ -8,6 +8,10 @@ import androidx.lifecycle.MutableLiveData
 import androidx.preference.PreferenceManager
 import bela.mi.vi.android.R
 import bela.mi.vi.data.Settings
+import bela.mi.vi.data.Settings.Companion.QUICK_MATCH_VALID_2_DAYS
+import bela.mi.vi.data.Settings.Companion.QUICK_MATCH_VALID_30_DAYS
+import bela.mi.vi.data.Settings.Companion.QUICK_MATCH_VALID_7_DAYS
+import bela.mi.vi.data.Settings.Companion.QUICK_MATCH_VALID_ALWAYS
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 
@@ -19,6 +23,8 @@ class BelaSettings @Inject constructor(@ApplicationContext context: Context) : S
     var setLimit: MutableLiveData<Int> = MutableLiveData()
     val listener = SharedPreferences.OnSharedPreferenceChangeListener { sharedPreference, key -> onChanged(sharedPreference, key) }
     val themeMode: MutableLiveData<Int> = MutableLiveData()
+    val quickMatchValidityPeriod: MutableLiveData<Int> = MutableLiveData()
+
     private val keyGamePoints = context.getString(R.string.key_settings_game_points)
     private val keyAllTricks = context.getString(R.string.key_settings_all_tricks)
     private val keyBelaDeclaration = context.getString(R.string.key_settings_bela_declaration)
@@ -27,6 +33,11 @@ class BelaSettings @Inject constructor(@ApplicationContext context: Context) : S
     private val themeDark = context.getString(R.string.settings_theme_dark)
     private val themeLight = context.getString(R.string.settings_theme_light)
     private val themeSystem = context.getString(R.string.settings_theme_system)
+    private val keyQuickMatchValidityPeriod = context.getString(R.string.key_settings_quick_match_auto_remove)
+    private val quickMatchValid2Days = context.getString(R.string.settings_quick_match_valid_2_days)
+    private val quickMatchValid7Days = context.getString(R.string.settings_quick_match_valid_7_days)
+    private val quickMatchValid30Days = context.getString(R.string.settings_quick_match_valid_30_days)
+    private val quickMatchValidAlways = context.getString(R.string.settings_quick_match_valid_always)
 
     init {
         val sharedPreference = PreferenceManager.getDefaultSharedPreferences(context)
@@ -37,6 +48,7 @@ class BelaSettings @Inject constructor(@ApplicationContext context: Context) : S
             belaDeclaration.value = getIntFromString(keyBelaDeclaration, Settings.DEFAULT_BELA_DECLARATION)
             setLimit.value = getIntFromString(keySetLimit, Settings.DEFAULT_SET_LIMIT)
             themeMode.value = getThemeMode()
+            quickMatchValidityPeriod.value = getQuickMatchValidityPeriod()
         }
     }
 
@@ -44,6 +56,7 @@ class BelaSettings @Inject constructor(@ApplicationContext context: Context) : S
     override fun getAllTricks() = allTricks.value ?: super.getAllTricks()
     override fun getBelaDeclaration() = belaDeclaration.value ?: super.getBelaDeclaration()
     override fun getSetLimit() = setLimit.value ?: super.getSetLimit()
+    override fun getQuickMatchValidityPeriod() = quickMatchValidityPeriod.value ?: super.getQuickMatchValidityPeriod()
 
     private fun onChanged(sharedPreferences: SharedPreferences, key: String) {
         when (key) {
@@ -52,6 +65,7 @@ class BelaSettings @Inject constructor(@ApplicationContext context: Context) : S
             keyBelaDeclaration -> belaDeclaration.value = sharedPreferences.getIntFromString(key, Settings.DEFAULT_BELA_DECLARATION)
             keySetLimit -> setLimit.value = sharedPreferences.getIntFromString(key, Settings.DEFAULT_SET_LIMIT)
             keyTheme -> themeMode.value = sharedPreferences.getThemeMode()
+            keyQuickMatchValidityPeriod -> quickMatchValidityPeriod.value = sharedPreferences.getQuickMatchValidityPeriod()
         }
     }
 
@@ -65,6 +79,16 @@ class BelaSettings @Inject constructor(@ApplicationContext context: Context) : S
             themeDark -> MODE_NIGHT_YES
             themeLight -> MODE_NIGHT_NO
             themeSystem -> if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q) MODE_NIGHT_AUTO_BATTERY else MODE_NIGHT_FOLLOW_SYSTEM
+            else -> throw IllegalStateException("Settings $prefValue is not expected")
+        }
+    }
+
+    private fun SharedPreferences.getQuickMatchValidityPeriod(): Int {
+        return when (val prefValue = getString(keyQuickMatchValidityPeriod, quickMatchValid7Days) ?: quickMatchValid7Days) {
+            quickMatchValid2Days -> QUICK_MATCH_VALID_2_DAYS
+            quickMatchValid7Days -> QUICK_MATCH_VALID_7_DAYS
+            quickMatchValid30Days -> QUICK_MATCH_VALID_30_DAYS
+            quickMatchValidAlways -> QUICK_MATCH_VALID_ALWAYS
             else -> throw IllegalStateException("Settings $prefValue is not expected")
         }
     }

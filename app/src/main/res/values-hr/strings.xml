@@ -35,6 +35,11 @@
     <string name="title_source_code">Izvorni kôd</string>
     <string name="title_sets_finished">Odigrano partija</string>
     <string name="title_winning_rate">Postotak dobivenih partija</string>
+    <string name="title_auto_delete_quick_match">Automatski izbriši brzi meč nakon</string>
+    <string name="title_quick_match_valid_2_days">2 dana</string>
+    <string name="title_quick_match_valid_7_days">7 dana</string>
+    <string name="title_quick_match_valid_30_days">30 dana</string>
+    <string name="title_quick_match_valid_always">Nikad</string>
     <string name="action_new_match">Novi meč</string>
     <string name="action_new_quick_match">Brzi meč</string>
     <string name="action_new_game">Nova igra</string>

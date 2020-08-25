@@ -38,6 +38,11 @@
     <string name="title_source_code">Source code</string>
     <string name="title_sets_finished">Sets played</string>
     <string name="title_winning_rate">Winning rate</string>
+    <string name="title_auto_delete_quick_match">Auto delete quick match after</string>
+    <string name="title_quick_match_valid_2_days">2 days</string>
+    <string name="title_quick_match_valid_7_days">7 days</string>
+    <string name="title_quick_match_valid_30_days">30 days</string>
+    <string name="title_quick_match_valid_always">Never</string>
     <string name="action_new_match">New Match</string>
     <string name="action_new_quick_match">Quick Match</string>
     <string name="action_new_game">New Game</string>
@@ -77,10 +82,15 @@
     <string name="key_settings_bela_declaration" translatable="false">belaPref</string>
     <string name="key_settings_set_limit" translatable="false">setLimitPref</string>
     <string name="key_settings_theme" translatable="false">themePref</string>
+    <string name="key_settings_quick_match_auto_remove" translatable="false">quickMatchAutoRemovePref</string>
 
     <string name="settings_theme_dark" translatable="false">dark</string>
     <string name="settings_theme_light" translatable="false">light</string>
     <string name="settings_theme_system" translatable="false">system</string>
+    <string name="settings_quick_match_valid_2_days" translatable="false">two_days</string>
+    <string name="settings_quick_match_valid_7_days" translatable="false">seven_days</string>
+    <string name="settings_quick_match_valid_30_days" translatable="false">thirty_days</string>
+    <string name="settings_quick_match_valid_always" translatable="false">never</string>
 
     <string name="button_add_20" translatable="false">+20</string>
     <string name="button_add_50" translatable="false">+50</string>

@@ -71,8 +71,10 @@ dependencies {
     implementation "com.google.dagger:hilt-android:${versions.hiltDagger}"
     kapt "com.google.dagger:hilt-android-compiler:${versions.hiltDagger}"
     implementation "androidx.hilt:hilt-lifecycle-viewmodel:${versions.hilt}"
+    implementation "androidx.hilt:hilt-work:${versions.hilt}"
     kapt "androidx.hilt:hilt-compiler:${versions.hilt}"
-
+    // Work
+    implementation "androidx.work:work-runtime-ktx:${versions.work}"
     // Allows to inspect real database content from browser when debug build is running on device
     //debugImplementation 'com.amitshekhar.android:debug-db:1.0.6'
 }

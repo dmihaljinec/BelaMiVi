@@ -32,12 +32,12 @@ data class MatchStatistics(
     val gamesCount: Flow<Int>
 )
 
-private fun nowDate(): String {
+fun nowDate(): String {
     return SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
         .format(Calendar.getInstance().time)
 }
 
-private fun nowTime(): String {
+fun nowTime(): String {
     return SimpleDateFormat("HH:mm", Locale.getDefault())
         .format(Calendar.getInstance().time)
 }

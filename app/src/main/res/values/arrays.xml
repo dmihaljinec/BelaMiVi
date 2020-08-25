@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Label ordering must match values -->
     <array name="theme_option_labels">
         <item>@string/title_theme_dark</item>
         <item>@string/title_theme_light</item>
@@ -11,5 +10,19 @@
         <item>@string/settings_theme_dark</item>
         <item>@string/settings_theme_light</item>
         <item>@string/settings_theme_system</item>
+    </array>
+
+    <array name="quick_match_option_labels">
+        <item>@string/title_quick_match_valid_2_days</item>
+        <item>@string/title_quick_match_valid_7_days</item>
+        <item>@string/title_quick_match_valid_30_days</item>
+        <item>@string/title_quick_match_valid_always</item>
+    </array>
+
+    <array name="quick_match_option_values">
+        <item>@string/settings_quick_match_valid_2_days</item>
+        <item>@string/settings_quick_match_valid_7_days</item>
+        <item>@string/settings_quick_match_valid_30_days</item>
+        <item>@string/settings_quick_match_valid_always</item>
     </array>
 </resources>

@@ -17,9 +17,22 @@
             app:key="@string/key_settings_bela_declaration"
             app:title="@string/title_bela" />
 
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        app:title="@string/title_match">
+
         <EditTextPreference
             app:key="@string/key_settings_set_limit"
             app:title="@string/title_set_limit" />
+
+        <ListPreference
+            app:key="@string/key_settings_quick_match_auto_remove"
+            app:title="@string/title_auto_delete_quick_match"
+            app:defaultValue="@string/settings_quick_match_valid_7_days"
+            app:useSimpleSummaryProvider="true"
+            app:entries="@array/quick_match_option_labels"
+            app:entryValues="@array/quick_match_option_values"/>
 
     </PreferenceCategory>
 
@@ -30,7 +43,7 @@
             app:key="@string/key_settings_theme"
             app:title="@string/title_theme"
             app:defaultValue="@string/settings_theme_dark"
-            app:summary="%s"
+            app:useSimpleSummaryProvider="true"
             app:entries="@array/theme_option_labels"
             app:entryValues="@array/theme_option_values"/>
 
