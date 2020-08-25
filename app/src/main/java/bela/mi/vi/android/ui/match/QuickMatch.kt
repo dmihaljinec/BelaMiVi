@@ -14,10 +14,11 @@ private const val TAG_QUICK_MATCH_CLEANER = "QuickMatchCleaner"
 
 @ExperimentalCoroutinesApi
 fun enqueueQuickMatchCleaner(context: Context) {
-    val worker = PeriodicWorkRequest.Builder(
-        QuickMatchCleaner::class.java,
-        1,
-        TimeUnit.DAYS
+    val worker = PeriodicWorkRequestBuilder<QuickMatchCleaner>(
+        24,
+        TimeUnit.HOURS,
+        2,
+        TimeUnit.HOURS
     ).build()
     WorkManager.getInstance(context).enqueueUniquePeriodicWork(
         TAG_QUICK_MATCH_CLEANER,

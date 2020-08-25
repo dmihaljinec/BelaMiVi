@@ -43,12 +43,12 @@ class BelaSettings @Inject constructor(@ApplicationContext context: Context) : S
         val sharedPreference = PreferenceManager.getDefaultSharedPreferences(context)
         sharedPreference?.run {
             registerOnSharedPreferenceChangeListener(listener)
-            gamePoints.value = getIntFromString(keyGamePoints, Settings.DEFAULT_GAME_POINTS)
-            allTricks.value = getIntFromString(keyAllTricks, Settings.DEFAULT_ALL_TRICKS)
-            belaDeclaration.value = getIntFromString(keyBelaDeclaration, Settings.DEFAULT_BELA_DECLARATION)
-            setLimit.value = getIntFromString(keySetLimit, Settings.DEFAULT_SET_LIMIT)
-            themeMode.value = getThemeMode()
-            quickMatchValidityPeriod.value = getQuickMatchValidityPeriod()
+            gamePoints.postValue(getIntFromString(keyGamePoints, Settings.DEFAULT_GAME_POINTS))
+            allTricks.postValue(getIntFromString(keyAllTricks, Settings.DEFAULT_ALL_TRICKS))
+            belaDeclaration.postValue(getIntFromString(keyBelaDeclaration, Settings.DEFAULT_BELA_DECLARATION))
+            setLimit.postValue(getIntFromString(keySetLimit, Settings.DEFAULT_SET_LIMIT))
+            themeMode.postValue(getThemeMode())
+            quickMatchValidityPeriod.postValue(getQuickMatchValidityPeriod())
         }
     }
 
