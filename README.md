@@ -16,4 +16,4 @@ License
 GPLv3. See the [LICENSE][2] file for details.
 
 [1]: https://play.google.com/store/apps/details?id=bela.mi.vi.blok
-[2]: https://github.com/dmihaljinec/BelaMiVi/LICENSE.md
+[2]: https://github.com/dmihaljinec/BelaMiVi/blob/master/LICENSE.md
