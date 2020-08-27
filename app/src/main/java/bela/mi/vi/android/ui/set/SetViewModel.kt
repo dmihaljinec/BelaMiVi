@@ -16,7 +16,7 @@ data class SetViewModel(
 fun Set.toSetViewModel(coroutineContext: CoroutineContext): SetViewModel {
     return SetViewModel(
         id,
-        teamOnePoints.map { it?.toString() ?: "0" }.asLiveData(coroutineContext), //TODO: check if this is ok or if it can be done better
-        teamTwoPoints.map { it?.toString() ?: "0" }.asLiveData(coroutineContext)
+        teamOnePoints.map { it.toString() }.asLiveData(coroutineContext),
+        teamTwoPoints.map { it.toString() }.asLiveData(coroutineContext)
     )
 }
