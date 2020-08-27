@@ -6,13 +6,11 @@ import bela.mi.vi.data.BelaRepository.GameReason.GameNotEditable
 import bela.mi.vi.data.BelaRepository.GameReason.InvalidGameData
 import bela.mi.vi.data.BelaRepository.OperationFailed
 import bela.mi.vi.data.Set
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import javax.inject.Inject
 
 
-@ExperimentalCoroutinesApi
 class WithGame @Inject constructor(private val belaRepository: BelaRepository) {
 
     @Throws(IllegalArgumentException::class, GameOperationFailed::class)

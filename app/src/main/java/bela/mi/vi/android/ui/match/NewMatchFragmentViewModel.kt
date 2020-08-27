@@ -15,13 +15,11 @@ import bela.mi.vi.data.Player
 import bela.mi.vi.interactor.WithMatch
 import bela.mi.vi.interactor.WithPlayer
 import kotlinx.coroutines.CoroutineExceptionHandler
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 
 
-@ExperimentalCoroutinesApi
 class NewMatchFragmentViewModel @ViewModelInject constructor(
     private val withMatch: WithMatch,
     private val withPlayer: WithPlayer,

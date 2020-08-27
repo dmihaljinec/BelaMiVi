@@ -8,13 +8,11 @@ import bela.mi.vi.android.ui.ConstraintSetsBuilder
 import bela.mi.vi.data.Game
 import bela.mi.vi.data.Player
 import bela.mi.vi.interactor.WithMatch
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 
 
-@ExperimentalCoroutinesApi
 class GameListFragmentViewModel @ViewModelInject constructor(
     private val withMatch: WithMatch,
     @Assisted savedStateHandle: SavedStateHandle

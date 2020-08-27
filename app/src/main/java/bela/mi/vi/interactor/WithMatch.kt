@@ -4,7 +4,6 @@ import bela.mi.vi.data.*
 import bela.mi.vi.data.BelaRepository.OperationFailed
 import bela.mi.vi.data.Set
 import bela.mi.vi.data.Settings.Companion.QUICK_MATCH_VALID_ALWAYS
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.first
@@ -14,7 +13,6 @@ import java.util.*
 import javax.inject.Inject
 
 
-@ExperimentalCoroutinesApi
 class WithMatch @Inject constructor(private val belaRepository: BelaRepository) {
 
     @Throws(IllegalArgumentException::class)

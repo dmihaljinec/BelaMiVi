@@ -12,10 +12,8 @@ import bela.mi.vi.android.R
 import bela.mi.vi.android.databinding.FragmentSetListBinding
 import bela.mi.vi.android.ui.MainActivity
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 
-@ExperimentalCoroutinesApi
 @AndroidEntryPoint
 class SetListFragment : Fragment() {
     private val adapter = SetListAdapter(true)

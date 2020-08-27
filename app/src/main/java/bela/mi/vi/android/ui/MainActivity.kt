@@ -16,10 +16,8 @@ import androidx.navigation.ui.setupWithNavController
 import bela.mi.vi.android.R
 import com.google.android.material.navigation.NavigationView
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 
-@ExperimentalCoroutinesApi
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     private val topLevelDestinations = setOf(
@@ -82,7 +80,6 @@ class MainActivity : AppCompatActivity() {
     }
 }
 
-@ExperimentalCoroutinesApi
 fun Fragment.requireMainActivity(): MainActivity {
     val mainActivity = activity as? MainActivity
     return mainActivity ?: throw IllegalStateException("Fragment $this not attached to MainActivity.")

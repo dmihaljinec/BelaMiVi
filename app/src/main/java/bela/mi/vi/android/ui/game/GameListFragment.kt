@@ -12,10 +12,8 @@ import bela.mi.vi.android.R
 import bela.mi.vi.android.databinding.FragmentGameListBinding
 import bela.mi.vi.android.ui.MainActivity
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 
-@ExperimentalCoroutinesApi
 @AndroidEntryPoint
 class GameListFragment : Fragment() {
     private val adapter = GameListAdapter(true)

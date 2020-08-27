@@ -10,7 +10,6 @@ import androidx.appcompat.widget.Toolbar
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import bela.mi.vi.android.R
@@ -18,10 +17,8 @@ import bela.mi.vi.android.databinding.FragmentNewMatchBinding
 import bela.mi.vi.android.ui.MainActivity
 import bela.mi.vi.android.ui.player.PlayerListAdapter
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 
-@ExperimentalCoroutinesApi
 @AndroidEntryPoint
 class NewMatchFragment : Fragment(), Toolbar.OnMenuItemClickListener {
     private val adapter = PlayerListAdapter()
@@ -43,7 +40,7 @@ class NewMatchFragment : Fragment(), Toolbar.OnMenuItemClickListener {
         binding.save.setOnClickListener { save() }
         binding.executePendingBindings()
         adapter.clickListener = newMatchFragmentViewModel.clickListener
-        newMatchFragmentViewModel.availablePlayers.observe(viewLifecycleOwner, Observer { adapter.submitList(it) })
+        newMatchFragmentViewModel.availablePlayers.observe(viewLifecycleOwner) { adapter.submitList(it) }
         (activity as? MainActivity)?.setupToolbarMenu(R.menu.new_match, this)
         return binding.root
     }

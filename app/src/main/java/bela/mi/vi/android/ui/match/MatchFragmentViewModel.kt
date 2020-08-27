@@ -10,13 +10,11 @@ import bela.mi.vi.data.BelaRepository.OperationFailed
 import bela.mi.vi.data.Game
 import bela.mi.vi.interactor.WithMatch
 import kotlinx.coroutines.CoroutineExceptionHandler
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import kotlin.math.absoluteValue
 
 
-@ExperimentalCoroutinesApi
 class MatchFragmentViewModel @ViewModelInject constructor(
     private val withMatch: WithMatch,
     @Assisted savedStateHandle: SavedStateHandle

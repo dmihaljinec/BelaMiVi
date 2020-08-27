@@ -5,14 +5,13 @@ import androidx.hilt.Assisted
 import androidx.hilt.work.WorkerInject
 import androidx.work.*
 import bela.mi.vi.interactor.WithMatch
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.coroutineScope
 import java.util.concurrent.TimeUnit
 
 
 private const val TAG_QUICK_MATCH_CLEANER = "QuickMatchCleaner"
 
-@ExperimentalCoroutinesApi
+
 fun enqueueQuickMatchCleaner(context: Context) {
     val worker = PeriodicWorkRequestBuilder<QuickMatchCleaner>(
         24,
@@ -31,7 +30,7 @@ fun cancelQuickMatchCleaner(context: Context) {
     WorkManager.getInstance(context).cancelAllWorkByTag(TAG_QUICK_MATCH_CLEANER)
 }
 
-@ExperimentalCoroutinesApi
+
 class QuickMatchCleaner @WorkerInject constructor(
     @Assisted appContext: Context,
     @Assisted workerParams: WorkerParameters,

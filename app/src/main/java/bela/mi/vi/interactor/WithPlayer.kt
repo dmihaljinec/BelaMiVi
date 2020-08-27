@@ -1,18 +1,15 @@
 package bela.mi.vi.interactor
 
 import bela.mi.vi.data.BelaRepository
-import bela.mi.vi.data.BelaRepository.PlayerOperationFailed
-import bela.mi.vi.data.BelaRepository.PlayerReason.InvalidPlayerName
 import bela.mi.vi.data.BelaRepository.OperationFailed
+import bela.mi.vi.data.BelaRepository.PlayerOperationFailed
 import bela.mi.vi.data.NewPlayer
 import bela.mi.vi.data.Player
 import bela.mi.vi.data.requirePlayerNameNotBlank
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 
-@ExperimentalCoroutinesApi
 class WithPlayer @Inject constructor(private val belaRepository: BelaRepository) {
 
     @Throws(PlayerOperationFailed::class)

@@ -5,13 +5,11 @@ import bela.mi.vi.data.BelaRepository.OperationFailed
 import bela.mi.vi.data.BelaRepository.Reason.SetNotFound
 import bela.mi.vi.data.Set
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 
 
-@ExperimentalCoroutinesApi
 class RoomSetDataSource(private val db: BelaDatabase) : SetDataSource {
 
     override suspend fun add(newSet: NewSet): Long = withContext(Dispatchers.IO) {

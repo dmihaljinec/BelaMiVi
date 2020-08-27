@@ -11,14 +11,12 @@ import bela.mi.vi.data.Player
 import bela.mi.vi.data.TeamOrdinal
 import bela.mi.vi.interactor.WithMatch
 import kotlinx.coroutines.CoroutineExceptionHandler
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import java.text.DecimalFormat
 
 
-@ExperimentalCoroutinesApi
 class MatchStatisticsFragmentViewModel @ViewModelInject constructor(
     private val withMatch: WithMatch,
     @Assisted savedStateHandle: SavedStateHandle

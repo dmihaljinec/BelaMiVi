@@ -20,11 +20,9 @@ import bela.mi.vi.android.ui.gameCoroutineExceptionHandler
 import bela.mi.vi.data.BelaRepository.GameOperationFailed
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineExceptionHandler
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.launch
 
 
-@ExperimentalCoroutinesApi
 @AndroidEntryPoint
 class GameFragment : Fragment(), Toolbar.OnMenuItemClickListener {
     private val gameId: Long by lazy { arguments?.getLong(getString(R.string.key_game_id), -1L) ?: -1L }

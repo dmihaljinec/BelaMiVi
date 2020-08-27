@@ -13,11 +13,9 @@ import androidx.preference.PreferenceFragmentCompat
 import bela.mi.vi.android.R
 import bela.mi.vi.android.ui.requireMainActivity
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import javax.inject.Inject
 
 
-@ExperimentalCoroutinesApi
 @AndroidEntryPoint
 class SettingsFragment : PreferenceFragmentCompat() {
     @Inject lateinit var belaSettings: BelaSettings

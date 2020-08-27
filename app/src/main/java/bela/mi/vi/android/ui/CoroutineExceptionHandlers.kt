@@ -8,10 +8,8 @@ import bela.mi.vi.data.BelaRepository.*
 import bela.mi.vi.data.BelaRepository.GameReason.GameNotEditable
 import bela.mi.vi.data.BelaRepository.PlayerReason.*
 import bela.mi.vi.data.BelaRepository.Reason.*
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 
-@ExperimentalCoroutinesApi
 fun playerCoroutineExceptionHandler(operationFailed: PlayerOperationFailed, context: Context) {
     val message = when (operationFailed.reason) {
         is PlayerNameNotUnique ->
@@ -24,7 +22,6 @@ fun playerCoroutineExceptionHandler(operationFailed: PlayerOperationFailed, cont
     Toast.makeText(context, message, Toast.LENGTH_LONG).show()
 }
 
-@ExperimentalCoroutinesApi
 fun gameCoroutineExceptionHandler(operationFailed: GameOperationFailed, context: Context) {
     val message = when (operationFailed.reason) {
         is GameNotEditable ->
@@ -41,7 +38,6 @@ fun gameCoroutineExceptionHandler(operationFailed: GameOperationFailed, context:
     Toast.makeText(context, message, Toast.LENGTH_LONG).show()
 }
 
-@ExperimentalCoroutinesApi
 fun operationFailedCoroutineExceptionHandler(operationFailed: OperationFailed) {
     val subject = when (operationFailed.reason) {
         is GameNotFound -> "Game"

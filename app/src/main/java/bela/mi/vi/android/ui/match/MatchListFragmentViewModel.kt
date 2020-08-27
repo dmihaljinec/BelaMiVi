@@ -12,13 +12,11 @@ import bela.mi.vi.android.ui.operationFailedCoroutineExceptionHandler
 import bela.mi.vi.data.BelaRepository.OperationFailed
 import bela.mi.vi.interactor.WithMatch
 import kotlinx.coroutines.CoroutineExceptionHandler
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 
 
-@ExperimentalCoroutinesApi
 class MatchListFragmentViewModel @ViewModelInject constructor(
     private val withMatch: WithMatch
 ) : ViewModel() {

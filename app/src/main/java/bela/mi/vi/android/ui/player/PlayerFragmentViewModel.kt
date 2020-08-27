@@ -14,12 +14,10 @@ import bela.mi.vi.data.BelaRepository.OperationFailed
 import bela.mi.vi.data.BelaRepository.PlayerOperationFailed
 import bela.mi.vi.interactor.WithPlayer
 import kotlinx.coroutines.CoroutineExceptionHandler
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 
-@ExperimentalCoroutinesApi
 class PlayerFragmentViewModel @ViewModelInject constructor(
     private val withPlayer: WithPlayer,
     @Assisted savedStateHandle: SavedStateHandle

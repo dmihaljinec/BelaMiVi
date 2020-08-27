@@ -9,11 +9,9 @@ import bela.mi.vi.android.ui.match.enqueueQuickMatchCleaner
 import bela.mi.vi.android.ui.settings.BelaSettings
 import bela.mi.vi.data.Settings
 import dagger.hilt.android.HiltAndroidApp
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import javax.inject.Inject
 
 
-@ExperimentalCoroutinesApi
 @HiltAndroidApp
 class App : Application(), Configuration.Provider {
     @Inject lateinit var belaSettings: BelaSettings

@@ -9,10 +9,8 @@ import androidx.fragment.app.Fragment
 import bela.mi.vi.android.R
 import bela.mi.vi.android.databinding.FragmentAboutBinding
 import bela.mi.vi.android.ui.requireMainActivity
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 
-@ExperimentalCoroutinesApi
 class AboutFragment : Fragment() {
 
     override fun onCreateView(

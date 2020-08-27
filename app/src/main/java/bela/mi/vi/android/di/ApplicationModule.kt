@@ -10,7 +10,6 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ApplicationComponent
 import dagger.hilt.android.qualifiers.ApplicationContext
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import javax.inject.Singleton
 
 
@@ -20,7 +19,6 @@ object ApplicationModule {
 
     @Provides
     @Singleton
-    @ExperimentalCoroutinesApi
     fun provideBelaRepository(
         @ApplicationContext context: Context,
         belaSettings: BelaSettings

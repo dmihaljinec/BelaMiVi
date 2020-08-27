@@ -15,10 +15,8 @@ import bela.mi.vi.android.R
 import bela.mi.vi.android.databinding.FragmentMatchListBinding
 import bela.mi.vi.android.ui.MainActivity
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 
-@ExperimentalCoroutinesApi
 @AndroidEntryPoint
 class MatchListFragment : Fragment(), Toolbar.OnMenuItemClickListener {
     private val adapter = MatchListAdapter(true)

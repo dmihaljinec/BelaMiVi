@@ -15,13 +15,13 @@ import org.junit.Assert.assertThrows
 import org.junit.Test
 
 
-@ExperimentalCoroutinesApi
 class WithPlayerTest {
     private val belaRepository = mockk<BelaRepository> {
         coEvery { getPlayer(1) } coAnswers { flowOf(Player(1L, "James", flowOf(0), flowOf(0))) }
     }
 
     @Test
+    @ExperimentalCoroutinesApi
     fun `player name which contains empty string or whitespaces throws PlayerOperationFailed with InvalidPlayerName reason`() {
         val withPlayer = WithPlayer(belaRepository)
         val names = listOf("", " ", "\t", "\n", "\u00A0", " \t\n\u00A0")

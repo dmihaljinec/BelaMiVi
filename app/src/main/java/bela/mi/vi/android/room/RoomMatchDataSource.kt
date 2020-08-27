@@ -5,14 +5,12 @@ import bela.mi.vi.data.BelaRepository.OperationFailed
 import bela.mi.vi.data.BelaRepository.Reason.MatchNotFound
 import bela.mi.vi.data.BelaRepository.Reason.PlayerNotFound
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 
 
-@ExperimentalCoroutinesApi
 class RoomMatchDataSource(
     private val db: BelaDatabase
 ) : MatchDataSource {
