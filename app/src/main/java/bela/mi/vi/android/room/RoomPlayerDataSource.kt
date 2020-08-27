@@ -10,14 +10,12 @@ import bela.mi.vi.data.NewPlayer
 import bela.mi.vi.data.Player
 import bela.mi.vi.data.PlayerDataSource
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 
 
-@ExperimentalCoroutinesApi
 class RoomPlayerDataSource(private val db: BelaDatabase) : PlayerDataSource {
     override suspend fun add(newPlayer: NewPlayer): Long = withContext(Dispatchers.IO) {
         return@withContext try {

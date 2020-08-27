@@ -2,11 +2,9 @@ package bela.mi.vi.data
 
 import bela.mi.vi.data.BelaRepository.GameOperationFailed
 import bela.mi.vi.data.BelaRepository.OperationFailed
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 
 
-@ExperimentalCoroutinesApi
 interface GameDataSource {
     suspend fun add(game: Game): Long
     @Throws(OperationFailed::class) suspend fun get(id: Long): Flow<Game>

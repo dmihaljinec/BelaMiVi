@@ -9,7 +9,6 @@ import androidx.appcompat.widget.Toolbar
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.observe
 import androidx.navigation.fragment.findNavController
 import bela.mi.vi.android.R
 import bela.mi.vi.android.databinding.FragmentPlayerListBinding

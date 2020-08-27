@@ -6,6 +6,7 @@ import bela.mi.vi.data.BelaRepository.PlayerReason.InvalidPlayerName
 import bela.mi.vi.data.BelaRepository.OperationFailed
 import bela.mi.vi.data.NewPlayer
 import bela.mi.vi.data.Player
+import bela.mi.vi.data.requirePlayerNameNotBlank
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
@@ -16,8 +17,7 @@ class WithPlayer @Inject constructor(private val belaRepository: BelaRepository)
 
     @Throws(PlayerOperationFailed::class)
     suspend fun new(name: String): Long {
-        if (name.isEmpty()) throw PlayerOperationFailed(InvalidPlayerName)
-        return belaRepository.add(NewPlayer(name.trim()))
+        return belaRepository.add(NewPlayer(name))
     }
 
     @Throws(OperationFailed::class)
@@ -31,8 +31,8 @@ class WithPlayer @Inject constructor(private val belaRepository: BelaRepository)
 
     @Throws(PlayerOperationFailed::class)
     suspend fun rename(id: Long, name: String) {
-        if (name.isEmpty()) throw PlayerOperationFailed(InvalidPlayerName)
-        belaRepository.renamePlayer(id, name.trim())
+        requirePlayerNameNotBlank(name)
+        belaRepository.renamePlayer(id, name)
     }
 
     @Throws(PlayerOperationFailed::class)

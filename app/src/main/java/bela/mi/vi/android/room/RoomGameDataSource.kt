@@ -6,13 +6,11 @@ import bela.mi.vi.data.Game
 import bela.mi.vi.data.GameDataSource
 import bela.mi.vi.data.TeamOrdinal
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 
 
-@ExperimentalCoroutinesApi
 class RoomGameDataSource(private val db: BelaDatabase) : GameDataSource {
     override suspend fun add(game: Game): Long = withContext(Dispatchers.IO) {
         return@withContext db.gameDao().add(

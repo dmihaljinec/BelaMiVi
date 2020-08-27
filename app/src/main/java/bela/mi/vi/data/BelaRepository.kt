@@ -1,10 +1,8 @@
 package bela.mi.vi.data
 
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 
 
-@ExperimentalCoroutinesApi
 class BelaRepository(
     private val playerDataSource: PlayerDataSource,
     private val matchDataSource: MatchDataSource,

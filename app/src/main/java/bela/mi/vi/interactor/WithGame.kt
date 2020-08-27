@@ -94,7 +94,7 @@ class WithGame @Inject constructor(private val belaRepository: BelaRepository) {
     private suspend fun requireThatGameIsEditable(id: Long) {
         val game = belaRepository.getGame(id).first()
         val set = belaRepository.getSet(game.setId).first()
-        val lastSet = belaRepository.getAllSets(set.matchId).first().maxBy { it.id }
+        val lastSet = belaRepository.getAllSets(set.matchId).first().maxByOrNull { it.id }
         if (lastSet == null || lastSet.id != set.id) throw GameOperationFailed(GameNotEditable)
     }
 
