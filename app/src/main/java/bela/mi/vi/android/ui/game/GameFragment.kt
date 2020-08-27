@@ -28,7 +28,7 @@ import kotlinx.coroutines.launch
 @AndroidEntryPoint
 class GameFragment : Fragment(), Toolbar.OnMenuItemClickListener {
     private val gameId: Long by lazy { arguments?.getLong(getString(R.string.key_game_id), -1L) ?: -1L }
-    private val gameViewModel: GameViewModel by viewModels()
+    private val gameFragmentViewModel: GameFragmentViewModel by viewModels()
     private val title: String by lazy {
         if (hasGameId) getString(R.string.title_game)
         else getString(R.string.title_new_game)
@@ -58,7 +58,7 @@ class GameFragment : Fragment(), Toolbar.OnMenuItemClickListener {
             container,
             false)
         binding.save.setOnClickListener { save() }
-        binding.game = gameViewModel
+        binding.game = gameFragmentViewModel
         val editorListener: (textView: TextView?, actionId: Int, keyEvent: KeyEvent?) -> Boolean = { _, actionId, keyEvent ->
             if (keyEvent != null && keyEvent.keyCode == KeyEvent.KEYCODE_ENTER || actionId == EditorInfo.IME_ACTION_DONE) {
                 save()
@@ -111,7 +111,7 @@ class GameFragment : Fragment(), Toolbar.OnMenuItemClickListener {
 
     private fun save() {
         lifecycleScope.launch(handler) {
-            gameViewModel.save()
+            gameFragmentViewModel.save()
             findNavController().navigateUp()
         }
     }

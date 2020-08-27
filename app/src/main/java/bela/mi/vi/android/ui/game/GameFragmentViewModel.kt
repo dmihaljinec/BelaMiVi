@@ -24,7 +24,7 @@ import kotlinx.coroutines.launch
 
 
 @ExperimentalCoroutinesApi
-class GameViewModel @ViewModelInject constructor(
+class GameFragmentViewModel @ViewModelInject constructor(
     private val withMatch: WithMatch,
     private val withGame: WithGame,
     private val belaSettings: BelaSettings,

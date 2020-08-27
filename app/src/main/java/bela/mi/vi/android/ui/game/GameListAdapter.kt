@@ -9,7 +9,7 @@ import bela.mi.vi.android.ui.ListAdapter
 import bela.mi.vi.data.Game
 
 
-class GamesAdapter(usesFooter: Boolean = false) : ListAdapter<Game>(diffCallback, usesFooter) {
+class GameListAdapter(usesFooter: Boolean = false) : ListAdapter<Game>(diffCallback, usesFooter) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DataBindingViewHolder {
         return when (viewType) {

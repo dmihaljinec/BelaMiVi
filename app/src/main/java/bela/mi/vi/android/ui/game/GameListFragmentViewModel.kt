@@ -15,7 +15,7 @@ import kotlinx.coroutines.launch
 
 
 @ExperimentalCoroutinesApi
-class GamesViewModel @ViewModelInject constructor(
+class GameListFragmentViewModel @ViewModelInject constructor(
     private val withMatch: WithMatch,
     @Assisted savedStateHandle: SavedStateHandle
 ) : ViewModel() {

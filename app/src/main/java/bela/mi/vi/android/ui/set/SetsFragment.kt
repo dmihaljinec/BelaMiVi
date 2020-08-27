@@ -39,7 +39,7 @@ class SetsFragment : Fragment() {
         binding.setSets(setsViewModel)
         binding.lifecycleOwner = viewLifecycleOwner
         adapter.clickListener = { setSummary ->
-            val action = SetsFragmentDirections.actionSetsFragmentToGamesFragment(matchId, setSummary.id)
+            val action = SetsFragmentDirections.actionSetsFragmentToGameListFragment(matchId, setSummary.id)
             findNavController().navigate(action)
         }
         adapter.attachedViews.observe(viewLifecycleOwner) { setsViewModel.listConstraint.update() }

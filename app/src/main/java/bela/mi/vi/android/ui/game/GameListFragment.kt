@@ -10,7 +10,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.observe
 import androidx.navigation.fragment.findNavController
 import bela.mi.vi.android.R
-import bela.mi.vi.android.databinding.FragmentGamesBinding
+import bela.mi.vi.android.databinding.FragmentGameListBinding
 import bela.mi.vi.android.ui.MainActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -18,37 +18,37 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 @ExperimentalCoroutinesApi
 @AndroidEntryPoint
-class GamesFragment : Fragment() {
-    private val adapter = GamesAdapter(true)
+class GameListFragment : Fragment() {
+    private val adapter = GameListAdapter(true)
     val setId: Long by lazy {
         arguments?.getLong(getString(R.string.key_set_id), -1L) ?: -1L
     }
-    private val gamesViewModel: GamesViewModel by viewModels()
+    private val gameListFragmentViewModel: GameListFragmentViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val binding = DataBindingUtil.inflate<FragmentGamesBinding>(
+        val binding = DataBindingUtil.inflate<FragmentGameListBinding>(
             inflater,
-            R.layout.fragment_games,
+            R.layout.fragment_game_list,
             container,
             false)
         binding.list.adapter = adapter
-        binding.setGames(gamesViewModel)
+        binding.games = gameListFragmentViewModel
         binding.lifecycleOwner = viewLifecycleOwner
         adapter.clickListener = { game ->
-            val action = GamesFragmentDirections.actionGamesFragmentToGameFragment(gameId = game.id)
+            val action = GameListFragmentDirections.actionGameListFragmentToGameFragment(gameId = game.id)
             findNavController().navigate(action)
         }
         adapter.longClickListener = { game ->
-            val action = GamesFragmentDirections.actionGamesFragmentToDeleteActionDialogFragment(gameId = game.id)
+            val action = GameListFragmentDirections.actionGameListFragmentToDeleteActionDialogFragment(gameId = game.id)
             findNavController().navigate(action)
             true
         }
-        adapter.attachedViews.observe(viewLifecycleOwner) { gamesViewModel.listConstraint.update() }
-        gamesViewModel.games.observe(viewLifecycleOwner) { adapter.submitList(it) }
+        adapter.attachedViews.observe(viewLifecycleOwner) { gameListFragmentViewModel.listConstraint.update() }
+        gameListFragmentViewModel.games.observe(viewLifecycleOwner) { adapter.submitList(it) }
         (activity as? MainActivity)?.clearToolbarMenu()
         return binding.root
     }

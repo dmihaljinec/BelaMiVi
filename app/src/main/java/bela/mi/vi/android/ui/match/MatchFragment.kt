@@ -14,7 +14,7 @@ import androidx.navigation.fragment.findNavController
 import bela.mi.vi.android.R
 import bela.mi.vi.android.databinding.FragmentMatchBinding
 import bela.mi.vi.android.ui.DeleteActionDialogFragment
-import bela.mi.vi.android.ui.game.GamesAdapter
+import bela.mi.vi.android.ui.game.GameListAdapter
 import bela.mi.vi.android.ui.requireMainActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -23,7 +23,7 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 @ExperimentalCoroutinesApi
 @AndroidEntryPoint
 class MatchFragment : Fragment(), Toolbar.OnMenuItemClickListener {
-    private val adapter = GamesAdapter(true)
+    private val adapter = GameListAdapter(true)
     private val matchId: Long by lazy { arguments?.getLong(getString(R.string.key_match_id), -1L) ?: -1L }
     private val matchViewModel: MatchViewModel by viewModels()
 

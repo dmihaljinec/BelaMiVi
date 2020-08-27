@@ -6,7 +6,7 @@
         <import type="bela.mi.vi.android.R"/>
         <variable
             name="game"
-            type="bela.mi.vi.android.ui.game.GameViewModel" />
+            type="bela.mi.vi.android.ui.game.GameFragmentViewModel" />
     </data>
 
     <ScrollView
