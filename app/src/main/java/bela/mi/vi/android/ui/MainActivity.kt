@@ -23,7 +23,7 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     private val topLevelDestinations = setOf(
-        R.id.match_summaries_fragment,
+        R.id.match_list_fragment,
         R.id.player_list_fragment
     )
 

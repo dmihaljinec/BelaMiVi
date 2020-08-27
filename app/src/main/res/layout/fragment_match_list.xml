@@ -7,7 +7,7 @@
 
         <variable
             name="match"
-            type="bela.mi.vi.android.ui.match.MatchSummariesViewModel" />
+            type="bela.mi.vi.android.ui.match.MatchListFragmentViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

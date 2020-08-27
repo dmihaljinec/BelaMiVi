@@ -19,7 +19,7 @@ import java.text.DecimalFormat
 
 
 @ExperimentalCoroutinesApi
-class MatchStatisticsViewModel @ViewModelInject constructor(
+class MatchStatisticsFragmentViewModel @ViewModelInject constructor(
     private val withMatch: WithMatch,
     @Assisted savedStateHandle: SavedStateHandle
 ) : ViewModel() {

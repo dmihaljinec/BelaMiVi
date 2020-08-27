@@ -6,7 +6,7 @@
         <import type="bela.mi.vi.android.R" />
         <variable
             name="match"
-            type="bela.mi.vi.android.ui.match.MatchViewModel" />
+            type="bela.mi.vi.android.ui.match.MatchFragmentViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -23,8 +23,8 @@
             android:layout_marginStart="20dp"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:playerOne="@{match.matchSummary.teamOnePlayerOne}"
-            app:playerTwo="@{match.matchSummary.teamOnePlayerTwo}" />
+            app:playerOne="@{match.matchViewModel.teamOnePlayerOne}"
+            app:playerTwo="@{match.matchViewModel.teamOnePlayerTwo}" />
 
         <TextView
             android:id="@+id/set_score"
@@ -49,8 +49,8 @@
             android:layout_marginEnd="20dp"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:playerOne="@{match.matchSummary.teamTwoPlayerOne}"
-            app:playerTwo="@{match.matchSummary.teamTwoPlayerTwo}" />
+            app:playerOne="@{match.matchViewModel.teamTwoPlayerOne}"
+            app:playerTwo="@{match.matchViewModel.teamTwoPlayerTwo}" />
 
         <TextView
             android:id="@+id/list_label"

@@ -5,7 +5,7 @@
     <data>
         <variable
             name="match"
-            type="bela.mi.vi.android.ui.match.MatchStatisticsViewModel" />
+            type="bela.mi.vi.android.ui.match.MatchStatisticsFragmentViewModel" />
     </data>
 
     <ScrollView

@@ -5,7 +5,7 @@
     <data>
         <variable
             name="match"
-            type="bela.mi.vi.android.ui.match.MatchSummary" />
+            type="bela.mi.vi.android.ui.match.MatchViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

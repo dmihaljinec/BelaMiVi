@@ -22,7 +22,7 @@ import kotlinx.coroutines.launch
 
 
 @ExperimentalCoroutinesApi
-class NewMatchViewModel @ViewModelInject constructor(
+class NewMatchFragmentViewModel @ViewModelInject constructor(
     private val withMatch: WithMatch,
     private val withPlayer: WithPlayer,
     private val belaSettings: BelaSettings

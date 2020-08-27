@@ -13,7 +13,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.observe
 import androidx.navigation.fragment.findNavController
 import bela.mi.vi.android.R
-import bela.mi.vi.android.databinding.FragmentMatchSummariesBinding
+import bela.mi.vi.android.databinding.FragmentMatchListBinding
 import bela.mi.vi.android.ui.MainActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -21,43 +21,43 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 @ExperimentalCoroutinesApi
 @AndroidEntryPoint
-class MatchSummariesFragment : Fragment(), Toolbar.OnMenuItemClickListener {
-    private val adapter = MatchSummariesAdapter(true)
-    private val matchSummariesViewModel: MatchSummariesViewModel by viewModels()
+class MatchListFragment : Fragment(), Toolbar.OnMenuItemClickListener {
+    private val adapter = MatchListAdapter(true)
+    private val matchListFragmentViewModel: MatchListFragmentViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val binding = DataBindingUtil.inflate<FragmentMatchSummariesBinding>(
+        val binding = DataBindingUtil.inflate<FragmentMatchListBinding>(
             inflater,
-            R.layout.fragment_match_summaries,
+            R.layout.fragment_match_list,
             container,
             false)
         binding.list.adapter = adapter
         binding.lifecycleOwner = viewLifecycleOwner
-        binding.match = matchSummariesViewModel
+        binding.match = matchListFragmentViewModel
         adapter.clickListener = { matchSummary ->
             val matchAction =
-                MatchSummariesFragmentDirections.actionMatchSummariesFragmentToMatchFragment(
+                MatchListFragmentDirections.actionMatchListFragmentToMatchFragment(
                     matchSummary.matchId
                 )
             findNavController().navigate(matchAction)
         }
         adapter.longClickListener = { matchSummary ->
             val deleteAction =
-                MatchSummariesFragmentDirections.actionMatchSummariesFragmentToDeleteActionDialogFragment(
+                MatchListFragmentDirections.actionMatchListFragmentToDeleteActionDialogFragment(
                     matchId = matchSummary.matchId
                 )
             findNavController().navigate(deleteAction)
             true
         }
-        matchSummariesViewModel.matchSummaries.observe(viewLifecycleOwner) { adapter.submitList(it) }
+        matchListFragmentViewModel.matches.observe(viewLifecycleOwner) { adapter.submitList(it) }
         binding.newMatch.setOnClickListener {
             newMatch()
         }
-        adapter.attachedViews.observe(viewLifecycleOwner) { matchSummariesViewModel.listConstraint.update() }
+        adapter.attachedViews.observe(viewLifecycleOwner) { matchListFragmentViewModel.listConstraint.update() }
         (activity as? MainActivity)?.setupToolbarMenu(R.menu.match_summaries, this)
         return binding.root
     }
@@ -74,22 +74,22 @@ class MatchSummariesFragment : Fragment(), Toolbar.OnMenuItemClickListener {
 
     private fun newMatch() {
         val newMatchAction =
-            MatchSummariesFragmentDirections.actionMatchSummariesFragmentToNewMatchFragment()
+            MatchListFragmentDirections.actionMatchListFragmentToNewMatchFragment()
         findNavController().navigate(newMatchAction)
     }
 
     private fun newQuickMatch() {
         lifecycleScope.launchWhenResumed {
-            val matchId = matchSummariesViewModel.quickMatch()
+            val matchId = matchListFragmentViewModel.quickMatch()
             if (matchId != -1L) {
-                val action = MatchSummariesFragmentDirections.actionMatchSummariesFragmentToMatchFragment(matchId)
+                val action = MatchListFragmentDirections.actionMatchListFragmentToMatchFragment(matchId)
                 findNavController().navigate(action)
             }
         }
     }
 
     private fun deleteAll() {
-        val action = MatchSummariesFragmentDirections.actionMatchSummariesFragmentToDeleteActionDialogFragment(allMatches = true)
+        val action = MatchListFragmentDirections.actionMatchListFragmentToDeleteActionDialogFragment(allMatches = true)
         findNavController().navigate(action)
     }
 }

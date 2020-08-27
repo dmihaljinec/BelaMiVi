@@ -8,32 +8,32 @@ import bela.mi.vi.android.ui.DataBindingViewHolder
 import bela.mi.vi.android.ui.ListAdapter
 
 
-class MatchSummariesAdapter(usesFooter: Boolean = false) : ListAdapter<MatchSummary>(diffCallback, usesFooter) {
+class MatchListAdapter(usesFooter: Boolean = false) : ListAdapter<MatchViewModel>(diffCallback, usesFooter) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DataBindingViewHolder {
         return when (viewType) {
-            TYPE_MATCH_SUMMARY -> DataBindingViewHolder(
+            TYPE_MATCH -> DataBindingViewHolder(
                 parent,
-                R.layout.listitem_match_summary,
+                R.layout.listitem_match,
                 BR.match
             )
             else -> super.onCreateViewHolder(parent, viewType)
         }
     }
 
-    override fun getViewType(position: Int): Int = TYPE_MATCH_SUMMARY
+    override fun getViewType(position: Int): Int = TYPE_MATCH
 
 
     companion object {
-        private val diffCallback = object : DiffUtil.ItemCallback<MatchSummary>() {
-            override fun areItemsTheSame(oldItem: MatchSummary, newItem: MatchSummary): Boolean {
+        private val diffCallback = object : DiffUtil.ItemCallback<MatchViewModel>() {
+            override fun areItemsTheSame(oldItem: MatchViewModel, newItem: MatchViewModel): Boolean {
                 return oldItem.matchId == newItem.matchId
             }
 
-            override fun areContentsTheSame(oldItem: MatchSummary, newItem: MatchSummary): Boolean {
+            override fun areContentsTheSame(oldItem: MatchViewModel, newItem: MatchViewModel): Boolean {
                 return oldItem == newItem
             }
         }
-        const val TYPE_MATCH_SUMMARY = TYPE_OTHER + 1
+        const val TYPE_MATCH = TYPE_OTHER + 1
     }
 }

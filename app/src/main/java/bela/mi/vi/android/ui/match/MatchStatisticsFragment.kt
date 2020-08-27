@@ -17,7 +17,7 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 @ExperimentalCoroutinesApi
 @AndroidEntryPoint
 class MatchStatisticsFragment : Fragment() {
-    private val matchStatisticsViewModel: MatchStatisticsViewModel by viewModels()
+    private val matchStatisticsFragmentViewModel: MatchStatisticsFragmentViewModel by viewModels()
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -28,7 +28,7 @@ class MatchStatisticsFragment : Fragment() {
             R.layout.fragment_match_statistics,
             container,
             false)
-        binding.match = matchStatisticsViewModel
+        binding.match = matchStatisticsFragmentViewModel
         binding.lifecycleOwner = viewLifecycleOwner
         (activity as? MainActivity)?.clearToolbarMenu()
         return binding.root

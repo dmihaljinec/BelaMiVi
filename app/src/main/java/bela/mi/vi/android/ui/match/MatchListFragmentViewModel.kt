@@ -19,9 +19,10 @@ import kotlinx.coroutines.launch
 
 
 @ExperimentalCoroutinesApi
-class MatchSummariesViewModel @ViewModelInject constructor(
-    private val withMatch: WithMatch) : ViewModel() {
-    val matchSummaries: MutableLiveData<List<MatchSummary>> = MutableLiveData()
+class MatchListFragmentViewModel @ViewModelInject constructor(
+    private val withMatch: WithMatch
+) : ViewModel() {
+    val matches: MutableLiveData<List<MatchViewModel>> = MutableLiveData()
     val constraintSets: MutableLiveData<ArrayList<Int>>
     val listConstraint: Constraint.List
     val emptyList: EmptyListViewModel
@@ -32,7 +33,7 @@ class MatchSummariesViewModel @ViewModelInject constructor(
 
     init {
         val constraintSetsBuilder = ConstraintSetsBuilder()
-        listConstraint = constraintSetsBuilder.addListConstraint { matchSummaries.value?.size ?: 0 > 0 }
+        listConstraint = constraintSetsBuilder.addListConstraint { matches.value?.size ?: 0 > 0 }
         constraintSets = constraintSetsBuilder.build()
 
         emptyList = EmptyListViewModel().apply {
@@ -40,15 +41,15 @@ class MatchSummariesViewModel @ViewModelInject constructor(
             text.value = R.string.description_empty_match_list
         }
 
-        matchSummaries.observeForever {
+        matches.observeForever {
             emptyList.visibility.value = it?.size ?: 0 == 0
         }
 
         viewModelScope.launch(handler) {
             withMatch.getAll()
-                .map { matches -> matches.map { match -> match.toMatchSummary(coroutineContext) } }
+                .map { matches -> matches.map { match -> match.toMatchViewModel(coroutineContext) } }
                 .collect {
-                    matchSummaries.value = it
+                    matches.value = it
                 }
         }
     }

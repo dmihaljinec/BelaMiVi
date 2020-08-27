@@ -25,7 +25,7 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 @AndroidEntryPoint
 class NewMatchFragment : Fragment(), Toolbar.OnMenuItemClickListener {
     private val adapter = PlayerListAdapter()
-    private val newMatchViewModel: NewMatchViewModel by viewModels()
+    private val newMatchFragmentViewModel: NewMatchFragmentViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -39,11 +39,11 @@ class NewMatchFragment : Fragment(), Toolbar.OnMenuItemClickListener {
             false)
         binding.list.adapter = adapter
         binding.lifecycleOwner = viewLifecycleOwner
-        binding.match = newMatchViewModel
+        binding.match = newMatchFragmentViewModel
         binding.save.setOnClickListener { save() }
         binding.executePendingBindings()
-        adapter.clickListener = newMatchViewModel.clickListener
-        newMatchViewModel.availablePlayers.observe(viewLifecycleOwner, Observer { adapter.submitList(it) })
+        adapter.clickListener = newMatchFragmentViewModel.clickListener
+        newMatchFragmentViewModel.availablePlayers.observe(viewLifecycleOwner, Observer { adapter.submitList(it) })
         (activity as? MainActivity)?.setupToolbarMenu(R.menu.new_match, this)
         return binding.root
     }
@@ -59,7 +59,7 @@ class NewMatchFragment : Fragment(), Toolbar.OnMenuItemClickListener {
 
     private fun save() {
         lifecycleScope.launchWhenResumed {
-            val matchId = newMatchViewModel.createNewMatch()
+            val matchId = newMatchFragmentViewModel.createNewMatch()
             if (matchId == -1L) {
                 Toast.makeText(context, R.string.description_operation_failed_new_match_missing_player, Toast.LENGTH_LONG).show()
                 return@launchWhenResumed

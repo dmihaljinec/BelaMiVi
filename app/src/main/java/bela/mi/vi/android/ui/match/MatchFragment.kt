@@ -25,7 +25,7 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 class MatchFragment : Fragment(), Toolbar.OnMenuItemClickListener {
     private val adapter = GameListAdapter(true)
     private val matchId: Long by lazy { arguments?.getLong(getString(R.string.key_match_id), -1L) ?: -1L }
-    private val matchViewModel: MatchViewModel by viewModels()
+    private val matchFragmentViewModel: MatchFragmentViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -39,7 +39,7 @@ class MatchFragment : Fragment(), Toolbar.OnMenuItemClickListener {
             container,
             false)
         binding.list.adapter = adapter
-        binding.match = matchViewModel
+        binding.match = matchFragmentViewModel
         binding.lifecycleOwner = viewLifecycleOwner
         adapter.clickListener = { game ->
             editGame(game.id)
@@ -52,16 +52,16 @@ class MatchFragment : Fragment(), Toolbar.OnMenuItemClickListener {
             findNavController().navigate(action)
             true
         }
-        adapter.attachedViews.observe(viewLifecycleOwner) { matchViewModel.listConstraint.update() }
-        matchViewModel.games.observe(viewLifecycleOwner) { adapter.submitList(it) }
+        adapter.attachedViews.observe(viewLifecycleOwner) { matchFragmentViewModel.listConstraint.update() }
+        matchFragmentViewModel.games.observe(viewLifecycleOwner) { adapter.submitList(it) }
         binding.newGame.setOnClickListener { newGame() }
         binding.setScore.setOnClickListener {
-            val toast = Toast.makeText(context, matchViewModel.getDiff(), Toast.LENGTH_SHORT)
+            val toast = Toast.makeText(context, matchFragmentViewModel.getDiff(), Toast.LENGTH_SHORT)
             toast.setGravity(Gravity.CENTER, 0, 0)
             toast.show()
         }
         mainActivity.setupToolbarMenu(R.menu.match, this)
-        matchViewModel.matchScore.observe(viewLifecycleOwner) { matchScore ->
+        matchFragmentViewModel.matchScore.observe(viewLifecycleOwner) { matchScore ->
             matchScore?.let {
                 mainActivity.setToolbarTitle(it)
             }
