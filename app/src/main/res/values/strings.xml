@@ -7,7 +7,6 @@
     <string name="title_list_of_players">List of Players</string>
     <string name="title_new_match">New Match</string>
     <string name="title_match">Match</string>
-    <string name="title_match_with_score">Match %1$s</string>
     <string name="title_player">Player</string>
     <string name="title_sets">Sets</string>
     <string name="title_new_game">New Game</string>
@@ -25,8 +24,6 @@
     <string name="title_theme_system">System default</string>
     <string name="title_points">Points</string>
     <string name="title_display">Display</string>
-    <string name="title_team_one">Team 1</string>
-    <string name="title_team_two">Team 2</string>
     <string name="title_declarations">Declarations</string>
     <string name="title_theme">Theme</string>
     <string name="title_chosen_trump">Chosen Trump</string>
@@ -43,12 +40,12 @@
     <string name="title_quick_match_valid_7_days">7 days</string>
     <string name="title_quick_match_valid_30_days">30 days</string>
     <string name="title_quick_match_valid_always">Never</string>
+    <string name="title_reset_declarations">Reset declarations</string>
     <string name="action_new_match">New Match</string>
     <string name="action_new_quick_match">Quick Match</string>
     <string name="action_new_game">New Game</string>
     <string name="action_new_player">New Player</string>
     <string name="action_save">Save</string>
-    <string name="action_edit">Edit</string>
     <string name="action_delete">Delete</string>
     <string name="action_delete_all">Delete All</string>
     <string name="description_operation_failed_player_used_in_match">Cannot delete players that are members of a match</string>

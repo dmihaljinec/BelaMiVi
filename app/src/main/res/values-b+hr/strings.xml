@@ -6,7 +6,6 @@
     <string name="title_list_of_players">Lista igrača</string>
     <string name="title_new_match">Novi meč</string>
     <string name="title_match">Meč</string>
-    <string name="title_match_with_score">Meč %1$s</string>
     <string name="title_player">Igrač</string>
     <string name="title_sets">Partije</string>
     <string name="title_new_game">Nova igra</string>
@@ -24,8 +23,6 @@
     <string name="title_theme_system">Prati android sustav</string>
     <string name="title_points">Bodovi</string>
     <string name="title_display">Prikaz</string>
-    <string name="title_team_one">Mi</string>
-    <string name="title_team_two">Vi</string>
     <string name="title_declarations">Zvanja</string>
     <string name="title_theme">Tema</string>
     <string name="title_chosen_trump">Odabran adut</string>
@@ -40,12 +37,12 @@
     <string name="title_quick_match_valid_7_days">7 dana</string>
     <string name="title_quick_match_valid_30_days">30 dana</string>
     <string name="title_quick_match_valid_always">Nikad</string>
+    <string name="title_reset_declarations">Poništi zvanja</string>
     <string name="action_new_match">Novi meč</string>
     <string name="action_new_quick_match">Brzi meč</string>
     <string name="action_new_game">Nova igra</string>
     <string name="action_new_player">Novi igrač</string>
     <string name="action_save">Spremi</string>
-    <string name="action_edit">Uredi</string>
     <string name="action_delete">Izbriši</string>
     <string name="action_delete_all">Izbriši sve</string>
     <string name="description_operation_failed_player_used_in_match">Nije moguće izbrisati igrače koji pripadaju meču</string>

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
@@ -117,16 +118,19 @@
 
                 <Button
                     android:id="@+id/team_one_20"
+                    style="?android:attr/buttonBarButtonStyle"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:paddingEnd="5dp"
                     android:background="@drawable/ripple_circle_button"
                     android:onClick="@{() -> game.teamOneAddTwenty()}"
                     android:textColor="@color/colorWhite"
-                    android:text="@string/button_add_20"/>
+                    android:text="@string/button_add_20"
+                    tools:ignore="RtlSymmetry" />
 
                 <Button
                     android:id="@+id/team_one_50"
+                    style="?android:attr/buttonBarButtonStyle"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:layout_marginStart="@dimen/app_margin"
@@ -134,7 +138,8 @@
                     android:background="@drawable/ripple_circle_button"
                     android:onClick="@{() -> game.teamOneAddFifty()}"
                     android:textColor="@color/colorWhite"
-                    android:text="@string/button_add_50"/>
+                    android:text="@string/button_add_50"
+                    tools:ignore="RtlSymmetry" />
 
             </LinearLayout>
 
@@ -161,6 +166,7 @@
                 android:tint="@color/colorWhite"
                 android:background="@drawable/ripple_circle_button"
                 android:onClick="@{() -> game.resetDeclarations()}"
+                android:contentDescription="@string/title_reset_declarations"
                 app:layout_constraintTop_toBottomOf="@id/team_one_declarations"
                 app:layout_constraintBottom_toBottomOf="@id/team_one_points_buttons"
                 app:layout_constraintStart_toStartOf="parent"
@@ -179,6 +185,7 @@
 
                 <Button
                     android:id="@+id/team_two_20"
+                    style="?android:attr/buttonBarButtonStyle"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:layout_marginEnd="@dimen/app_margin"
@@ -186,17 +193,20 @@
                     android:background="@drawable/ripple_circle_button"
                     android:onClick="@{() -> game.teamTwoAddTwenty()}"
                     android:textColor="@color/colorWhite"
-                    android:text="@string/button_add_20"/>
+                    android:text="@string/button_add_20"
+                    tools:ignore="RtlSymmetry" />
 
                 <Button
                     android:id="@+id/team_two_50"
+                    style="?android:attr/buttonBarButtonStyle"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:paddingEnd="5dp"
                     android:background="@drawable/ripple_circle_button"
                     android:onClick="@{() -> game.teamTwoAddFifty()}"
                     android:textColor="@color/colorWhite"
-                    android:text="@string/button_add_50"/>
+                    android:text="@string/button_add_50"
+                    tools:ignore="RtlSymmetry" />
 
             </LinearLayout>
 
@@ -231,11 +241,13 @@
                 android:layout_marginTop="@dimen/app_margin"
                 android:layout_marginStart="@dimen/app_margin"
                 android:minWidth="50dp"
+                android:importantForAutofill="no"
                 app:layout_constraintTop_toBottomOf="@id/points"
                 app:layout_constraintStart_toStartOf="parent"
                 android:inputType="number"
                 android:textSize="@dimen/text_large"
-                android:text="@={game.teamOnePoints}"/>
+                android:text="@={game.teamOnePoints}"
+                tools:ignore="LabelFor" />
 
             <EditText
                 android:id="@+id/team_two_points"
@@ -244,11 +256,13 @@
                 android:layout_marginTop="@dimen/app_margin"
                 android:layout_marginEnd="@dimen/app_margin"
                 android:minWidth="50dp"
+                android:importantForAutofill="no"
                 app:layout_constraintTop_toBottomOf="@id/points"
                 app:layout_constraintEnd_toEndOf="parent"
                 android:inputType="number"
                 android:textSize="@dimen/text_large"
-                android:text="@={game.teamTwoPoints}"/>
+                android:text="@={game.teamTwoPoints}"
+                tools:ignore="LabelFor" />
 
             <Space
                 android:id="@+id/space"
