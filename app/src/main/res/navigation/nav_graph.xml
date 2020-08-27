@@ -68,8 +68,8 @@
             android:id="@+id/action_match_fragment_to_match_statistics_fragment"
             app:destination="@id/match_statistics_fragment" />
         <action
-            android:id="@+id/action_match_fragment_to_sets_fragment"
-            app:destination="@id/sets_fragment" />
+            android:id="@+id/action_match_fragment_to_set_list_fragment"
+            app:destination="@id/set_list_fragment" />
         <action
             android:id="@+id/action_match_fragment_to_delete_action_dialog_fragment"
             app:destination="@id/delete_action_dialog_fragment" />
@@ -109,15 +109,15 @@
             app:destination="@id/delete_action_dialog_fragment" />
     </fragment>
     <fragment
-        android:id="@+id/sets_fragment"
-        android:name="bela.mi.vi.android.ui.set.SetsFragment"
+        android:id="@+id/set_list_fragment"
+        android:name="bela.mi.vi.android.ui.set.SetListFragment"
         android:label="@string/title_list_of_sets">
         <argument
             android:name="matchId"
             app:argType="long"
             android:defaultValue="-1L"/>
         <action
-            android:id="@+id/action_sets_fragment_to_game_list_fragment"
+            android:id="@+id/action_set_list_fragment_to_game_list_fragment"
             app:destination="@id/game_list_fragment" />
     </fragment>
     <fragment

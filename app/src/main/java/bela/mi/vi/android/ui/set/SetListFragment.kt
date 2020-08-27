@@ -10,7 +10,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.observe
 import androidx.navigation.fragment.findNavController
 import bela.mi.vi.android.R
-import bela.mi.vi.android.databinding.FragmentSetsBinding
+import bela.mi.vi.android.databinding.FragmentSetListBinding
 import bela.mi.vi.android.ui.MainActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -18,32 +18,32 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 @ExperimentalCoroutinesApi
 @AndroidEntryPoint
-class SetsFragment : Fragment() {
-    private val adapter = SetsAdapter(true)
+class SetListFragment : Fragment() {
+    private val adapter = SetListAdapter(true)
     val matchId: Long by lazy {
         arguments?.getLong(getString(R.string.key_match_id), -1L) ?: -1L
     }
-    private val setsViewModel: SetsViewModel by viewModels()
+    private val setListFragmentViewModel: SetListFragmentViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val binding = DataBindingUtil.inflate<FragmentSetsBinding>(
+        val binding = DataBindingUtil.inflate<FragmentSetListBinding>(
             inflater,
-            R.layout.fragment_sets,
+            R.layout.fragment_set_list,
             container,
             false)
         binding.list.adapter = adapter
-        binding.setSets(setsViewModel)
+        binding.set = setListFragmentViewModel
         binding.lifecycleOwner = viewLifecycleOwner
         adapter.clickListener = { setSummary ->
-            val action = SetsFragmentDirections.actionSetsFragmentToGameListFragment(matchId, setSummary.id)
+            val action = SetListFragmentDirections.actionSetListFragmentToGameListFragment(matchId, setSummary.id)
             findNavController().navigate(action)
         }
-        adapter.attachedViews.observe(viewLifecycleOwner) { setsViewModel.listConstraint.update() }
-        setsViewModel.sets.observe(viewLifecycleOwner) { adapter.submitList(it) }
+        adapter.attachedViews.observe(viewLifecycleOwner) { setListFragmentViewModel.listConstraint.update() }
+        setListFragmentViewModel.sets.observe(viewLifecycleOwner) { adapter.submitList(it) }
         (activity as? MainActivity)?.clearToolbarMenu()
         return binding.root
     }

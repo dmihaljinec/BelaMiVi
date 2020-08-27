@@ -36,7 +36,7 @@ class GameListFragment : Fragment() {
             container,
             false)
         binding.list.adapter = adapter
-        binding.games = gameListFragmentViewModel
+        binding.game = gameListFragmentViewModel
         binding.lifecycleOwner = viewLifecycleOwner
         adapter.clickListener = { game ->
             val action = GameListFragmentDirections.actionGameListFragmentToGameFragment(gameId = game.id)

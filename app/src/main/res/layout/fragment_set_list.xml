@@ -4,14 +4,14 @@
 
     <data>
         <variable
-            name="sets"
-            type="bela.mi.vi.android.ui.set.SetsViewModel" />
+            name="set"
+            type="bela.mi.vi.android.ui.set.SetListFragmentViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        applyConstraintSets="@{sets.constraintSets}">
+        applyConstraintSets="@{set.constraintSets}">
 
         <include
             android:id="@+id/team_one_icon"
@@ -22,8 +22,8 @@
             android:layout_marginStart="20dp"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:playerOne="@{sets.teamOnePlayerOne}"
-            app:playerTwo="@{sets.teamOnePlayerTwo}"/>
+            app:playerOne="@{set.teamOnePlayerOne}"
+            app:playerTwo="@{set.teamOnePlayerTwo}"/>
 
         <include
             android:id="@+id/team_two_icon"
@@ -34,8 +34,8 @@
             android:layout_marginEnd="20dp"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:playerOne="@{sets.teamTwoPlayerOne}"
-            app:playerTwo="@{sets.teamTwoPlayerTwo}"/>
+            app:playerOne="@{set.teamTwoPlayerOne}"
+            app:playerTwo="@{set.teamTwoPlayerTwo}"/>
 
         <TextView
             android:id="@+id/list_label"

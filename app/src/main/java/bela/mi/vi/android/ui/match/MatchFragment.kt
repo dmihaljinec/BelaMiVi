@@ -120,7 +120,7 @@ class MatchFragment : Fragment(), Toolbar.OnMenuItemClickListener {
     }
 
     private fun sets() {
-        val action = MatchFragmentDirections.actionMatchFragmentToSetsFragment(matchId)
+        val action = MatchFragmentDirections.actionMatchFragmentToSetListFragment(matchId)
         findNavController().navigate(action)
     }
 

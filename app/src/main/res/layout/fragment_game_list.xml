@@ -4,14 +4,14 @@
 
     <data>
         <variable
-            name="games"
+            name="game"
             type="bela.mi.vi.android.ui.game.GameListFragmentViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:applyConstraintSets="@{games.constraintSets}">
+        app:applyConstraintSets="@{game.constraintSets}">
 
         <include
             android:id="@+id/team_one_icon"
@@ -22,8 +22,8 @@
             android:layout_marginStart="20dp"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:playerOne="@{games.teamOnePlayerOne}"
-            app:playerTwo="@{games.teamOnePlayerTwo}" />
+            app:playerOne="@{game.teamOnePlayerOne}"
+            app:playerTwo="@{game.teamOnePlayerTwo}" />
 
         <include
             android:id="@+id/team_two_icon"
@@ -34,8 +34,8 @@
             android:layout_marginEnd="20dp"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:playerOne="@{games.teamTwoPlayerOne}"
-            app:playerTwo="@{games.teamTwoPlayerTwo}" />
+            app:playerOne="@{game.teamTwoPlayerOne}"
+            app:playerTwo="@{game.teamTwoPlayerTwo}" />
 
         <TextView
             android:id="@+id/list_label"

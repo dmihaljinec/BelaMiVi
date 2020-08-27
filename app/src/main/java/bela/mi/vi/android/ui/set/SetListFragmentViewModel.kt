@@ -18,12 +18,12 @@ import kotlinx.coroutines.launch
 
 
 @ExperimentalCoroutinesApi
-class SetsViewModel @ViewModelInject constructor(
+class SetListFragmentViewModel @ViewModelInject constructor(
     private val withMatch: WithMatch,
     @Assisted savedStateHandle: SavedStateHandle
 ) : ViewModel() {
     private val matchId = savedStateHandle.get<Long>("matchId") ?: -1L
-    var sets: LiveData<List<SetSummary>> = MutableLiveData()
+    var sets: MutableLiveData<List<SetViewModel>> = MutableLiveData()
     var teamOnePlayerOne: MutableLiveData<Player> = MutableLiveData()
     var teamOnePlayerTwo: MutableLiveData<Player> = MutableLiveData()
     var teamTwoPlayerOne: MutableLiveData<Player> = MutableLiveData()
@@ -47,9 +47,13 @@ class SetsViewModel @ViewModelInject constructor(
         initObservers()
 
         viewModelScope.launch(handler) {
-            sets = withMatch.getAllSets(matchId)
-                .map { list -> list.map { set -> set.toSetSummary(coroutineContext) } }
-                .asLiveData(coroutineContext)
+            withMatch.getAllSets(matchId)
+                .map { list -> list.map { set -> set.toSetViewModel(coroutineContext) } }
+                .collect {
+                    sets.value = it
+                }
+        }
+        viewModelScope.launch(handler) {
             withMatch.get(matchId).collect {  match ->
                 teamOnePlayerOne.value = match.teamOne.playerOne.first()
                 teamOnePlayerTwo.value = match.teamOne.playerTwo.first()

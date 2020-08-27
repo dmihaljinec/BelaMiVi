@@ -8,7 +8,7 @@ import bela.mi.vi.android.ui.DataBindingViewHolder
 import bela.mi.vi.android.ui.ListAdapter
 
 
-class SetsAdapter(usesFooter: Boolean = false) : ListAdapter<SetSummary>(diffCallback, usesFooter) {
+class SetListAdapter(usesFooter: Boolean = false) : ListAdapter<SetViewModel>(diffCallback, usesFooter) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DataBindingViewHolder {
         return when (viewType) {
@@ -25,11 +25,11 @@ class SetsAdapter(usesFooter: Boolean = false) : ListAdapter<SetSummary>(diffCal
 
 
     companion object {
-        private val diffCallback = object : DiffUtil.ItemCallback<SetSummary>() {
-            override fun areItemsTheSame(oldItem: SetSummary, newItem: SetSummary): Boolean {
+        private val diffCallback = object : DiffUtil.ItemCallback<SetViewModel>() {
+            override fun areItemsTheSame(oldItem: SetViewModel, newItem: SetViewModel): Boolean {
                 return oldItem.id == newItem.id
             }
-            override fun areContentsTheSame(oldItem: SetSummary, newItem: SetSummary): Boolean {
+            override fun areContentsTheSame(oldItem: SetViewModel, newItem: SetViewModel): Boolean {
                 return oldItem == newItem
             }
         }

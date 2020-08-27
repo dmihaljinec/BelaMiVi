@@ -5,7 +5,7 @@
     <data>
         <variable
             name="set"
-            type="bela.mi.vi.android.ui.set.SetSummary" />
+            type="bela.mi.vi.android.ui.set.SetViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
