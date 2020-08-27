@@ -4,10 +4,10 @@
 
     <Constraint
         android:id="@id/team_one_icon"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginStart="20dp"
+        android:layout_width="@dimen/circle_icon_size"
+        android:layout_height="@dimen/circle_icon_size"
+        android:layout_marginTop="@dimen/app_margin_half"
+        android:layout_marginStart="@dimen/app_margin"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 

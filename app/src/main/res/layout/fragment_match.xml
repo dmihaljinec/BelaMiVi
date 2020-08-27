@@ -17,10 +17,10 @@
         <include
             android:id="@+id/team_one_icon"
             layout="@layout/team_icon"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginStart="20dp"
+            android:layout_width="@dimen/circle_icon_size"
+            android:layout_height="@dimen/circle_icon_size"
+            android:layout_marginTop="@dimen/app_margin_half"
+            android:layout_marginStart="@dimen/app_margin"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:playerOne="@{match.matchViewModel.teamOnePlayerOne}"
@@ -38,15 +38,15 @@
             app:layout_constraintEnd_toEndOf="parent"
             android:background="?android:attr/selectableItemBackground"
             android:text='@{match.setScore}'
-            android:textSize="30sp"/>
+            android:textSize="@dimen/text_huge"/>
 
         <include
             android:id="@+id/team_two_icon"
             layout="@layout/team_icon"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="20dp"
+            android:layout_width="@dimen/circle_icon_size"
+            android:layout_height="@dimen/circle_icon_size"
+            android:layout_marginTop="@dimen/app_margin_half"
+            android:layout_marginEnd="@dimen/app_margin"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:playerOne="@{match.matchViewModel.teamTwoPlayerOne}"
@@ -56,7 +56,7 @@
             android:id="@+id/list_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="@dimen/app_margin"
             app:layout_constraintTop_toBottomOf="@id/set_score"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -80,7 +80,7 @@
             android:id="@+id/new_game"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="20dp"
+            android:layout_margin="@dimen/app_margin"
             android:src="@drawable/new_tint_24"
             android:tint="@color/colorWhite"
             android:contentDescription="@string/action_new_game"

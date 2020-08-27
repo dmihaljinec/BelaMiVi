@@ -14,9 +14,9 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
-        android:paddingTop="20dp"
-        android:paddingStart="20dp"
-        android:paddingEnd="20dp"
+        android:paddingTop="@dimen/app_margin"
+        android:paddingStart="@dimen/app_margin"
+        android:paddingEnd="@dimen/app_margin"
         android:paddingBottom="80dp"
         android:visibility="@{emptyList.visibility ? View.VISIBLE : View.INVISIBLE}"
         android:orientation="vertical" >
@@ -33,12 +33,12 @@
             android:id="@+id/empty_list_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="@dimen/app_margin"
             android:fontFamily="@font/ubuntu"
             android:gravity="center"
             app:textResource="@{emptyList.text}"
             android:textColor="@android:color/tab_indicator_text"
-            android:textSize="18sp" />
+            android:textSize="@dimen/text_medium" />
 
     </LinearLayout>
 

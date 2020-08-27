@@ -18,27 +18,27 @@
             android:id="@+id/team_one_points"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
+            android:layout_marginStart="@dimen/app_margin"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toStartOf="@id/team_two_points"
             android:gravity="center"
             android:text='@{"" + game.teamOnePoints}'
-            android:textSize="20sp"/>
+            android:textSize="@dimen/text_large"/>
 
         <TextView
             android:id="@+id/team_two_points"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="20dp"
+            android:layout_marginEnd="@dimen/app_margin"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/team_one_points"
             android:gravity="center"
             android:text='@{"" + game.teamTwoPoints}'
-            android:textSize="20sp"/>
+            android:textSize="@dimen/text_large"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

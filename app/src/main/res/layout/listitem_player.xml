@@ -12,16 +12,16 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingStart="20dp"
-        android:paddingEnd="20dp"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp"
+        android:paddingStart="@dimen/app_margin"
+        android:paddingEnd="@dimen/app_margin"
+        android:paddingTop="@dimen/app_margin_half"
+        android:paddingBottom="@dimen/app_margin_half"
         android:background="?android:attr/selectableItemBackground">
 
         <TextView
             android:id="@+id/player_icon"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="@dimen/circle_icon_size"
+            android:layout_height="@dimen/circle_icon_size"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -30,14 +30,14 @@
             android:gravity="center"
             android:text="@{player.name.substring(0, 1)}"
             android:textColor="@color/colorWhite"
-            android:textSize="20sp"/>
+            android:textSize="@dimen/text_large"/>
 
         <TextView
             android:id="@+id/player_name"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:layout_marginEnd="20dp"
+            android:layout_marginStart="@dimen/app_margin"
+            android:layout_marginEnd="@dimen/app_margin"
             android:singleLine="true"
             android:ellipsize="marquee"
             app:layout_constraintTop_toTopOf="parent"

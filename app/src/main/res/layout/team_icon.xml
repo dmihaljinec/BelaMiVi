@@ -14,8 +14,8 @@
 
     <TextView
         android:id="@+id/team_icon"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
+        android:layout_width="@dimen/circle_icon_size"
+        android:layout_height="@dimen/circle_icon_size"
         android:background="@drawable/circle"
         app:backgroundTintFromTeamPlayerOne="@{playerOne}"
         app:backgroundTintFromTeamPlayerTwo="@{playerTwo}"
@@ -24,6 +24,6 @@
         android:gravity="center"
         android:text='@{(playerOne != null ? playerOne.name.substring(0, 1) : "") + (playerTwo != null ? playerTwo.name.substring(0, 1) : "")}'
         android:textColor="@color/colorWhite"
-        android:textSize="16sp"/>
+        android:textSize="@dimen/text_normal"/>
 
 </layout>
