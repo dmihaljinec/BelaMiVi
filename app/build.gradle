@@ -17,6 +17,7 @@ android {
         targetSdkVersion 29
         versionCode 21
         versionName "2.0.0"
+        testInstrumentationRunner "bela.mi.vi.BelaTestRunner"
     }
 
     applicationVariants.all { variant ->
@@ -75,10 +76,15 @@ dependencies {
     kapt "androidx.hilt:hilt-compiler:${versions.hilt}"
     // Work
     implementation "androidx.work:work-runtime-ktx:${versions.work}"
-    // Allows to inspect real database content from browser when debug build is running on device
-    //debugImplementation 'com.amitshekhar.android:debug-db:1.0.6'
     // Unit test
     testImplementation "junit:junit:${versions.junit}"
     testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:${versions.coroutinesAndroidVersion}"
     testImplementation "io.mockk:mockk:${versions.mockk}"
+    // Android Instrumented test
+    androidTestImplementation "androidx.test:core:${versions.androidTest}"
+    //androidTestImplementation "androidx.test:core-ktx:${versions.androidTest}"
+    androidTestImplementation "androidx.test:runner:${versions.androidTest}"
+    //androidTestImplementation "androidx.test:rules:${versions.androidTest}"
+    // Allows to inspect real database content from browser when debug build is running on device
+    //debugImplementation 'com.amitshekhar.android:debug-db:1.0.6'
 }

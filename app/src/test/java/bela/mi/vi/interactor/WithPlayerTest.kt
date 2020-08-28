@@ -1,4 +1,4 @@
-package bela.mi.vi.test.interactor
+package bela.mi.vi.interactor
 
 import bela.mi.vi.data.BelaRepository
 import bela.mi.vi.data.BelaRepository.PlayerOperationFailed
