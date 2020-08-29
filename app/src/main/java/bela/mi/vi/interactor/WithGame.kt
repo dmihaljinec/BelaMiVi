@@ -89,7 +89,7 @@ class WithGame @Inject constructor(private val belaRepository: BelaRepository) {
      * Game is editable if and only if it's part of a last set.
      */
     @Throws(GameOperationFailed::class)
-    private suspend fun requireThatGameIsEditable(id: Long) {
+    internal suspend fun requireThatGameIsEditable(id: Long) {
         val game = belaRepository.getGame(id).first()
         val set = belaRepository.getSet(game.setId).first()
         val lastSet = belaRepository.getAllSets(set.matchId).first().maxByOrNull { it.id }
@@ -102,15 +102,19 @@ class WithGame @Inject constructor(private val belaRepository: BelaRepository) {
      * increased for team one and team two declarations.
      */
     @Throws(GameOperationFailed::class)
-    private fun requireValidGameData(game: Game) {
+    internal fun requireValidGameData(game: Game) {
         var gamePoints = belaRepository.settings.getGamePoints()
-        if (game.allTricks) gamePoints += belaRepository.settings.getAllTricks()
+        if (game.allTricks) {
+            gamePoints += belaRepository.settings.getAllTricks()
+            if (game.teamOnePoints != 0 && game.teamTwoPoints != 0)
+                throw GameOperationFailed(InvalidGameData(gamePoints, game.teamOnePoints, game.teamTwoPoints))
+        }
         gamePoints += (game.teamOneDeclarations + game.teamTwoDeclarations)
         if (gamePoints != (game.teamOnePoints + game.teamTwoPoints))
             throw GameOperationFailed(InvalidGameData(gamePoints, game.teamOnePoints, game.teamTwoPoints))
     }
 
-    private suspend fun updateSetWinner(set: Set) {
+    internal suspend fun updateSetWinner(set: Set) {
         val match = belaRepository.getMatch(set.matchId).first()
         val setLimit = match.setLimit
         val team1Points = belaRepository.getPointsInSet(set.id, TeamOrdinal.ONE).first()

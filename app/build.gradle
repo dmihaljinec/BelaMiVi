@@ -46,6 +46,11 @@ android {
     }
 }
 
+configurations.all {
+    // androidx.test includes junit 4.12 so this will force that entire project uses same junit version
+    resolutionStrategy.force "junit:junit:${versions.junit}"
+}
+
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:${versions.kotlin}"
@@ -84,7 +89,6 @@ dependencies {
     androidTestImplementation "androidx.test:core:${versions.androidTest}"
     //androidTestImplementation "androidx.test:core-ktx:${versions.androidTest}"
     androidTestImplementation "androidx.test:runner:${versions.androidTest}"
-    //androidTestImplementation "androidx.test:rules:${versions.androidTest}"
     // Allows to inspect real database content from browser when debug build is running on device
     //debugImplementation 'com.amitshekhar.android:debug-db:1.0.6'
 }
