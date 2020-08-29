@@ -92,7 +92,7 @@ class WithMatch @Inject constructor(private val belaRepository: BelaRepository) 
 
     suspend fun getMatchStatistics(id: Long) = belaRepository.getMatchStatistics(id)
 
-    private fun getValidUntil(simpleDateFormat: SimpleDateFormat, validityPeriod: Int): Date {
+    internal fun getValidUntil(simpleDateFormat: SimpleDateFormat, validityPeriod: Int): Date {
         val calendar = Calendar.getInstance()
         calendar.time = simpleDateFormat.parse(nowDate()) ?: Date()
         calendar.add(Calendar.DAY_OF_YEAR, -validityPeriod)
