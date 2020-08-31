@@ -20,6 +20,7 @@ import java.lang.IllegalArgumentException
 @RunWith(AndroidJUnit4ClassRunner::class)
 class WithGameAndroidTest {
     private lateinit var testApplication: TestApplication
+    private lateinit var withMatch: WithMatch
     private lateinit var withGame: WithGame
     private var matchId = -1L
 
@@ -28,14 +29,15 @@ class WithGameAndroidTest {
         val context = ApplicationProvider.getApplicationContext<TestApplication>()
         assertTrue(context != null)
         testApplication = context
+        withMatch = WithMatch(testApplication.belaRepository)
         withGame = WithGame(testApplication.belaRepository)
-        matchId = WithMatch(testApplication.belaRepository).quick()
+        matchId = withMatch.quick()
         assertTrue(matchId != -1L)
     }
 
     @After
     fun cleanup() = runBlocking {
-        if (matchId != -1L) WithMatch(testApplication.belaRepository).remove(matchId)
+        if (matchId != -1L) withMatch.remove(matchId)
     }
 
     @Test

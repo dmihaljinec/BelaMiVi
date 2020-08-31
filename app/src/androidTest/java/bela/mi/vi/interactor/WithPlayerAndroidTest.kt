@@ -5,6 +5,7 @@ import androidx.test.internal.runner.junit4.AndroidJUnit4ClassRunner
 import bela.mi.vi.data.BelaRepository
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
+import org.junit.After
 import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
@@ -24,9 +25,14 @@ class WithPlayerAndroidTest {
         withPlayer = WithPlayer(testApplication.belaRepository)
     }
 
+    @After
+    fun cleanup() = runBlocking {
+        withPlayer.removeAll()
+    }
+
     @Test
     fun newPlayer() = runBlocking {
-        removeAll()
+        withPlayer.removeAll()
         val id = withPlayer.new("James")
         val player = withPlayer.get(id).first()
         assertTrue(player.name == "James")
@@ -34,7 +40,7 @@ class WithPlayerAndroidTest {
 
     @Test
     fun uniquePlayerName(): Unit = runBlocking {
-        removeAll()
+        withPlayer.removeAll()
         withPlayer.new("James")
         try {
             withPlayer.new("James")
@@ -61,20 +67,12 @@ class WithPlayerAndroidTest {
 
     @Test
     fun renamePlayer() = runBlocking {
-        removeAll()
+        withPlayer.removeAll()
         val id = withPlayer.new("Bond")
         assertTrue(id != -1L)
         withPlayer.rename(id, "Bond 007")
         val player = withPlayer.get(id).first()
         assertTrue(player.name == "Bond 007")
-    }
-
-    @Test
-    fun getAll() = runBlocking {
-        removeAll()
-        withPlayer.new("James")
-        withPlayer.new("Bond")
-        assertTrue(withPlayer.getAll().first().size == 2)
     }
 
     @Test
