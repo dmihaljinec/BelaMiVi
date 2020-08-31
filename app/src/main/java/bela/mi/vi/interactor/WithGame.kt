@@ -110,7 +110,7 @@ class WithGame @Inject constructor(private val belaRepository: BelaRepository) {
                 throw GameOperationFailed(InvalidGameData(gamePoints, game.teamOnePoints, game.teamTwoPoints))
         }
         gamePoints += (game.teamOneDeclarations + game.teamTwoDeclarations)
-        if (gamePoints != (game.teamOnePoints + game.teamTwoPoints))
+        if (gamePoints != (game.teamOnePoints + game.teamTwoPoints) || game.teamOnePoints == game.teamTwoPoints)
             throw GameOperationFailed(InvalidGameData(gamePoints, game.teamOnePoints, game.teamTwoPoints))
     }
 

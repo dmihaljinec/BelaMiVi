@@ -70,6 +70,7 @@ class WithGameTest {
         val invalidGames = listOf(
             Game(0L, false, 0, 0, 0, 0),
             Game(0L, false, 0, 0, 182, 0),
+            Game(0L, false, 0, 0, 81, 81),
             Game(0L, true, 0, 0, 152, 100),
             Game(0L, true, 0, 50, 303, 0),
             Game(0L, false, 20, 0, 142, 20),
