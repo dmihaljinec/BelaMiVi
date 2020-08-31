@@ -66,7 +66,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@id/team_one_icon"
             app:layout_constraintEnd_toStartOf="@id/team_two_icon"
-            android:text='@{match.teamOneSetsWon + " - " + match.teamTwoSetsWon}'
+            android:text='@{(match.teamOneSetsWon != null ? match.teamOneSetsWon : "0") + " - " + (match.teamTwoSetsWon != null ? match.teamTwoSetsWon : "0")}'
             android:textSize="@dimen/text_large"/>
 
         <TextView
