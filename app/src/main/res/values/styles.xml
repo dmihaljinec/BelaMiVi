@@ -18,7 +18,6 @@
         <item name="itemBackground">@drawable/ripple_nav_item</item>
     </style>
 
-    <!-- "Widget.Design.BottomSheet.Modal" -->
     <style name="BottomSheetDialogFragment" parent="Theme.MaterialComponents.Light.BottomSheetDialog">
         <item name="bottomSheetStyle">@style/BottomSheetDialogStyle</item>
         <item name="colorAccent">@color/colorAccentBlue</item>
@@ -30,6 +29,11 @@
 
     <style name="EditTextStyle" parent="Widget.AppCompat.EditText">
         <item name="android:minHeight">48dp</item>
+    </style>
+
+    <style name="ImageButtonStyle" parent="Widget.AppCompat.ImageButton">
+        <item name="colorAccent">@color/colorAccentGold</item>
+        <item name="android:background">@android:color/transparent</item> <!-- required for tooltip style -->
     </style>
 
 </resources>

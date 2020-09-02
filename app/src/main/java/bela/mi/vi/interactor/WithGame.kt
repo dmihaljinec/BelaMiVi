@@ -85,6 +85,48 @@ class WithGame @Inject constructor(private val belaRepository: BelaRepository) {
         }
     }
 
+    @Throws(IllegalArgumentException::class)
+    fun pointsToWinSet(setLimit: Int,
+                       gamePoints: Int,
+                       isAllTricks: Boolean,
+                       teamOneDeclarations: Int,
+                       teamTwoDeclarations: Int,
+                       teamOneSetPoints: Int,
+                       teamTwoSetPoints: Int,
+                       team: TeamOrdinal
+    ): Int {
+        require(setLimit > 0 && gamePoints > 0) { "set limit ($setLimit) and game points ($gamePoints) must be greater then zero" }
+        require(teamOneSetPoints < setLimit && teamTwoSetPoints < setLimit) { "team one set points ($teamOneSetPoints) and team two set points ($teamTwoSetPoints) must be less then set limit ($setLimit)" }
+        val targetTeamSetPoints: Int
+        val otherTeamSetPoints: Int
+        val otherTeamDeclarations: Int
+        when (team) {
+            TeamOrdinal.NONE -> throw IllegalArgumentException("TeamOrdinal.NONE cannot be used here, only TeamOrdinal.ONE or TeamOrdinal.TWO")
+            TeamOrdinal.ONE -> {
+                targetTeamSetPoints = teamOneSetPoints
+                otherTeamSetPoints = teamTwoSetPoints
+                otherTeamDeclarations = teamTwoDeclarations
+            }
+            TeamOrdinal.TWO -> {
+                targetTeamSetPoints = teamTwoSetPoints
+                otherTeamSetPoints = teamOneSetPoints
+                otherTeamDeclarations = teamOneDeclarations
+            }
+        }
+        require(targetTeamSetPoints + gamePoints >= setLimit) { "Target team current set points ($targetTeamSetPoints) is insufficient to win set ($setLimit) with given game points ($gamePoints)" }
+        var teamGamePoints = if (otherTeamSetPoints > targetTeamSetPoints) otherTeamSetPoints - targetTeamSetPoints else 0
+        val half = ((gamePoints - teamGamePoints) / 2) + 1
+        teamGamePoints += half.coerceAtLeast(setLimit - targetTeamSetPoints - teamGamePoints)
+        val otherTeamGamePoints = gamePoints - teamGamePoints
+        // Valid game rules
+        when {
+            isAllTricks -> teamGamePoints = gamePoints // other team must have 0 points
+            otherTeamGamePoints < otherTeamDeclarations -> teamGamePoints = gamePoints // if other team points is less then declarations they had then they must have 0 points
+            otherTeamGamePoints == otherTeamDeclarations + 1 -> teamGamePoints++ // 1 is not a valid game points, so other team must have 1 less point
+        }
+        return teamGamePoints
+    }
+
     /**
      * Game is editable if and only if it's part of a last set.
      */

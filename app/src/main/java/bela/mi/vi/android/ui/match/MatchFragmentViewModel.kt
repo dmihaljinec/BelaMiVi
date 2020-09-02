@@ -50,12 +50,12 @@ class MatchFragmentViewModel @ViewModelInject constructor(
         }
         viewModelScope.launch(handler) {
             withMatch.get(matchId).collect { match ->
-                val summary = match.toMatchViewModel(coroutineContext)
-                matchViewModel.value = summary
-                setScore.addSource(summary.teamOnePointsWon) { updateSetScore() }
-                setScore.addSource(summary.teamTwoPointsWon) { updateSetScore() }
-                matchScore.addSource(summary.teamOneSetsWon) { updateMatchScore() }
-                matchScore.addSource(summary.teamTwoSetsWon) { updateMatchScore() }
+                val match = match.toMatchViewModel(coroutineContext)
+                matchViewModel.value = match
+                setScore.addSource(match.teamOnePointsWon) { updateSetScore() }
+                setScore.addSource(match.teamTwoPointsWon) { updateSetScore() }
+                matchScore.addSource(match.teamOneSetsWon) { updateMatchScore() }
+                matchScore.addSource(match.teamTwoSetsWon) { updateMatchScore() }
                 matchViewModel.observeForever {
                     teamOneIconConstraint.update()
                     teamTwoIconConstraint.update()

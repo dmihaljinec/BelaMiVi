@@ -61,4 +61,7 @@
     <string name="description_empty_player_list">Pritisni dodaj gumb i stvori novog igrača</string>
     <string name="description_empty_available_player_list">Nema dostupnih igrača, dodaj preko izbornika</string>
     <string name="hint_new_match">Odaberi igrača</string>
+    <string name="tooltip_add_20">Dodaj 20 zvanja</string>
+    <string name="tooltip_add_50">Dodaj 50 zvanja</string>
+    <string name="tooltip_win_set">Dodaj dosta bodova za pobjedu u partiji</string>
 </resources>

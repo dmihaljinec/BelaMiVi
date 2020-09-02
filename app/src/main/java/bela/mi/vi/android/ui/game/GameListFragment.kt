@@ -17,8 +17,8 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class GameListFragment : Fragment() {
     private val adapter = GameListAdapter(true)
-    val setId: Long by lazy {
-        arguments?.getLong(getString(R.string.key_set_id), -1L) ?: -1L
+    val matchId: Long by lazy {
+        arguments?.getLong(getString(R.string.key_match_id), -1L) ?: -1L
     }
     private val gameListFragmentViewModel: GameListFragmentViewModel by viewModels()
 
@@ -36,7 +36,7 @@ class GameListFragment : Fragment() {
         binding.game = gameListFragmentViewModel
         binding.lifecycleOwner = viewLifecycleOwner
         adapter.clickListener = { game ->
-            val action = GameListFragmentDirections.actionGameListFragmentToGameFragment(gameId = game.id)
+            val action = GameListFragmentDirections.actionGameListFragmentToGameFragment(matchId, game.id)
             findNavController().navigate(action)
         }
         adapter.longClickListener = { game ->

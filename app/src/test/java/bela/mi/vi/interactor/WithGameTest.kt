@@ -142,4 +142,144 @@ class WithGameTest {
             assertTrue(winningSet.winningTeam == pair.second)
         }
     }
+
+    @Test
+    fun pointsToWinSet() {
+        assertTrue(withGame.pointsToWinSet(
+            1001,
+            162,
+            false,
+            0,
+            0,
+            984,
+            953,
+            TeamOrdinal.ONE
+        ) == 82)
+        assertTrue(withGame.pointsToWinSet(
+            1001,
+            162,
+            false,
+            0,
+            0,
+            984,
+            953,
+            TeamOrdinal.TWO
+        ) == 97)
+        assertTrue(withGame.pointsToWinSet(
+            1001,
+            162,
+            false,
+            0,
+            0,
+            840,
+            923,
+            TeamOrdinal.ONE
+        ) == 162)
+        assertTrue(withGame.pointsToWinSet(
+            1001,
+            182,
+            false,
+            20,
+            0,
+            907,
+            838,
+            TeamOrdinal.TWO
+        ) == 182)
+        assertTrue(withGame.pointsToWinSet(
+            1001,
+            182,
+            false,
+            20,
+            0,
+            907,
+            840,
+            TeamOrdinal.TWO
+        ) == 162)
+        assertTrue(withGame.pointsToWinSet(
+            1001,
+            252,
+            true,
+            0,
+            0,
+            845,
+            815,
+            TeamOrdinal.ONE
+        ) == 252)
+    }
+
+    @Test
+    fun invalidPointsToWin() {
+        assertThrows(IllegalArgumentException::class.java) {
+            withGame.pointsToWinSet(
+                1001,
+                162,
+                false,
+                0,
+                0,
+                838,
+                838,
+                TeamOrdinal.ONE
+            )
+        }
+        assertThrows(IllegalArgumentException::class.java) {
+            withGame.pointsToWinSet(
+                0,
+                162,
+                false,
+                0,
+                0,
+                840,
+                840,
+                TeamOrdinal.ONE
+            )
+        }
+        assertThrows(IllegalArgumentException::class.java) {
+            withGame.pointsToWinSet(
+                1001,
+                0,
+                false,
+                0,
+                0,
+                840,
+                840,
+                TeamOrdinal.ONE
+            )
+        }
+        assertThrows(IllegalArgumentException::class.java) {
+            withGame.pointsToWinSet(
+                1001,
+                162,
+                false,
+                0,
+                0,
+                840,
+                1001,
+                TeamOrdinal.ONE
+            )
+        }
+        assertThrows(IllegalArgumentException::class.java) {
+            withGame.pointsToWinSet(
+                1001,
+                162,
+                false,
+                0,
+                0,
+                1017,
+                9321,
+                TeamOrdinal.ONE
+            )
+        }
+        assertThrows(IllegalArgumentException::class.java) {
+            withGame.pointsToWinSet(
+                1001,
+                162,
+                false,
+                0,
+                0,
+                907,
+                953,
+                TeamOrdinal.NONE
+            )
+        }
+    }
 }

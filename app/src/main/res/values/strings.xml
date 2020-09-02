@@ -64,6 +64,9 @@
     <string name="description_empty_player_list">Click the add button below to create a new player</string>
     <string name="description_empty_available_player_list">No available players, add more from the menu</string>
     <string name="hint_new_match">Select player</string>
+    <string name="tooltip_add_20">Add 20 declarations</string>
+    <string name="tooltip_add_50">Add 50 declarations</string>
+    <string name="tooltip_win_set">Add enough points to win the set</string>
 
     <string name="key_match_id" translatable="false">matchId</string>
     <string name="key_all_matches" translatable="false">allMatches</string>

@@ -16,7 +16,7 @@ android {
         minSdkVersion 23
         targetSdkVersion 29
         versionCode 22
-        versionName "2.0.0"
+        versionName "2.0.1"
         testInstrumentationRunner "bela.mi.vi.BelaTestRunner"
     }
 
