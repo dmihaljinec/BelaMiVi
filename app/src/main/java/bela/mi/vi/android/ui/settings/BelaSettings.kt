@@ -70,7 +70,7 @@ class BelaSettings @Inject constructor(@ApplicationContext context: Context) : S
     }
 
     private fun SharedPreferences.getIntFromString(preferenceKey: String, defaultValue: Int): Int {
-        val prefValue = getString(preferenceKey, "$defaultValue")?.toInt() ?: defaultValue
+        val prefValue = getString(preferenceKey, "$defaultValue")?.toIntOrNull() ?: defaultValue
         return if (prefValue <= 0) defaultValue else prefValue
     }
 
