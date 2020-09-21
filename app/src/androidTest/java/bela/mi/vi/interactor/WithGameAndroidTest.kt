@@ -16,7 +16,6 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import java.lang.IllegalArgumentException
 
-
 @RunWith(AndroidJUnit4ClassRunner::class)
 class WithGameAndroidTest {
     private lateinit var testApplication: TestApplication
@@ -152,11 +151,12 @@ class WithGameAndroidTest {
         } }.apply { assertTrue(this?.reason is GameNotFound) }
     }
 
-    private data class GameData(val allTricks: Boolean = false,
-                                val teamOneDeclarations: Int = 0,
-                                val teamTwoDeclarations: Int = 0,
-                                val teamOnePoints: Int = 0,
-                                val teamTwoPoints: Int = 0
+    private data class GameData(
+        val allTricks: Boolean = false,
+        val teamOneDeclarations: Int = 0,
+        val teamTwoDeclarations: Int = 0,
+        val teamOnePoints: Int = 0,
+        val teamTwoPoints: Int = 0
     ) {
         fun compare(game: Game): Boolean = allTricks == game.allTricks &&
                 teamOneDeclarations == game.teamOneDeclarations &&

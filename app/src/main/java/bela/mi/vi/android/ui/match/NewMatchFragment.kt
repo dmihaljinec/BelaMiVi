@@ -18,7 +18,6 @@ import bela.mi.vi.android.ui.MainActivity
 import bela.mi.vi.android.ui.player.PlayerListAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
-
 @AndroidEntryPoint
 class NewMatchFragment : Fragment(), Toolbar.OnMenuItemClickListener {
     private val adapter = PlayerListAdapter()
@@ -46,7 +45,7 @@ class NewMatchFragment : Fragment(), Toolbar.OnMenuItemClickListener {
     }
 
     override fun onMenuItemClick(menuItem: MenuItem): Boolean {
-        when(menuItem.itemId) {
+        when (menuItem.itemId) {
             R.id.save_menu_item -> save()
             R.id.new_player_menu_item -> newPlayer()
             else -> return false

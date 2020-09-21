@@ -15,7 +15,6 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 
-
 class RoomPlayerDataSource(private val db: BelaDatabase) : PlayerDataSource {
     override suspend fun add(newPlayer: NewPlayer): Long = withContext(Dispatchers.IO) {
         return@withContext try {

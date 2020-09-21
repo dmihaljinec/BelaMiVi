@@ -3,7 +3,10 @@ package bela.mi.vi.android.ui.settings
 import android.content.Context
 import android.content.SharedPreferences
 import android.os.Build
-import androidx.appcompat.app.AppCompatDelegate.*
+import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_AUTO_BATTERY
+import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
+import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_NO
+import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_YES
 import androidx.lifecycle.MutableLiveData
 import androidx.preference.PreferenceManager
 import bela.mi.vi.android.R
@@ -14,7 +17,6 @@ import bela.mi.vi.data.Settings.Companion.QUICK_MATCH_VALID_7_DAYS
 import bela.mi.vi.data.Settings.Companion.QUICK_MATCH_VALID_ALWAYS
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
-
 
 class BelaSettings @Inject constructor(@ApplicationContext context: Context) : Settings {
     var gamePoints: MutableLiveData<Int> = MutableLiveData()

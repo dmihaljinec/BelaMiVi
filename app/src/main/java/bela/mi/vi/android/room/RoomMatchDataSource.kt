@@ -1,15 +1,20 @@
 package bela.mi.vi.android.room
 
-import bela.mi.vi.data.*
 import bela.mi.vi.data.BelaRepository.OperationFailed
 import bela.mi.vi.data.BelaRepository.Reason.MatchNotFound
 import bela.mi.vi.data.BelaRepository.Reason.PlayerNotFound
+import bela.mi.vi.data.Match
+import bela.mi.vi.data.MatchDataSource
+import bela.mi.vi.data.MatchStatistics
+import bela.mi.vi.data.NewMatch
+import bela.mi.vi.data.Team
+import bela.mi.vi.data.TeamOrdinal
+import bela.mi.vi.data.TeamStatistics
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
-
 
 class RoomMatchDataSource(
     private val db: BelaDatabase
@@ -31,7 +36,7 @@ class RoomMatchDataSource(
         }
     }
 
-    override suspend fun getAll(): Flow<List<Match>>  {
+    override suspend fun getAll(): Flow<List<Match>> {
         return db.matchDao().getAll().map { it.map { matchEntity -> matchEntity.toMatch() } }
     }
 

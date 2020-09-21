@@ -1,7 +1,12 @@
 package bela.mi.vi.android.ui.match
 
 import androidx.hilt.lifecycle.ViewModelInject
-import androidx.lifecycle.*
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MediatorLiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.asLiveData
+import androidx.lifecycle.viewModelScope
 import bela.mi.vi.android.R
 import bela.mi.vi.android.ui.Constraint
 import bela.mi.vi.android.ui.ConstraintSetsBuilder
@@ -18,7 +23,6 @@ import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
-
 
 class NewMatchFragmentViewModel @ViewModelInject constructor(
     private val withMatch: WithMatch,
@@ -68,7 +72,7 @@ class NewMatchFragmentViewModel @ViewModelInject constructor(
         initObservers()
         viewModelScope.launch(handler) {
             all = withPlayer.getAll()
-                .map{ players -> players.map { player -> player.toPlayerViewModel(coroutineContext) } }
+                .map { players -> players.map { player -> player.toPlayerViewModel(coroutineContext) } }
                 .asLiveData(coroutineContext)
             availablePlayers.addSource(all) { updateAvailablePlayers() }
             all.observeForever { updateSelectedPlayers() }

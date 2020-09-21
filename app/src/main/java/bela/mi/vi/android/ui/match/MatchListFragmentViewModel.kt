@@ -16,7 +16,6 @@ import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 
-
 class MatchListFragmentViewModel @ViewModelInject constructor(
     private val withMatch: WithMatch
 ) : ViewModel() {

@@ -4,7 +4,6 @@ import androidx.lifecycle.MutableLiveData
 import bela.mi.vi.android.R
 import bela.mi.vi.data.TeamOrdinal
 
-
 class ConstraintSetsBuilder {
     private var currentIndex = 0
     private val array = arrayListOf<Int>()
@@ -49,7 +48,6 @@ class ConstraintSetsBuilder {
     }
 }
 
-
 sealed class Constraint(
     val defaultValue: Int,
     protected val constraintSets: MutableLiveData<ArrayList<Int>>,
@@ -67,8 +65,7 @@ sealed class Constraint(
         override fun update() {
             val currentValue = constraintSets.value?.get(index)
             val newValue = if (isAvailable()) available else unavailable
-            if (currentValue == null || currentValue != newValue)
-                constraintSets.set(index, newValue)
+            if (currentValue == null || currentValue != newValue) constraintSets.set(index, newValue)
         }
     }
 
@@ -156,8 +153,7 @@ sealed class Constraint(
                 TeamOrdinal.TWO -> R.xml.game_declarations_team_two
                 TeamOrdinal.NONE -> R.xml.game_declarations_none
             }
-            if (currentValue == null || currentValue != newValue)
-                constraintSets.set(index, newValue)
+            if (currentValue == null || currentValue != newValue) constraintSets.set(index, newValue)
         }
     }
 }

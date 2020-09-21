@@ -16,7 +16,6 @@ import bela.mi.vi.android.databinding.FragmentMatchListBinding
 import bela.mi.vi.android.ui.MainActivity
 import dagger.hilt.android.AndroidEntryPoint
 
-
 @AndroidEntryPoint
 class MatchListFragment : Fragment(), Toolbar.OnMenuItemClickListener {
     private val adapter = MatchListAdapter(true)
@@ -60,7 +59,7 @@ class MatchListFragment : Fragment(), Toolbar.OnMenuItemClickListener {
     }
 
     override fun onMenuItemClick(menuItem: MenuItem): Boolean {
-        when(menuItem.itemId) {
+        when (menuItem.itemId) {
             R.id.new_quick_match_menu_item -> newQuickMatch()
             R.id.new_match_menu_item -> newMatch()
             R.id.delete_all_menu_item -> deleteAll()

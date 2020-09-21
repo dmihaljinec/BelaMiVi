@@ -4,7 +4,6 @@ import androidx.room.Database
 import androidx.room.RoomDatabase
 import bela.mi.vi.android.room.BelaDatabase.Companion.DB_VERSION
 
-
 @Database(
     entities = [PlayerEntity::class, GameEntity::class, SetEntity::class, MatchEntity::class],
     version = DB_VERSION,
@@ -25,6 +24,9 @@ abstract class BelaDatabase : RoomDatabase() {
         const val TABLE_MATCHES = "matches"
         const val TABLE_SETS = "sets"
         const val TABLE_GAMES = "games"
-        const val TABLE_CONNECTED = "$TABLE_MATCHES INNER JOIN $TABLE_SETS ON $TABLE_MATCHES.${MatchEntity.ID} = $TABLE_SETS.${SetEntity.MATCH_ID} INNER JOIN $TABLE_GAMES ON $TABLE_SETS.${SetEntity.ID} = $TABLE_GAMES.${GameEntity.SET_ID}"
+        const val TABLE_CONNECTED =
+            "$TABLE_MATCHES INNER JOIN $TABLE_SETS ON $TABLE_MATCHES.${MatchEntity.ID} =" +
+            "$TABLE_SETS.${SetEntity.MATCH_ID} INNER JOIN $TABLE_GAMES ON" +
+            "$TABLE_SETS.${SetEntity.ID} = $TABLE_GAMES.${GameEntity.SET_ID}"
     }
 }

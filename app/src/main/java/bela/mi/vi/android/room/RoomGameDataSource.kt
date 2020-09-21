@@ -10,7 +10,6 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 
-
 class RoomGameDataSource(private val db: BelaDatabase) : GameDataSource {
     override suspend fun add(game: Game): Long = withContext(Dispatchers.IO) {
         return@withContext db.gameDao().add(

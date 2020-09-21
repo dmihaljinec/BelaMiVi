@@ -9,7 +9,6 @@ import bela.mi.vi.data.requirePlayerNameNotBlank
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
-
 class WithPlayer @Inject constructor(private val belaRepository: BelaRepository) {
 
     @Throws(PlayerOperationFailed::class)
@@ -42,4 +41,3 @@ class WithPlayer @Inject constructor(private val belaRepository: BelaRepository)
         belaRepository.removeAllPlayers()
     }
 }
-

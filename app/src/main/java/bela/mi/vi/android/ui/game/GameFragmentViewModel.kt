@@ -21,7 +21,6 @@ import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 
-
 class GameFragmentViewModel @ViewModelInject constructor(
     private val withMatch: WithMatch,
     private val withGame: WithGame,
@@ -52,7 +51,7 @@ class GameFragmentViewModel @ViewModelInject constructor(
     private var setLimit: MutableLiveData<Int> = MutableLiveData(belaSettings.getSetLimit())
     private val matchId = savedStateHandle.get<Long>("matchId") ?: -1L
     private val gameId = savedStateHandle.get<Long>("gameId") ?: -1L
-    private val saveGame = if(gameId != -1L) ::editGame else ::newGame
+    private val saveGame = if (gameId != -1L) ::editGame else ::newGame
     private val handler = CoroutineExceptionHandler { _, exception ->
         if (exception is OperationFailed) operationFailedCoroutineExceptionHandler(exception)
         else throw exception

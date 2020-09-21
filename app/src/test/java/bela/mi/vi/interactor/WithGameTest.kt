@@ -1,6 +1,12 @@
 package bela.mi.vi.interactor
 
-import bela.mi.vi.data.*
+import bela.mi.vi.data.BelaRepository
+import bela.mi.vi.data.Game
+import bela.mi.vi.data.Match
+import bela.mi.vi.data.Player
+import bela.mi.vi.data.Settings
+import bela.mi.vi.data.Team
+import bela.mi.vi.data.TeamOrdinal
 import bela.mi.vi.data.BelaRepository.GameOperationFailed
 import bela.mi.vi.data.BelaRepository.GameReason.GameNotEditable
 import bela.mi.vi.data.BelaRepository.GameReason.InvalidGameData
@@ -14,7 +20,6 @@ import kotlinx.coroutines.test.runBlockingTest
 import org.junit.Assert.assertThrows
 import org.junit.Assert.assertTrue
 import org.junit.Test
-
 
 class WithGameTest {
     private val belaSettings = mockk<Settings> {

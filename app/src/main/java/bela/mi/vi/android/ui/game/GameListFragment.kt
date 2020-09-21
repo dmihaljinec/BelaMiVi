@@ -13,7 +13,6 @@ import bela.mi.vi.android.databinding.FragmentGameListBinding
 import bela.mi.vi.android.ui.MainActivity
 import dagger.hilt.android.AndroidEntryPoint
 
-
 @AndroidEntryPoint
 class GameListFragment : Fragment() {
     private val adapter = GameListAdapter(true)

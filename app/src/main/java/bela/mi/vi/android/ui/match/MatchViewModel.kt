@@ -6,7 +6,6 @@ import bela.mi.vi.data.Match
 import bela.mi.vi.data.Player
 import kotlin.coroutines.CoroutineContext
 
-
 data class MatchViewModel(
     val matchId: Long,
     val isQuickMatch: Boolean,
@@ -19,7 +18,6 @@ data class MatchViewModel(
     var teamTwoSetsWon: LiveData<Int>,
     var teamTwoPointsWon: LiveData<Int>
 )
-
 
 fun Match.toMatchViewModel(coroutineContext: CoroutineContext): MatchViewModel {
     return MatchViewModel(

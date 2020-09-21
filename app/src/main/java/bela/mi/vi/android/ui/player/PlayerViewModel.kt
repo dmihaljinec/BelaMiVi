@@ -8,7 +8,6 @@ import bela.mi.vi.android.ui.match.formatPercentage
 import bela.mi.vi.data.Player
 import kotlin.coroutines.CoroutineContext
 
-
 data class PlayerViewModel(
     val id: Long,
     val name: String,

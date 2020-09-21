@@ -21,7 +21,6 @@ import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-
 @AndroidEntryPoint
 class DeleteActionDialogFragment : BottomSheetDialogFragment() {
     private val playerId: Long by lazy { arguments?.getLong(getString(R.string.key_player_id), -1L) ?: -1L }
@@ -142,7 +141,7 @@ class DeleteActionDialogFragment : BottomSheetDialogFragment() {
 
     override fun onStart() {
         super.onStart()
-        //this forces the sheet to appear at max height even on landscape
+        // this forces the sheet to appear at max height even on landscape
         val behavior = BottomSheetBehavior.from(requireView().parent as View)
         behavior.state = BottomSheetBehavior.STATE_EXPANDED
     }

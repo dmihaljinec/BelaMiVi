@@ -1,7 +1,11 @@
 package bela.mi.vi.interactor
 
-import bela.mi.vi.data.*
+import bela.mi.vi.data.BelaRepository
 import bela.mi.vi.data.BelaRepository.OperationFailed
+import bela.mi.vi.data.Game
+import bela.mi.vi.data.NewMatch
+import bela.mi.vi.data.nowDate
+import bela.mi.vi.data.Match
 import bela.mi.vi.data.Set
 import bela.mi.vi.data.Settings.Companion.QUICK_MATCH_VALID_ALWAYS
 import kotlinx.coroutines.flow.Flow
@@ -9,24 +13,28 @@ import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
 import java.text.SimpleDateFormat
-import java.util.*
+import java.util.Calendar
+import java.util.Date
+import java.util.Locale
 import javax.inject.Inject
-
 
 class WithMatch @Inject constructor(private val belaRepository: BelaRepository) {
 
     @Throws(IllegalArgumentException::class)
-    suspend fun new(teamOnePlayerOneId: Long,
-                    teamOnePlayerTwoId: Long,
-                    teamTwoPlayerOneId: Long,
-                    teamTwoPlayerTwoId: Long,
-                    setLimit: Int): Long {
-        require(teamOnePlayerOneId != teamOnePlayerTwoId &&
-                teamOnePlayerOneId != teamTwoPlayerOneId &&
-                teamOnePlayerOneId != teamTwoPlayerTwoId &&
-                teamOnePlayerTwoId != teamTwoPlayerOneId &&
-                teamOnePlayerTwoId != teamTwoPlayerTwoId &&
-                teamTwoPlayerOneId != teamTwoPlayerTwoId
+    suspend fun new(
+        teamOnePlayerOneId: Long,
+        teamOnePlayerTwoId: Long,
+        teamTwoPlayerOneId: Long,
+        teamTwoPlayerTwoId: Long,
+        setLimit: Int
+    ): Long {
+        require(
+            teamOnePlayerOneId != teamOnePlayerTwoId &&
+                    teamOnePlayerOneId != teamTwoPlayerOneId &&
+                    teamOnePlayerOneId != teamTwoPlayerTwoId &&
+                    teamOnePlayerTwoId != teamTwoPlayerOneId &&
+                    teamOnePlayerTwoId != teamTwoPlayerTwoId &&
+                    teamTwoPlayerOneId != teamTwoPlayerTwoId
         ) { "Match players must be unique $teamOnePlayerOneId, $teamOnePlayerTwoId, $teamTwoPlayerOneId, $teamTwoPlayerTwoId" }
         require(setLimit > 0) { "Set limit must be greater then zero: $setLimit" }
         return belaRepository.add(

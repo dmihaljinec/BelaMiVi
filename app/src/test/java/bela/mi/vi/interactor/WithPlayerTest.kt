@@ -10,7 +10,6 @@ import kotlinx.coroutines.test.runBlockingTest
 import org.junit.Assert.assertThrows
 import org.junit.Test
 
-
 class WithPlayerTest {
     private val belaRepository = mockk<BelaRepository>()
     private val withPlayer = WithPlayer(belaRepository)

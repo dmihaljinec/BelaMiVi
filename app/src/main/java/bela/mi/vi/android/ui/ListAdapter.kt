@@ -6,7 +6,6 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import bela.mi.vi.android.R
 
-
 abstract class ListAdapter<T>(
     diffCallbak: DiffUtil.ItemCallback<T>,
     private val usesFooter: Boolean

@@ -1,7 +1,11 @@
 package bela.mi.vi.android.ui.player
 
 import android.os.Bundle
-import android.view.*
+import android.view.KeyEvent
+import android.view.LayoutInflater
+import android.view.MenuItem
+import android.view.View
+import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import androidx.appcompat.widget.Toolbar
 import androidx.databinding.DataBindingUtil
@@ -20,7 +24,6 @@ import bela.mi.vi.data.BelaRepository.PlayerOperationFailed
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.launch
-
 
 @AndroidEntryPoint
 class PlayerFragment : Fragment(), Toolbar.OnMenuItemClickListener {

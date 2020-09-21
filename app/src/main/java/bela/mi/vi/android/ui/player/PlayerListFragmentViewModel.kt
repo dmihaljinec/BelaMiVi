@@ -13,7 +13,6 @@ import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 
-
 class PlayerListFragmentViewModel @ViewModelInject constructor(
     private val withPlayer: WithPlayer
 ) : ViewModel() {

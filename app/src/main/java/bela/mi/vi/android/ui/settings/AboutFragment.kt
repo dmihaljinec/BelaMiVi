@@ -10,7 +10,6 @@ import bela.mi.vi.android.R
 import bela.mi.vi.android.databinding.FragmentAboutBinding
 import bela.mi.vi.android.ui.requireMainActivity
 
-
 class AboutFragment : Fragment() {
 
     override fun onCreateView(

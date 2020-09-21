@@ -2,7 +2,13 @@ package bela.mi.vi.android.ui.match
 
 import androidx.hilt.Assisted
 import androidx.hilt.lifecycle.ViewModelInject
-import androidx.lifecycle.*
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MediatorLiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.SavedStateHandle
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.asLiveData
+import androidx.lifecycle.viewModelScope
 import bela.mi.vi.android.ui.Constraint
 import bela.mi.vi.android.ui.ConstraintSetsBuilder
 import bela.mi.vi.android.ui.operationFailedCoroutineExceptionHandler
@@ -16,13 +22,12 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import java.text.DecimalFormat
 
-
 class MatchStatisticsFragmentViewModel @ViewModelInject constructor(
     private val withMatch: WithMatch,
     @Assisted savedStateHandle: SavedStateHandle
 ) : ViewModel() {
     private val matchId = savedStateHandle.get<Long>("matchId") ?: -1L
-    private var gamesCount:LiveData<Int> = MutableLiveData()
+    private var gamesCount: LiveData<Int> = MutableLiveData()
     var teamOneSetsWon: LiveData<Int> = MutableLiveData()
     var teamTwoSetsWon: LiveData<Int> = MutableLiveData()
     var teamOnePointsWon: LiveData<Int> = MutableLiveData()
@@ -31,10 +36,10 @@ class MatchStatisticsFragmentViewModel @ViewModelInject constructor(
     var teamTwoDeclarations: LiveData<Int> = MutableLiveData()
     var teamOneAllTricks: LiveData<Int> = MutableLiveData()
     var teamTwoAllTricks: LiveData<Int> = MutableLiveData()
-    var teamOnePlayerOne: MutableLiveData<Player> = MutableLiveData()
-    var teamOnePlayerTwo: MutableLiveData<Player> = MutableLiveData()
-    var teamTwoPlayerOne: MutableLiveData<Player> = MutableLiveData()
-    var teamTwoPlayerTwo: MutableLiveData<Player> = MutableLiveData()
+    val teamOnePlayerOne: MutableLiveData<Player> = MutableLiveData()
+    val teamOnePlayerTwo: MutableLiveData<Player> = MutableLiveData()
+    val teamTwoPlayerOne: MutableLiveData<Player> = MutableLiveData()
+    val teamTwoPlayerTwo: MutableLiveData<Player> = MutableLiveData()
     val constraintSets: MutableLiveData<ArrayList<Int>>
     private val teamOneIconConstraint: Constraint.TeamOneIcon
     private val teamTwoIconConstraint: Constraint.TeamTwoIcon
@@ -72,7 +77,7 @@ class MatchStatisticsFragmentViewModel @ViewModelInject constructor(
             teamTwoChosenTrump = matchStatistics.teamTwoStats.chosenTrump.asLiveData(coroutineContext)
             teamOnePassedGames = matchStatistics.teamOneStats.passedGames.asLiveData(coroutineContext)
             teamTwoPassedGames = matchStatistics.teamTwoStats.passedGames.asLiveData(coroutineContext)
-            withMatch.get(matchId).collect {  match ->
+            withMatch.get(matchId).collect { match ->
                 teamOnePlayerOne.value = match.teamOne.playerOne.first()
                 teamOnePlayerTwo.value = match.teamOne.playerTwo.first()
                 teamTwoPlayerOne.value = match.teamTwo.playerOne.first()
@@ -138,5 +143,5 @@ fun formatPercentage(numerator: Int, denominator: Int): String {
     if (denominator > 0) {
         percentage = DecimalFormat("0").format((numerator.toDouble() / denominator.toDouble()) * 100)
     }
-    return "${percentage}% ($numerator/$denominator)"
+    return "$percentage% ($numerator/$denominator)"
 }

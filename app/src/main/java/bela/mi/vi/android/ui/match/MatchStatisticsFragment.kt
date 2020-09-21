@@ -12,7 +12,6 @@ import bela.mi.vi.android.databinding.FragmentMatchStatisticsBinding
 import bela.mi.vi.android.ui.MainActivity
 import dagger.hilt.android.AndroidEntryPoint
 
-
 @AndroidEntryPoint
 class MatchStatisticsFragment : Fragment() {
     private val matchStatisticsFragmentViewModel: MatchStatisticsFragmentViewModel by viewModels()

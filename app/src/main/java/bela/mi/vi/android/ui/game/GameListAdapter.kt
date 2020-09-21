@@ -8,7 +8,6 @@ import bela.mi.vi.android.ui.DataBindingViewHolder
 import bela.mi.vi.android.ui.ListAdapter
 import bela.mi.vi.data.Game
 
-
 class GameListAdapter(usesFooter: Boolean = false) : ListAdapter<Game>(diffCallback, usesFooter) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DataBindingViewHolder {
@@ -23,7 +22,6 @@ class GameListAdapter(usesFooter: Boolean = false) : ListAdapter<Game>(diffCallb
     }
 
     override fun getViewType(position: Int): Int = TYPE_GAME
-
 
     companion object {
         private val diffCallback = object : DiffUtil.ItemCallback<Game>() {

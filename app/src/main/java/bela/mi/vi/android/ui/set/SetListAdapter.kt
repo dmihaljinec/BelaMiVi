@@ -7,7 +7,6 @@ import bela.mi.vi.android.R
 import bela.mi.vi.android.ui.DataBindingViewHolder
 import bela.mi.vi.android.ui.ListAdapter
 
-
 class SetListAdapter(usesFooter: Boolean = false) : ListAdapter<SetViewModel>(diffCallback, usesFooter) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DataBindingViewHolder {
@@ -22,7 +21,6 @@ class SetListAdapter(usesFooter: Boolean = false) : ListAdapter<SetViewModel>(di
     }
 
     override fun getViewType(position: Int): Int = TYPE_SET_SUMMARY
-
 
     companion object {
         private val diffCallback = object : DiffUtil.ItemCallback<SetViewModel>() {

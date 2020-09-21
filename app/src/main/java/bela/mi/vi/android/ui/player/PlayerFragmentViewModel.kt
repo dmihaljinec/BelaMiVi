@@ -17,7 +17,6 @@ import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
-
 class PlayerFragmentViewModel @ViewModelInject constructor(
     private val withPlayer: WithPlayer,
     @Assisted savedStateHandle: SavedStateHandle
@@ -28,7 +27,7 @@ class PlayerFragmentViewModel @ViewModelInject constructor(
     var colorResId: MutableLiveData<Int> = MutableLiveData(R.color.playerIcon_1)
     val constraintSets: MutableLiveData<ArrayList<Int>>
     private val playerIconConstraint: Constraint.PlayerIcon
-    private val savePlayer = if(playerId != -1L) ::editPlayer else ::newPlayer
+    private val savePlayer = if (playerId != -1L) ::editPlayer else ::newPlayer
     private val handler = CoroutineExceptionHandler { _, exception ->
         if (exception is OperationFailed) operationFailedCoroutineExceptionHandler(exception)
         else throw exception

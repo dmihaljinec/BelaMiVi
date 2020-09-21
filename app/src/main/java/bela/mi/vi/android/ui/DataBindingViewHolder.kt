@@ -9,8 +9,11 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LifecycleRegistry
 import androidx.recyclerview.widget.RecyclerView
 
-
-class DataBindingViewHolder(parent: ViewGroup, layoutId: Int, private val bindingValueId: Int) : RecyclerView.ViewHolder(
+class DataBindingViewHolder(
+    parent: ViewGroup,
+    layoutId: Int,
+    private val bindingValueId: Int
+) : RecyclerView.ViewHolder(
     LayoutInflater.from(parent.context).inflate(layoutId, parent, false)), LifecycleOwner {
     private var binding: ViewDataBinding? = DataBindingUtil.bind(itemView)
     var viewModel: Any? = null

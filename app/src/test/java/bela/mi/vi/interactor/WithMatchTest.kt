@@ -1,6 +1,11 @@
 package bela.mi.vi.interactor
 
-import bela.mi.vi.data.*
+import bela.mi.vi.data.BelaRepository
+import bela.mi.vi.data.Match
+import bela.mi.vi.data.Player
+import bela.mi.vi.data.Settings
+import bela.mi.vi.data.Team
+import bela.mi.vi.data.TeamOrdinal
 import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.mockk
@@ -11,8 +16,7 @@ import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
 import java.text.SimpleDateFormat
-import java.util.*
-
+import java.util.Locale
 
 class WithMatchTest {
     private val belaSettings = mockk<Settings> {

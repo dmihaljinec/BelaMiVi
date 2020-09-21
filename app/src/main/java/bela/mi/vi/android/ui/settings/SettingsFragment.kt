@@ -15,7 +15,6 @@ import bela.mi.vi.android.ui.requireMainActivity
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
-
 @AndroidEntryPoint
 class SettingsFragment : PreferenceFragmentCompat() {
     @Inject lateinit var belaSettings: BelaSettings
@@ -52,4 +51,3 @@ class SettingsFragment : PreferenceFragmentCompat() {
         }
     }
 }
-

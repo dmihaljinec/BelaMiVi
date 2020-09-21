@@ -2,7 +2,11 @@ package bela.mi.vi.android.ui.match
 
 import androidx.hilt.Assisted
 import androidx.hilt.lifecycle.ViewModelInject
-import androidx.lifecycle.*
+import androidx.lifecycle.MediatorLiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.SavedStateHandle
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import bela.mi.vi.android.ui.Constraint
 import bela.mi.vi.android.ui.ConstraintSetsBuilder
 import bela.mi.vi.android.ui.operationFailedCoroutineExceptionHandler
@@ -14,14 +18,13 @@ import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import kotlin.math.absoluteValue
 
-
 class MatchFragmentViewModel @ViewModelInject constructor(
     private val withMatch: WithMatch,
     @Assisted savedStateHandle: SavedStateHandle
 ) : ViewModel() {
     var matchViewModel: MutableLiveData<MatchViewModel> = MutableLiveData()
     val setScore: MediatorLiveData<String> = MediatorLiveData<String>().apply { value = "0 : 0" }
-    val matchScore: MediatorLiveData<String> = MediatorLiveData<String>().apply{ value = "0 - 0" }
+    val matchScore: MediatorLiveData<String> = MediatorLiveData<String>().apply { value = "0 - 0" }
     val diff: MutableLiveData<Int> = MutableLiveData(0)
     val constraintSets: MutableLiveData<ArrayList<Int>>
     private val teamOneIconConstraint: Constraint.TeamOneIcon
@@ -49,8 +52,8 @@ class MatchFragmentViewModel @ViewModelInject constructor(
             }
         }
         viewModelScope.launch(handler) {
-            withMatch.get(matchId).collect { match ->
-                val match = match.toMatchViewModel(coroutineContext)
+            withMatch.get(matchId).collect {
+                val match = it.toMatchViewModel(coroutineContext)
                 matchViewModel.value = match
                 setScore.addSource(match.teamOnePointsWon) { updateSetScore() }
                 setScore.addSource(match.teamTwoPointsWon) { updateSetScore() }

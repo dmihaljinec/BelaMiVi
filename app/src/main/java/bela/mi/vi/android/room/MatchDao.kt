@@ -7,13 +7,12 @@ import androidx.room.Update
 import bela.mi.vi.android.room.BelaDatabase.Companion.TABLE_MATCHES
 import kotlinx.coroutines.flow.Flow
 
-
 @Dao
 interface MatchDao {
     @Insert
     suspend fun add(matchEntity: MatchEntity): Long
 
-    @Query("DELETE FROM ${TABLE_MATCHES} WHERE ${MatchEntity.ID} = :id")
+    @Query("DELETE FROM $TABLE_MATCHES WHERE ${MatchEntity.ID} = :id")
     suspend fun remove(id: Long)
 
     @Query("DELETE FROM $TABLE_MATCHES")

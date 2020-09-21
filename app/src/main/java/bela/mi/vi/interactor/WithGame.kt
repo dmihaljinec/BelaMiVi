@@ -14,12 +14,13 @@ import javax.inject.Inject
 class WithGame @Inject constructor(private val belaRepository: BelaRepository) {
 
     @Throws(IllegalArgumentException::class, GameOperationFailed::class)
-    suspend fun new(matchId: Long,
-                    allTricks: Boolean = false,
-                    teamOneDeclarations: Int = 0,
-                    teamTwoDeclarations: Int = 0,
-                    teamOnePoints: Int = 0,
-                    teamTwoPoints: Int = 0
+    suspend fun new(
+        matchId: Long,
+        allTricks: Boolean = false,
+        teamOneDeclarations: Int = 0,
+        teamTwoDeclarations: Int = 0,
+        teamOnePoints: Int = 0,
+        teamTwoPoints: Int = 0
     ): Long {
         var lastSet = belaRepository.getLastSet(matchId).first()
         if (lastSet == null) {
@@ -41,12 +42,14 @@ class WithGame @Inject constructor(private val belaRepository: BelaRepository) {
     }
 
     @Throws(IllegalArgumentException::class, GameOperationFailed::class)
-    suspend fun update(gameId: Long,
-                       allTricks: Boolean,
-                       teamOneDeclarations: Int,
-                       teamTwoDeclarations: Int,
-                       teamOnePoints: Int,
-                       teamTwoPoints: Int) {
+    suspend fun update(
+        gameId: Long,
+        allTricks: Boolean,
+        teamOneDeclarations: Int,
+        teamTwoDeclarations: Int,
+        teamOnePoints: Int,
+        teamTwoPoints: Int
+    ) {
         requireThatGameIsEditable(gameId)
         val savedGame = belaRepository.getGame(gameId).first()
         val game = Game(
@@ -86,14 +89,15 @@ class WithGame @Inject constructor(private val belaRepository: BelaRepository) {
     }
 
     @Throws(IllegalArgumentException::class)
-    fun pointsToWinSet(setLimit: Int,
-                       gamePoints: Int,
-                       isAllTricks: Boolean,
-                       teamOneDeclarations: Int,
-                       teamTwoDeclarations: Int,
-                       teamOneSetPoints: Int,
-                       teamTwoSetPoints: Int,
-                       team: TeamOrdinal
+    fun pointsToWinSet(
+        setLimit: Int,
+        gamePoints: Int,
+        isAllTricks: Boolean,
+        teamOneDeclarations: Int,
+        teamTwoDeclarations: Int,
+        teamOneSetPoints: Int,
+        teamTwoSetPoints: Int,
+        team: TeamOrdinal
     ): Int {
         require(setLimit > 0 && gamePoints > 0) { "set limit ($setLimit) and game points ($gamePoints) must be greater then zero" }
         require(teamOneSetPoints < setLimit && teamTwoSetPoints < setLimit) { "team one set points ($teamOneSetPoints) and team two set points ($teamTwoSetPoints) must be less then set limit ($setLimit)" }

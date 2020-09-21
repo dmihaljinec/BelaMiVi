@@ -4,11 +4,18 @@ import android.content.Context
 import android.util.Log
 import android.widget.Toast
 import bela.mi.vi.android.R
-import bela.mi.vi.data.BelaRepository.*
+import bela.mi.vi.data.BelaRepository.GameOperationFailed
+import bela.mi.vi.data.BelaRepository.GameReason
+import bela.mi.vi.data.BelaRepository.OperationFailed
+import bela.mi.vi.data.BelaRepository.PlayerOperationFailed
 import bela.mi.vi.data.BelaRepository.GameReason.GameNotEditable
-import bela.mi.vi.data.BelaRepository.PlayerReason.*
-import bela.mi.vi.data.BelaRepository.Reason.*
-
+import bela.mi.vi.data.BelaRepository.PlayerReason.InvalidPlayerName
+import bela.mi.vi.data.BelaRepository.PlayerReason.PlayerNameNotUnique
+import bela.mi.vi.data.BelaRepository.PlayerReason.PlayerUsedInMatch
+import bela.mi.vi.data.BelaRepository.Reason.GameNotFound
+import bela.mi.vi.data.BelaRepository.Reason.MatchNotFound
+import bela.mi.vi.data.BelaRepository.Reason.PlayerNotFound
+import bela.mi.vi.data.BelaRepository.Reason.SetNotFound
 
 fun playerCoroutineExceptionHandler(operationFailed: PlayerOperationFailed, context: Context) {
     val message = when (operationFailed.reason) {

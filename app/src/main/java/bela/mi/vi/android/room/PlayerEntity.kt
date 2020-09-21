@@ -1,9 +1,12 @@
 package bela.mi.vi.android.room
 
-import androidx.room.*
+import androidx.room.ColumnInfo
 import androidx.room.ColumnInfo.NOCASE
+import androidx.room.Entity
+import androidx.room.Ignore
+import androidx.room.Index
+import androidx.room.PrimaryKey
 import bela.mi.vi.data.NewPlayer
-
 
 @Entity(
     tableName = BelaDatabase.TABLE_PLAYERS,
@@ -17,8 +20,7 @@ data class PlayerEntity(
     val name: String,
     @ColumnInfo(name = HIDDEN)
     val hidden: Boolean
-)
-{
+) {
     @Ignore
     constructor(newPlayer: NewPlayer) : this(0, newPlayer.name, false)
 

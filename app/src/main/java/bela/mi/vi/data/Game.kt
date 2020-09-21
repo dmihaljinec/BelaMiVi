@@ -10,7 +10,7 @@ data class Game(
     val teamTwoPoints: Int = 0
 ) {
     init {
-        require(teamOneDeclarations >= 0 && teamTwoDeclarations  >= 0) {
+        require(teamOneDeclarations >= 0 && teamTwoDeclarations >= 0) {
             "Declarations must be >= 0, $teamOneDeclarations $teamTwoDeclarations"
         }
         require(teamOnePoints >= 0 && teamTwoPoints >= 0) {

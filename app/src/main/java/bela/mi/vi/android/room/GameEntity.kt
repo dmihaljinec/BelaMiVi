@@ -1,9 +1,12 @@
 package bela.mi.vi.android.room
 
-import androidx.room.*
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.ForeignKey
 import androidx.room.ForeignKey.CASCADE
+import androidx.room.Ignore
+import androidx.room.PrimaryKey
 import bela.mi.vi.data.Game
-
 
 @Entity(
     tableName = BelaDatabase.TABLE_GAMES,
@@ -30,8 +33,7 @@ data class GameEntity(
     val team1Points: Int,
     @ColumnInfo(name = TEAM2_POINTS)
     val team2Points: Int
-)
-{
+) {
     @Ignore
     constructor(game: Game) :
             this(

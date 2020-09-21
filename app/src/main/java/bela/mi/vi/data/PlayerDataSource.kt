@@ -4,7 +4,6 @@ import bela.mi.vi.data.BelaRepository.OperationFailed
 import bela.mi.vi.data.BelaRepository.PlayerOperationFailed
 import kotlinx.coroutines.flow.Flow
 
-
 interface PlayerDataSource {
     @Throws(PlayerOperationFailed::class) suspend fun add(newPlayer: NewPlayer): Long
     @Throws(OperationFailed::class) suspend fun get(id: Long): Flow<Player>

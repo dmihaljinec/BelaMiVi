@@ -2,7 +2,12 @@ package bela.mi.vi.android.ui.game
 
 import androidx.hilt.Assisted
 import androidx.hilt.lifecycle.ViewModelInject
-import androidx.lifecycle.*
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.SavedStateHandle
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.asLiveData
 import bela.mi.vi.android.ui.Constraint
 import bela.mi.vi.android.ui.ConstraintSetsBuilder
 import bela.mi.vi.data.Game
@@ -11,7 +16,6 @@ import bela.mi.vi.interactor.WithMatch
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
-
 
 class GameListFragmentViewModel @ViewModelInject constructor(
     private val withMatch: WithMatch,
@@ -38,7 +42,7 @@ class GameListFragmentViewModel @ViewModelInject constructor(
         initObservers()
         viewModelScope.launch {
             games = withMatch.getAllGamesInSet(setId).asLiveData(coroutineContext)
-            withMatch.get(matchId).collect {  match ->
+            withMatch.get(matchId).collect { match ->
                 teamOnePlayerOne.value = match.teamOne.playerOne.first()
                 teamOnePlayerTwo.value = match.teamOne.playerTwo.first()
                 teamTwoPlayerOne.value = match.teamTwo.playerOne.first()

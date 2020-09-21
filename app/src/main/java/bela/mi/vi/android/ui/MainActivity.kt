@@ -17,7 +17,6 @@ import bela.mi.vi.android.R
 import com.google.android.material.navigation.NavigationView
 import dagger.hilt.android.AndroidEntryPoint
 
-
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     private val topLevelDestinations = setOf(

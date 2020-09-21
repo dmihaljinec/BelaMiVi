@@ -18,7 +18,6 @@ import bela.mi.vi.android.ui.player.getPlayerColorResId
 import bela.mi.vi.data.Player
 import kotlin.math.absoluteValue
 
-
 @BindingAdapter(value = ["android:drawableEnd", "android:drawableTint"], requireAll = true)
 fun setDrawableEnd(textView: TextView, drawableResId: Int, tintColorResId: Int) {
     val drawable = if (drawableResId > 0) ContextCompat.getDrawable(textView.context, drawableResId) else null
@@ -49,10 +48,11 @@ fun backgroundTintFromPlayer(textView: TextView, player: PlayerViewModel?) {
 fun backgroundTintFromTeam(textView: TextView, playerOne: Player?, playerTwo: Player?) {
     val playerOneName = playerOne?.name ?: ""
     val playerTwoName = playerTwo?.name ?: ""
-    if (playerOneName.isNotEmpty() || playerTwoName.isNotEmpty())
+    if (playerOneName.isNotEmpty() || playerTwoName.isNotEmpty()) {
         backgroundTintFromTeam(textView, teamName(playerOne?.name, playerTwo?.name))
-    else
+    } else {
         textView.backgroundTintList = null
+    }
 }
 
 private fun backgroundTintFromTeam(textView: TextView, name: String) {

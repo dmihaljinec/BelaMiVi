@@ -6,7 +6,6 @@ import androidx.room.Query
 import bela.mi.vi.android.room.BelaDatabase.Companion.TABLE_SETS
 import kotlinx.coroutines.flow.Flow
 
-
 @Dao
 interface SetDao {
     @Insert

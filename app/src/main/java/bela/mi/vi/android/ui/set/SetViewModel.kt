@@ -6,7 +6,6 @@ import bela.mi.vi.data.Set
 import kotlinx.coroutines.flow.map
 import kotlin.coroutines.CoroutineContext
 
-
 data class SetViewModel(
     val id: Long,
     val teamOnePoints: LiveData<String>,

@@ -2,14 +2,13 @@ package bela.mi.vi.data
 
 import kotlinx.coroutines.flow.Flow
 
-
 class BelaRepository(
     private val playerDataSource: PlayerDataSource,
     private val matchDataSource: MatchDataSource,
     private val setDataSource: SetDataSource,
     private val gameDataSource: GameDataSource,
-    val settings: Settings){
-
+    val settings: Settings
+) {
     // Player
     suspend fun add(newPlayer: NewPlayer) = playerDataSource.add(newPlayer)
     suspend fun getPlayer(id: Long): Flow<Player> = playerDataSource.get(id)
@@ -44,7 +43,6 @@ class BelaRepository(
     suspend fun getPointsInSet(setId: Long, teamOrdinal: TeamOrdinal): Flow<Int> = gameDataSource.getPointsInSet(setId, teamOrdinal)
     suspend fun removeGame(id: Long) = gameDataSource.remove(id)
     suspend fun update(game: Game) = gameDataSource.update(game)
-
 
     class OperationFailed(val reason: Reason) : RuntimeException()
 

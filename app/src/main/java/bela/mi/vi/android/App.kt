@@ -11,7 +11,6 @@ import bela.mi.vi.data.Settings
 import dagger.hilt.android.HiltAndroidApp
 import javax.inject.Inject
 
-
 @HiltAndroidApp
 class App : Application(), Configuration.Provider {
     @Inject lateinit var belaSettings: BelaSettings

@@ -10,13 +10,12 @@ import bela.mi.vi.android.room.BelaDatabase.Companion.TABLE_PLAYERS
 import bela.mi.vi.android.room.BelaDatabase.Companion.TABLE_SETS
 import kotlinx.coroutines.flow.Flow
 
-
 @Dao
 interface PlayerDao {
     @Insert
     suspend fun add(player: PlayerEntity): Long
 
-    @Query("DELETE FROM ${TABLE_PLAYERS} WHERE ${PlayerEntity.ID} = :id AND ${PlayerEntity.HIDDEN} = 0")
+    @Query("DELETE FROM $TABLE_PLAYERS WHERE ${PlayerEntity.ID} = :id AND ${PlayerEntity.HIDDEN} = 0")
     suspend fun remove(id: Long)
 
     @Query("DELETE FROM $TABLE_PLAYERS WHERE ${PlayerEntity.HIDDEN} = 0")

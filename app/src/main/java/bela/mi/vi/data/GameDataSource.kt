@@ -4,7 +4,6 @@ import bela.mi.vi.data.BelaRepository.GameOperationFailed
 import bela.mi.vi.data.BelaRepository.OperationFailed
 import kotlinx.coroutines.flow.Flow
 
-
 interface GameDataSource {
     suspend fun add(game: Game): Long
     @Throws(OperationFailed::class) suspend fun get(id: Long): Flow<Game>

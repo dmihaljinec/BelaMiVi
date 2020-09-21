@@ -2,7 +2,8 @@ package bela.mi.vi.data
 
 import kotlinx.coroutines.flow.Flow
 import java.text.SimpleDateFormat
-import java.util.*
+import java.util.Calendar
+import java.util.Locale
 
 data class Match(
     val id: Long,

@@ -15,7 +15,6 @@ import bela.mi.vi.android.databinding.FragmentPlayerListBinding
 import bela.mi.vi.android.ui.MainActivity
 import dagger.hilt.android.AndroidEntryPoint
 
-
 @AndroidEntryPoint
 class PlayerListFragment : Fragment(), Toolbar.OnMenuItemClickListener {
     private val adapter = PlayerListAdapter(true)
@@ -59,7 +58,7 @@ class PlayerListFragment : Fragment(), Toolbar.OnMenuItemClickListener {
     }
 
     override fun onMenuItemClick(menuItem: MenuItem): Boolean {
-        when(menuItem.itemId) {
+        when (menuItem.itemId) {
             R.id.new_player_menu_item -> newPlayer()
             R.id.delete_all_menu_item -> deleteAll()
             else -> return false
@@ -74,7 +73,8 @@ class PlayerListFragment : Fragment(), Toolbar.OnMenuItemClickListener {
     }
 
     private fun deleteAll() {
-        val action = PlayerListFragmentDirections.actionPlayerListFragmentToDeleteActionDialogFragment(allPlayers = true)
+        val action = PlayerListFragmentDirections
+            .actionPlayerListFragmentToDeleteActionDialogFragment(allPlayers = true)
         findNavController().navigate(action)
     }
 }

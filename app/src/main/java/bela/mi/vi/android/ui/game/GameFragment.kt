@@ -1,7 +1,11 @@
 package bela.mi.vi.android.ui.game
 
 import android.os.Bundle
-import android.view.*
+import android.view.KeyEvent
+import android.view.LayoutInflater
+import android.view.MenuItem
+import android.view.View
+import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.widget.TextView
 import androidx.appcompat.widget.Toolbar
@@ -21,7 +25,6 @@ import bela.mi.vi.data.BelaRepository.GameOperationFailed
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.launch
-
 
 @AndroidEntryPoint
 class GameFragment : Fragment(), Toolbar.OnMenuItemClickListener {
@@ -99,7 +102,7 @@ class GameFragment : Fragment(), Toolbar.OnMenuItemClickListener {
     }
 
     override fun onMenuItemClick(menuItem: MenuItem): Boolean {
-        when(menuItem.itemId) {
+        when (menuItem.itemId) {
             R.id.save_menu_item -> save()
             R.id.delete_menu_item -> delete()
             else -> return false

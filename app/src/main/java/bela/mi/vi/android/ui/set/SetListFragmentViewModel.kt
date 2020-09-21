@@ -18,7 +18,6 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 
-
 class SetListFragmentViewModel @ViewModelInject constructor(
     private val withMatch: WithMatch,
     @Assisted savedStateHandle: SavedStateHandle
@@ -55,7 +54,7 @@ class SetListFragmentViewModel @ViewModelInject constructor(
                 }
         }
         viewModelScope.launch(handler) {
-            withMatch.get(matchId).collect {  match ->
+            withMatch.get(matchId).collect { match ->
                 teamOnePlayerOne.value = match.teamOne.playerOne.first()
                 teamOnePlayerTwo.value = match.teamOne.playerTwo.first()
                 teamTwoPlayerOne.value = match.teamTwo.playerOne.first()
@@ -76,6 +75,6 @@ class SetListFragmentViewModel @ViewModelInject constructor(
     }
 
     private fun isTeamTwoIconAvailable(): Boolean {
-        return  teamTwoPlayerOne.value != null && teamTwoPlayerTwo.value != null
+        return teamTwoPlayerOne.value != null && teamTwoPlayerTwo.value != null
     }
 }
