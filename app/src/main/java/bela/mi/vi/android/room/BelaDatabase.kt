@@ -25,8 +25,8 @@ abstract class BelaDatabase : RoomDatabase() {
         const val TABLE_SETS = "sets"
         const val TABLE_GAMES = "games"
         const val TABLE_CONNECTED =
-            "$TABLE_MATCHES INNER JOIN $TABLE_SETS ON $TABLE_MATCHES.${MatchEntity.ID} =" +
-            "$TABLE_SETS.${SetEntity.MATCH_ID} INNER JOIN $TABLE_GAMES ON" +
+            "$TABLE_MATCHES INNER JOIN $TABLE_SETS ON $TABLE_MATCHES.${MatchEntity.ID} = " +
+            "$TABLE_SETS.${SetEntity.MATCH_ID} INNER JOIN $TABLE_GAMES ON " +
             "$TABLE_SETS.${SetEntity.ID} = $TABLE_GAMES.${GameEntity.SET_ID}"
     }
 }
