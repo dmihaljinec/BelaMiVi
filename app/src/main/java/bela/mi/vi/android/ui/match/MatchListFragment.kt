@@ -58,6 +58,11 @@ class MatchListFragment : Fragment(), Toolbar.OnMenuItemClickListener {
         return binding.root
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        adapter.destroyViewHolders()
+    }
+
     override fun onMenuItemClick(menuItem: MenuItem): Boolean {
         when (menuItem.itemId) {
             R.id.new_quick_match_menu_item -> newQuickMatch()

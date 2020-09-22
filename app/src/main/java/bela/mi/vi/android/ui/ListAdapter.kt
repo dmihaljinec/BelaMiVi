@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import bela.mi.vi.android.R
+import java.lang.IllegalArgumentException
 
 abstract class ListAdapter<T>(
     diffCallbak: DiffUtil.ItemCallback<T>,
@@ -14,16 +15,15 @@ abstract class ListAdapter<T>(
     var longClickListener: ((T) -> Boolean)? = null
     var attachedViews: MutableLiveData<Int> = MutableLiveData(0)
     private var footerCount = 0
+    protected val viewHolders: MutableList<DataBindingViewHolder> = mutableListOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DataBindingViewHolder {
-        return when (viewType) {
-            TYPE_FOOTER -> DataBindingViewHolder(
-                parent,
-                R.layout.listitem_footer,
-                0
-            )
-            else -> throw IllegalStateException("View type $viewType should have been handled in extended class")
+        val viewHolder = when (viewType) {
+            TYPE_FOOTER -> DataBindingViewHolder(parent, R.layout.listitem_footer, 0)
+            else -> createDataBindingViewHolder(parent, viewType)
         }
+        viewHolders.add(viewHolder)
+        return viewHolder
     }
 
     override fun onBindViewHolder(holder: DataBindingViewHolder, position: Int) {
@@ -49,6 +49,10 @@ abstract class ListAdapter<T>(
 
     abstract fun getViewType(position: Int): Int
 
+    protected open fun createDataBindingViewHolder(parent: ViewGroup, viewType: Int): DataBindingViewHolder {
+        throw IllegalArgumentException("View type $viewType is not expected")
+    }
+
     override fun getItemCount(): Int {
         return super.getItemCount() + footerCount
     }
@@ -63,6 +67,11 @@ abstract class ListAdapter<T>(
         super.onViewDetachedFromWindow(holder)
         attachedViews.value = attachedViews.value?.dec() ?: 0
         holder.markDetached()
+    }
+
+    fun destroyViewHolders() {
+        viewHolders.forEach { viewHolder -> viewHolder.markDestroyed() }
+        viewHolders.clear()
     }
 
     private fun onBindFooterListItem() {

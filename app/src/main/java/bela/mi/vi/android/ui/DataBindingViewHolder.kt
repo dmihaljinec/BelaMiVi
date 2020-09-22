@@ -34,7 +34,6 @@ class DataBindingViewHolder(
     }
 
     init {
-        // TODO find a way to destroy
         lifecycleRegistry.currentState = Lifecycle.State.INITIALIZED
     }
 
@@ -44,5 +43,9 @@ class DataBindingViewHolder(
 
     fun markDetached() {
         lifecycleRegistry.currentState = Lifecycle.State.CREATED
+    }
+
+    fun markDestroyed() {
+        lifecycleRegistry.currentState = Lifecycle.State.DESTROYED
     }
 }

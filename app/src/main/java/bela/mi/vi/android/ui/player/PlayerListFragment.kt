@@ -57,6 +57,11 @@ class PlayerListFragment : Fragment(), Toolbar.OnMenuItemClickListener {
         return binding.root
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        adapter.destroyViewHolders()
+    }
+
     override fun onMenuItemClick(menuItem: MenuItem): Boolean {
         when (menuItem.itemId) {
             R.id.new_player_menu_item -> newPlayer()

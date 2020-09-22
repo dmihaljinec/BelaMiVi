@@ -43,4 +43,9 @@ class SetListFragment : Fragment() {
         (activity as? MainActivity)?.clearToolbarMenu()
         return binding.root
     }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        adapter.destroyViewHolders()
+    }
 }

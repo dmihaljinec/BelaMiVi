@@ -9,18 +9,21 @@ import bela.mi.vi.android.ui.ListAdapter
 
 class MatchListAdapter(usesFooter: Boolean = false) : ListAdapter<MatchViewModel>(diffCallback, usesFooter) {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DataBindingViewHolder {
+    override fun getViewType(position: Int): Int = TYPE_MATCH
+
+    override fun createDataBindingViewHolder(
+        parent: ViewGroup,
+        viewType: Int
+    ): DataBindingViewHolder {
         return when (viewType) {
             TYPE_MATCH -> DataBindingViewHolder(
                 parent,
                 R.layout.listitem_match,
                 BR.match
             )
-            else -> super.onCreateViewHolder(parent, viewType)
+            else -> super.createDataBindingViewHolder(parent, viewType)
         }
     }
-
-    override fun getViewType(position: Int): Int = TYPE_MATCH
 
     companion object {
         private val diffCallback = object : DiffUtil.ItemCallback<MatchViewModel>() {
