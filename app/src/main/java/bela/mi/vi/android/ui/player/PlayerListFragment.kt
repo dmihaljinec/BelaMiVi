@@ -13,6 +13,7 @@ import androidx.navigation.fragment.findNavController
 import bela.mi.vi.android.R
 import bela.mi.vi.android.databinding.FragmentPlayerListBinding
 import bela.mi.vi.android.ui.MainActivity
+import bela.mi.vi.android.ui.removeAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -31,8 +32,10 @@ class PlayerListFragment : Fragment(), Toolbar.OnMenuItemClickListener {
             container,
             false)
         binding.list.adapter = adapter
+        binding.list.removeAdapter(viewLifecycleOwner)
         binding.lifecycleOwner = viewLifecycleOwner
         binding.player = playerListFragmentViewModel
+        adapter.setLifecycleOwner(viewLifecycleOwner)
         adapter.clickListener = { player ->
             val viewPlayerAction =
                 PlayerListFragmentDirections.actionPlayerListFragmentToPlayerFragment(
@@ -53,13 +56,8 @@ class PlayerListFragment : Fragment(), Toolbar.OnMenuItemClickListener {
         binding.newPlayer.setOnClickListener {
             newPlayer()
         }
-        (activity as? MainActivity)?.setupToolbarMenu(R.menu.players, this)
+        (activity as? MainActivity)?.setupToolbarMenu(R.menu.player_list, this)
         return binding.root
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        adapter.destroyViewHolders()
     }
 
     override fun onMenuItemClick(menuItem: MenuItem): Boolean {

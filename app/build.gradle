@@ -9,7 +9,7 @@ plugins {
 
 android {
     compileSdkVersion 30
-    buildToolsVersion "29.0.3"
+    buildToolsVersion "30.0.2"
 
     defaultConfig {
         applicationId "bela.mi.vi.blok"
@@ -91,4 +91,6 @@ dependencies {
     androidTestImplementation "androidx.test:runner:${versions.androidTest}"
     // Allows to inspect real database content from browser when debug build is running on device
     //debugImplementation 'com.amitshekhar.android:debug-db:1.0.6'
+    // Leak canary
+    debugImplementation "com.squareup.leakcanary:leakcanary-android:${versions.leakCanary}"
 }

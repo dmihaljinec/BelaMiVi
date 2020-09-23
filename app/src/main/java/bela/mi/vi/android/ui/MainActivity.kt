@@ -10,9 +10,13 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleEventObserver
+import androidx.lifecycle.LifecycleOwner
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
+import androidx.recyclerview.widget.RecyclerView
 import bela.mi.vi.android.R
 import com.google.android.material.navigation.NavigationView
 import dagger.hilt.android.AndroidEntryPoint
@@ -64,6 +68,7 @@ class MainActivity : AppCompatActivity() {
     fun clearToolbarMenu() {
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
         toolbar.menu.clear()
+        toolbar.setOnMenuItemClickListener(null)
     }
 
     fun setupToolbarMenu(menuId: Int, clickListener: Toolbar.OnMenuItemClickListener) {
@@ -82,4 +87,10 @@ class MainActivity : AppCompatActivity() {
 fun Fragment.requireMainActivity(): MainActivity {
     val mainActivity = activity as? MainActivity
     return mainActivity ?: throw IllegalStateException("Fragment $this not attached to MainActivity.")
+}
+
+fun RecyclerView.removeAdapter(lifecycleOwner: LifecycleOwner) {
+    lifecycleOwner.lifecycle.addObserver(LifecycleEventObserver { _, event ->
+        if (event == Lifecycle.Event.ON_DESTROY) adapter = null
+    })
 }

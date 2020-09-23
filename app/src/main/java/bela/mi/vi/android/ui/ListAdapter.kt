@@ -1,6 +1,9 @@
 package bela.mi.vi.android.ui
 
 import android.view.ViewGroup
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleEventObserver
+import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -8,14 +11,14 @@ import bela.mi.vi.android.R
 import java.lang.IllegalArgumentException
 
 abstract class ListAdapter<T>(
-    diffCallbak: DiffUtil.ItemCallback<T>,
+    diffCallback: DiffUtil.ItemCallback<T>,
     private val usesFooter: Boolean
-) : ListAdapter<T, DataBindingViewHolder>(diffCallbak) {
+) : ListAdapter<T, DataBindingViewHolder>(diffCallback) {
     var clickListener: ((T) -> Unit)? = null
     var longClickListener: ((T) -> Boolean)? = null
     var attachedViews: MutableLiveData<Int> = MutableLiveData(0)
     private var footerCount = 0
-    protected val viewHolders: MutableList<DataBindingViewHolder> = mutableListOf()
+    private val viewHolders: MutableList<DataBindingViewHolder> = mutableListOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DataBindingViewHolder {
         val viewHolder = when (viewType) {
@@ -69,7 +72,13 @@ abstract class ListAdapter<T>(
         holder.markDetached()
     }
 
-    fun destroyViewHolders() {
+    fun setLifecycleOwner(lifecycleOwner: LifecycleOwner) {
+        lifecycleOwner.lifecycle.addObserver(LifecycleEventObserver { _, event ->
+            if (event == Lifecycle.Event.ON_DESTROY) destroyViewHolders()
+        })
+    }
+
+    private fun destroyViewHolders() {
         viewHolders.forEach { viewHolder -> viewHolder.markDestroyed() }
         viewHolders.clear()
     }

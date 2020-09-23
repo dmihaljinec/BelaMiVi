@@ -11,6 +11,7 @@ import androidx.navigation.fragment.findNavController
 import bela.mi.vi.android.R
 import bela.mi.vi.android.databinding.FragmentSetListBinding
 import bela.mi.vi.android.ui.MainActivity
+import bela.mi.vi.android.ui.removeAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -32,8 +33,10 @@ class SetListFragment : Fragment() {
             container,
             false)
         binding.list.adapter = adapter
+        binding.list.removeAdapter(viewLifecycleOwner)
         binding.set = setListFragmentViewModel
         binding.lifecycleOwner = viewLifecycleOwner
+        adapter.setLifecycleOwner(viewLifecycleOwner)
         adapter.clickListener = { set ->
             val action = SetListFragmentDirections.actionSetListFragmentToGameListFragment(matchId, set.id)
             findNavController().navigate(action)
@@ -42,10 +45,5 @@ class SetListFragment : Fragment() {
         setListFragmentViewModel.sets.observe(viewLifecycleOwner) { adapter.submitList(it) }
         (activity as? MainActivity)?.clearToolbarMenu()
         return binding.root
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        adapter.destroyViewHolders()
     }
 }

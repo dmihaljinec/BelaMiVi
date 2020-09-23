@@ -1,11 +1,7 @@
 package bela.mi.vi.android.ui.match
 
 import android.os.Bundle
-import android.view.Gravity
-import android.view.LayoutInflater
-import android.view.MenuItem
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
 import androidx.databinding.DataBindingUtil
@@ -18,6 +14,7 @@ import bela.mi.vi.android.R
 import bela.mi.vi.android.databinding.FragmentMatchBinding
 import bela.mi.vi.android.ui.DeleteActionDialogFragment
 import bela.mi.vi.android.ui.game.GameListAdapter
+import bela.mi.vi.android.ui.removeAdapter
 import bela.mi.vi.android.ui.requireMainActivity
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -39,8 +36,10 @@ class MatchFragment : Fragment(), Toolbar.OnMenuItemClickListener {
             container,
             false)
         binding.list.adapter = adapter
+        binding.list.removeAdapter(viewLifecycleOwner)
         binding.match = matchFragmentViewModel
         binding.lifecycleOwner = viewLifecycleOwner
+        adapter.setLifecycleOwner(viewLifecycleOwner)
         adapter.clickListener = { game ->
             editGame(game.id)
         }

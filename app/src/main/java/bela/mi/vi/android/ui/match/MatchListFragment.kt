@@ -14,6 +14,7 @@ import androidx.navigation.fragment.findNavController
 import bela.mi.vi.android.R
 import bela.mi.vi.android.databinding.FragmentMatchListBinding
 import bela.mi.vi.android.ui.MainActivity
+import bela.mi.vi.android.ui.removeAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -32,19 +33,21 @@ class MatchListFragment : Fragment(), Toolbar.OnMenuItemClickListener {
             container,
             false)
         binding.list.adapter = adapter
+        binding.list.removeAdapter(viewLifecycleOwner)
         binding.lifecycleOwner = viewLifecycleOwner
         binding.match = matchListFragmentViewModel
-        adapter.clickListener = { matchSummary ->
+        adapter.setLifecycleOwner(viewLifecycleOwner)
+        adapter.clickListener = { match ->
             val matchAction =
                 MatchListFragmentDirections.actionMatchListFragmentToMatchFragment(
-                    matchSummary.matchId
+                    match.matchId
                 )
             findNavController().navigate(matchAction)
         }
-        adapter.longClickListener = { matchSummary ->
+        adapter.longClickListener = { match ->
             val deleteAction =
                 MatchListFragmentDirections.actionMatchListFragmentToDeleteActionDialogFragment(
-                    matchId = matchSummary.matchId
+                    matchId = match.matchId
                 )
             findNavController().navigate(deleteAction)
             true
@@ -54,13 +57,8 @@ class MatchListFragment : Fragment(), Toolbar.OnMenuItemClickListener {
             newMatch()
         }
         adapter.attachedViews.observe(viewLifecycleOwner) { matchListFragmentViewModel.listConstraint.update() }
-        (activity as? MainActivity)?.setupToolbarMenu(R.menu.match_summaries, this)
+        (activity as? MainActivity)?.setupToolbarMenu(R.menu.match_list, this)
         return binding.root
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        adapter.destroyViewHolders()
     }
 
     override fun onMenuItemClick(menuItem: MenuItem): Boolean {

@@ -16,6 +16,7 @@ import bela.mi.vi.android.R
 import bela.mi.vi.android.databinding.FragmentNewMatchBinding
 import bela.mi.vi.android.ui.MainActivity
 import bela.mi.vi.android.ui.player.PlayerListAdapter
+import bela.mi.vi.android.ui.removeAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -34,10 +35,12 @@ class NewMatchFragment : Fragment(), Toolbar.OnMenuItemClickListener {
             container,
             false)
         binding.list.adapter = adapter
+        binding.list.removeAdapter(viewLifecycleOwner)
         binding.lifecycleOwner = viewLifecycleOwner
         binding.match = newMatchFragmentViewModel
         binding.save.setOnClickListener { save() }
         binding.executePendingBindings()
+        adapter.setLifecycleOwner(viewLifecycleOwner)
         adapter.clickListener = newMatchFragmentViewModel.clickListener
         newMatchFragmentViewModel.availablePlayers.observe(viewLifecycleOwner) { adapter.submitList(it) }
         (activity as? MainActivity)?.setupToolbarMenu(R.menu.new_match, this)
