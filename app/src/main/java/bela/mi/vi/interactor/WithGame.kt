@@ -4,12 +4,13 @@ import bela.mi.vi.data.*
 import bela.mi.vi.data.BelaRepository.GameOperationFailed
 import bela.mi.vi.data.BelaRepository.GameReason.GameNotEditable
 import bela.mi.vi.data.BelaRepository.GameReason.InvalidGameData
+import bela.mi.vi.data.BelaRepository.GameReason.InvalidGameDataByAllTricks
+import bela.mi.vi.data.BelaRepository.GameReason.InvalidGameDataByEquality
 import bela.mi.vi.data.BelaRepository.OperationFailed
 import bela.mi.vi.data.Set
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import javax.inject.Inject
-
 
 class WithGame @Inject constructor(private val belaRepository: BelaRepository) {
 
@@ -143,21 +144,29 @@ class WithGame @Inject constructor(private val belaRepository: BelaRepository) {
     }
 
     /**
-     * Game data is valid if game points is equal to sum of team one and team two points.
+     * Game data is valid if game points is equal to sum of team one and team two points but with
+     * two exceptions:
+     * all tricks - one team must have 0 points and other all remaining
+     * equality - teams cannot have equal amount of points
      * Game points is calculated according to [Settings] values for game points and all tricks
      * increased for team one and team two declarations.
      */
     @Throws(GameOperationFailed::class)
     internal fun requireValidGameData(game: Game) {
-        var gamePoints = belaRepository.settings.getGamePoints()
-        if (game.allTricks) {
-            gamePoints += belaRepository.settings.getAllTricks()
-            if (game.teamOnePoints != 0 && game.teamTwoPoints != 0)
-                throw GameOperationFailed(InvalidGameData(gamePoints, game.teamOnePoints, game.teamTwoPoints))
+        var gamePoints = belaRepository.settings.getGamePoints() +
+                    game.teamOneDeclarations +
+                    game.teamTwoDeclarations
+        if (game.allTricks) gamePoints += belaRepository.settings.getAllTricks()
+        val reason = when {
+            gamePoints != (game.teamOnePoints + game.teamTwoPoints) ->
+                InvalidGameData(gamePoints, game.teamOnePoints, game.teamTwoPoints)
+            game.allTricks && game.teamOnePoints != 0 && game.teamTwoPoints != 0 ->
+                InvalidGameDataByAllTricks(gamePoints, game.teamOnePoints, game.teamTwoPoints)
+            game.teamOnePoints == game.teamTwoPoints ->
+                InvalidGameDataByEquality(gamePoints, game.teamOnePoints, game.teamTwoPoints)
+            else -> null
         }
-        gamePoints += (game.teamOneDeclarations + game.teamTwoDeclarations)
-        if (gamePoints != (game.teamOnePoints + game.teamTwoPoints) || game.teamOnePoints == game.teamTwoPoints)
-            throw GameOperationFailed(InvalidGameData(gamePoints, game.teamOnePoints, game.teamTwoPoints))
+        if (reason != null) throw GameOperationFailed(reason)
     }
 
     internal suspend fun updateSetWinner(set: Set) {

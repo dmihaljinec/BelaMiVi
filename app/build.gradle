@@ -15,7 +15,7 @@ android {
         applicationId "bela.mi.vi.blok"
         minSdkVersion 23
         targetSdkVersion 30
-        versionCode 24
+        versionCode 25
         versionName "2.0.2"
         testInstrumentationRunner "bela.mi.vi.BelaTestRunner"
     }

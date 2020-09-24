@@ -10,6 +10,8 @@ import bela.mi.vi.data.TeamOrdinal
 import bela.mi.vi.data.BelaRepository.GameOperationFailed
 import bela.mi.vi.data.BelaRepository.GameReason.GameNotEditable
 import bela.mi.vi.data.BelaRepository.GameReason.InvalidGameData
+import bela.mi.vi.data.BelaRepository.GameReason.InvalidGameDataByAllTricks
+import bela.mi.vi.data.BelaRepository.GameReason.InvalidGameDataByEquality
 import bela.mi.vi.data.Set
 import io.mockk.coEvery
 import io.mockk.every
@@ -71,12 +73,10 @@ class WithGameTest {
     private var winningSet = set
 
     @Test
-    fun `invalid game data throws throws GameOperationFailed with InvalidGameData reason`() {
+    fun `invalid game data throws GameOperationFailed with InvalidGameData, InvalidGameDataByAllTricks or InvalidGameDataByEquality reason`() {
         val invalidGames = listOf(
             Game(0L, false, 0, 0, 0, 0),
             Game(0L, false, 0, 0, 182, 0),
-            Game(0L, false, 0, 0, 81, 81),
-            Game(0L, true, 0, 0, 152, 100),
             Game(0L, true, 0, 50, 303, 0),
             Game(0L, false, 20, 0, 142, 20),
             Game(0L, false, 50, 0, 121, 90),
@@ -86,6 +86,27 @@ class WithGameTest {
             assertThrows(GameOperationFailed::class.java) {
                 withGame.requireValidGameData(game)
             }.apply { assertTrue(this?.reason is InvalidGameData) }
+        }
+
+        val invalidGamesByAllTricks = listOf(
+            Game(0L, true, 0, 0, 152, 100),
+            Game(0L, true, 0, 50, 1, 301)
+        )
+        invalidGamesByAllTricks.forEach { game ->
+            assertThrows(GameOperationFailed::class.java) {
+                withGame.requireValidGameData(game)
+            }.apply { assertTrue(this?.reason is InvalidGameDataByAllTricks) }
+        }
+
+        val invalidGamesByEquality = listOf(
+            Game(0L, false, 0, 0, 81, 81),
+            Game(0L, false, 20, 20, 101, 101),
+            Game(0L, false, 50, 0, 106, 106)
+        )
+        invalidGamesByEquality.forEach { game ->
+            assertThrows(GameOperationFailed::class.java) {
+                withGame.requireValidGameData(game)
+            }.apply { assertTrue(this?.reason is InvalidGameDataByEquality) }
         }
     }
 

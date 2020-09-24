@@ -5,10 +5,12 @@ import android.util.Log
 import android.widget.Toast
 import bela.mi.vi.android.R
 import bela.mi.vi.data.BelaRepository.GameOperationFailed
-import bela.mi.vi.data.BelaRepository.GameReason
 import bela.mi.vi.data.BelaRepository.OperationFailed
 import bela.mi.vi.data.BelaRepository.PlayerOperationFailed
 import bela.mi.vi.data.BelaRepository.GameReason.GameNotEditable
+import bela.mi.vi.data.BelaRepository.GameReason.InvalidGameData
+import bela.mi.vi.data.BelaRepository.GameReason.InvalidGameDataByAllTricks
+import bela.mi.vi.data.BelaRepository.GameReason.InvalidGameDataByEquality
 import bela.mi.vi.data.BelaRepository.PlayerReason.InvalidPlayerName
 import bela.mi.vi.data.BelaRepository.PlayerReason.PlayerNameNotUnique
 import bela.mi.vi.data.BelaRepository.PlayerReason.PlayerUsedInMatch
@@ -33,11 +35,23 @@ fun gameCoroutineExceptionHandler(operationFailed: GameOperationFailed, context:
     val message = when (operationFailed.reason) {
         is GameNotEditable ->
             context.getString(R.string.description_operation_failed_game_not_editable)
-        is GameReason.InvalidGameData ->
+        is InvalidGameData ->
             context.getString(
                 R.string.description_operation_failed_game_invalid_data,
                 operationFailed.reason.gamePoints,
                 operationFailed.reason.teamOnePoints + operationFailed.reason.teamTwoPoints,
+                operationFailed.reason.teamOnePoints,
+                operationFailed.reason.teamTwoPoints
+            )
+        is InvalidGameDataByAllTricks ->
+            context.getString(
+                R.string.description_operation_failed_game_invalid_data_by_all_tricks,
+                operationFailed.reason.teamOnePoints,
+                operationFailed.reason.teamTwoPoints
+            )
+        is InvalidGameDataByEquality ->
+            context.getString(
+                R.string.description_operation_failed_game_invalid_data_by_equality,
                 operationFailed.reason.teamOnePoints,
                 operationFailed.reason.teamTwoPoints
             )

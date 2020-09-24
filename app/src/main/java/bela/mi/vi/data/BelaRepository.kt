@@ -66,5 +66,7 @@ class BelaRepository(
     sealed class GameReason {
         object GameNotEditable : GameReason()
         class InvalidGameData(val gamePoints: Int, val teamOnePoints: Int, val teamTwoPoints: Int) : GameReason()
+        class InvalidGameDataByAllTricks(val gamePoints: Int, val teamOnePoints: Int, val teamTwoPoints: Int) : GameReason()
+        class InvalidGameDataByEquality(val gamePoints: Int, val teamOnePoints: Int, val teamTwoPoints: Int) : GameReason()
     }
 }

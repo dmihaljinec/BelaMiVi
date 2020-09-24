@@ -8,6 +8,8 @@
         <item name="android:windowLightStatusBar">true</item>
         <item name="bottomSheetDialogTheme">@style/BottomSheetDialogFragment</item>
         <item name="editTextStyle">@style/EditTextStyle</item>
+        <item name="appNameAboutTextColor">@color/colorDarkGreen</item>
+        appNameAboutTextColor
     </style>
 
     <style name="AppTheme.NavigationView" parent="Widget.Design.NavigationView">

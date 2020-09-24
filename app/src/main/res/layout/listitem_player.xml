@@ -30,7 +30,8 @@
             android:gravity="center"
             android:text="@{player.name.substring(0, 1)}"
             android:textColor="@color/colorWhite"
-            android:textSize="@dimen/text_large"/>
+            android:textSize="@dimen/text_large"
+            android:textAllCaps="true"/>
 
         <TextView
             android:id="@+id/player_name"
