@@ -15,8 +15,8 @@ android {
         applicationId "bela.mi.vi.blok"
         minSdkVersion 23
         targetSdkVersion 30
-        versionCode 25
-        versionName "2.0.2"
+        versionCode 26
+        versionName "2.0.3"
         testInstrumentationRunner "bela.mi.vi.BelaTestRunner"
     }
 
@@ -75,7 +75,7 @@ dependencies {
     kapt "androidx.room:room-compiler:${versions.room}"
     // Hilt (Dagger dependency injection)
     implementation "com.google.dagger:hilt-android:${versions.hiltDagger}"
-    kapt "com.google.dagger:hilt-android-compiler:${versions.hiltDagger}"
+    kapt "com.google.dagger:hilt-compiler:${versions.hiltDagger}"
     implementation "androidx.hilt:hilt-lifecycle-viewmodel:${versions.hilt}"
     implementation "androidx.hilt:hilt-work:${versions.hilt}"
     kapt "androidx.hilt:hilt-compiler:${versions.hilt}"
