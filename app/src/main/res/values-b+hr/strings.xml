@@ -38,6 +38,11 @@
     <string name="title_quick_match_valid_30_days">30 dana</string>
     <string name="title_quick_match_valid_always">Nikad</string>
     <string name="title_reset_declarations">Poništi zvanja</string>
+    <string name="title_backup">Sigurnosna kopija</string>
+    <string name="title_create">Izradi</string>
+    <string name="title_create_backup">Izradi sigurnosnu kopiju</string>
+    <string name="title_restore">Vrati</string>
+    <string name="title_restore_backup">Vrati sigurnosnu kopiju</string>
     <string name="action_new_match">Novi meč</string>
     <string name="action_new_quick_match">Brzi meč</string>
     <string name="action_new_game">Nova igra</string>
@@ -45,6 +50,9 @@
     <string name="action_save">Spremi</string>
     <string name="action_delete">Izbriši</string>
     <string name="action_delete_all">Izbriši sve</string>
+    <string name="action_backup">Izradi sig. kopiju</string>
+    <string name="action_restore">Vrati sig. kopiju</string>
+    <string name="action_restart">Ponovno pokreni</string>
     <string name="description_operation_failed_player_used_in_match">Nije moguće izbrisati igrače koji pripadaju meču</string>
     <string name="description_operation_failed_player_name_invalid">Igračevo ime nije ispravno</string>
     <string name="description_operation_failed_player_name_not_unique">Igrač sa imenom %1$s već postoji</string>
@@ -62,6 +70,25 @@
     <string name="description_empty_match_list">Pritisni dodaj gumb i započni novi meč</string>
     <string name="description_empty_player_list">Pritisni dodaj gumb i stvori novog igrača</string>
     <string name="description_empty_available_player_list">Nema dostupnih igrača, dodaj preko izbornika</string>
+    <string name="description_backup">Aplikacija sprema podatke o igračima i mečevima u bazu podataka. Kada se napravi sigurnosna kopija baze podataka, istu je moguće koristiti kod prijelaza na novi uređaj ili na postojećem uređaju u slučaju potrebe za ponovnom instalacijom aplikacije, vraćanja uređaja na tvorničke postavke i slično.</string>
+    <string name="description_settings_backup">Izradi sigurnosnu kopiju baze podataka</string>
+    <string name="description_settings_restore">Vrati bazu podataka iz sigurnosne kopije</string>
+    <string name="state_backup_idle">Izradi sigurnosnu kopiju</string>
+    <string name="state_backup_idle_detailed">Za pokretanje izrade sigurnosne kopije pritisnite gumb na dnu ekrana. Proces započinje odabirom lokacije i imena datoteke za sigurnosnu kopiju. Baza podataka će se kopirati na odabranu lokaciju.</string>
+    <string name="state_backup_in_progress">Kopiranje baze podataka je u tijeku…</string>
+    <string name="state_backup_successful">Izrada sigurnosne kopije je uspješno završena</string>
+    <string name="state_backup_successful_detailed">Aplikacija se mora ponovno pokrenuti da učita podatke iz baze stoga pritisnite gumb Ponovno pokreni.</string>
+    <string name="state_backup_failed">Izrada sigurnosne kopije nije uspjela</string>
+    <string name="state_backup_failed_detailed">Provjerite da li imate dovoljno prostora na odabranoj lokaciji.\nAplikacija se mora ponovno pokrenuti da učita podatke iz baze stoga pritisnite gumb Ponovno pokreni te onda pokušajte ponovno.</string>
+    <string name="state_restore_idle">Vrati sigurnosnu kopiju</string>
+    <string name="state_restore_idle_detailed">Za pokretanje oporavka baze podataka iz sigurnosne kopije pritisnite gumb na dnu ekrana. Proces započinje odabirom sigurnosne kopije. Baza podataka iz sigurnosne kopije će zamijeniti trenutnu bazu podataka.</string>
+    <string name="state_restore_in_progress">Oporavak baze podataka je u tijeku…</string>
+    <string name="state_restore_successful">Vraćanje baze podataka je uspješno završeno</string>
+    <string name="state_restore_successful_detailed">Aplikacija se mora ponovno pokrenuti da učita podatke iz baze stoga pritisnite gumb Ponovno pokreni.</string>
+    <string name="state_restore_failed">Vraćanje baze podataka nije uspjelo</string>
+    <string name="state_restore_failed_detailed">Provjerite da li imate dovoljno prostora na uređaju.\nAplikacija se mora ponovno pokrenuti da učita podatke iz baze stoga pritisnite gumb Ponovno pokreni te onda pokušajte ponovno.</string>
+    <string name="state_restore_failed_invalid_backup_file_detailed">Odabrana datoteka ne sadrži ispravnu bazu podataka.\nAplikacija se mora ponovno pokrenuti da učita podatke iz baze stoga pritisnite gumb Ponovno pokreni te onda pokušajte ponovno.</string>
+
     <string name="hint_new_match">Odaberi igrača</string>
     <string name="tooltip_add_20">Dodaj 20 zvanja</string>
     <string name="tooltip_add_50">Dodaj 50 zvanja</string>

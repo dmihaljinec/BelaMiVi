@@ -32,7 +32,7 @@
             app:defaultValue="@string/settings_quick_match_valid_7_days"
             app:useSimpleSummaryProvider="true"
             app:entries="@array/quick_match_option_labels"
-            app:entryValues="@array/quick_match_option_values"/>
+            app:entryValues="@array/quick_match_option_values" />
 
     </PreferenceCategory>
 
@@ -45,7 +45,22 @@
             app:defaultValue="@string/settings_theme_dark"
             app:useSimpleSummaryProvider="true"
             app:entries="@array/theme_option_labels"
-            app:entryValues="@array/theme_option_values"/>
+            app:entryValues="@array/theme_option_values" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        app:title="@string/title_backup">
+
+        <Preference
+            app:key="@string/key_settings_backup"
+            app:title="@string/title_create"
+            app:summary="@string/description_settings_backup" />
+
+        <Preference
+            app:key="@string/key_settings_restore"
+            app:title="@string/title_restore"
+            app:summary="@string/description_settings_restore" />
 
     </PreferenceCategory>
 

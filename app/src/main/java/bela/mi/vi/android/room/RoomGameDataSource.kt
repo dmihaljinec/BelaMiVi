@@ -10,9 +10,9 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 
-class RoomGameDataSource(private val db: BelaDatabase) : GameDataSource {
+class RoomGameDataSource(private val db: Database) : GameDataSource {
     override suspend fun add(game: Game): Long = withContext(Dispatchers.IO) {
-        return@withContext db.gameDao().add(
+        return@withContext db.belaDatabase.gameDao().add(
             GameEntity(
                 game
             )
@@ -21,50 +21,50 @@ class RoomGameDataSource(private val db: BelaDatabase) : GameDataSource {
 
     @Throws(OperationFailed::class)
     override suspend fun get(id: Long): Flow<Game> {
-        return db.gameDao().get(id).map { gameEntity ->
+        return db.belaDatabase.gameDao().get(id).map { gameEntity ->
             if (gameEntity == null) throw OperationFailed(GameNotFound(id))
             gameEntity.toGame()
         }
     }
 
     override suspend fun getAll(setId: Long): Flow<List<Game>> {
-        return db.gameDao().getAll(setId).map { it.map { gameEntity -> gameEntity.toGame() } }
+        return db.belaDatabase.gameDao().getAll(setId).map { it.map { gameEntity -> gameEntity.toGame() } }
     }
 
     override suspend fun getAllFromLastSet(matchId: Long): Flow<List<Game>> {
-        return db.gameDao().getLastSetGames(matchId).map {
+        return db.belaDatabase.gameDao().getLastSetGames(matchId).map {
             it.map { gameEntity -> gameEntity.toGame() }
         }
     }
 
     override suspend fun getAllFromSet(setId: Long): Flow<List<Game>> {
-        return db.gameDao().getSetGames(setId).map {
+        return db.belaDatabase.gameDao().getSetGames(setId).map {
             it.map { gameEntity -> gameEntity.toGame() }
         }
     }
 
     override suspend fun getNumberOfGamesInSet(setId: Long): Flow<Int> {
-        return db.gameDao().getNumberOfGamesInSet(setId)
+        return db.belaDatabase.gameDao().getNumberOfGamesInSet(setId)
     }
 
     override suspend fun getPointsInSet(setId: Long, teamOrdinal: TeamOrdinal): Flow<Int> {
         return when (teamOrdinal) {
-            TeamOrdinal.ONE -> db.gameDao().getTeamOneSetPoints(setId)
-            TeamOrdinal.TWO -> db.gameDao().getTeamTwoSetPoints(setId)
+            TeamOrdinal.ONE -> db.belaDatabase.gameDao().getTeamOneSetPoints(setId)
+            TeamOrdinal.TWO -> db.belaDatabase.gameDao().getTeamTwoSetPoints(setId)
             else -> throw IllegalArgumentException("TeamOrdinal.NONE is not allowed")
         }
     }
 
     override suspend fun remove(id: Long) = withContext(Dispatchers.IO) {
-        db.gameDao().remove(id)
+        db.belaDatabase.gameDao().remove(id)
     }
 
     override suspend fun removeAll() = withContext(Dispatchers.IO){
-        db.gameDao().removeAll()
+        db.belaDatabase.gameDao().removeAll()
     }
 
     override suspend fun update(game: Game) = withContext(Dispatchers.IO) {
-        db.gameDao().update(GameEntity(game))
+        db.belaDatabase.gameDao().update(GameEntity(game))
     }
 
     private fun GameEntity.toGame(): Game {

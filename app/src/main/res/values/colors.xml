@@ -10,6 +10,7 @@
     <color name="colorLightGreen">#F0FFF0</color>
     <color name="colorGreen">#548B54</color>
     <color name="colorDarkGreen">#003300</color>
+    <color name="colorRed">#CC1C1C</color>
 
     <!-- Colors of player icon -->
     <color name="playerIcon_1">#CC1C1C</color>

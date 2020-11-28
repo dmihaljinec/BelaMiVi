@@ -133,11 +133,27 @@
         android:id="@+id/settings_fragment"
         android:name="bela.mi.vi.android.ui.settings.SettingsFragment"
         android:label="@string/title_settings" >
+        <action
+            android:id="@+id/action_settings_fragment_to_backup_fragment"
+            app:destination="@id/backup_fragment" />
+        <action
+            android:id="@+id/action_settings_fragment_to_restore_fragment"
+            app:destination="@id/restore_fragment" />
     </fragment>
     <fragment
         android:id="@+id/about_fragment"
         android:name="bela.mi.vi.android.ui.settings.AboutFragment"
         android:label="@string/title_about" >
+    </fragment>
+    <fragment
+        android:id="@+id/backup_fragment"
+        android:name="bela.mi.vi.android.ui.settings.BackupFragment"
+        android:label="@string/title_create_backup" >
+    </fragment>
+    <fragment
+        android:id="@+id/restore_fragment"
+        android:name="bela.mi.vi.android.ui.settings.RestoreFragment"
+        android:label="@string/title_restore_backup" >
     </fragment>
     <dialog
         android:id="@+id/delete_action_dialog_fragment"

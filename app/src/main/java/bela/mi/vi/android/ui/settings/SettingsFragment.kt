@@ -8,9 +8,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
+import androidx.navigation.fragment.findNavController
 import androidx.preference.EditTextPreference
+import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import bela.mi.vi.android.R
+import bela.mi.vi.android.ui.game.GameFragmentDirections
 import bela.mi.vi.android.ui.requireMainActivity
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -34,6 +37,16 @@ class SettingsFragment : PreferenceFragmentCompat() {
         findPreference<EditTextPreference>(getString(R.string.key_settings_all_tricks))?.configure(belaSettings.allTricks, viewLifecycleOwner)
         findPreference<EditTextPreference>(getString(R.string.key_settings_bela_declaration))?.configure(belaSettings.belaDeclaration, viewLifecycleOwner)
         findPreference<EditTextPreference>(getString(R.string.key_settings_set_limit))?.configure(belaSettings.setLimit, viewLifecycleOwner)
+        findPreference<Preference>(getString(R.string.key_settings_backup))?.setOnPreferenceClickListener {
+            val action = SettingsFragmentDirections.actionSettingsFragmentToBackupFragment()
+            findNavController().navigate(action)
+            true
+        }
+        findPreference<Preference>(getString(R.string.key_settings_restore))?.setOnPreferenceClickListener {
+            val action = SettingsFragmentDirections.actionSettingsFragmentToRestoreFragment()
+            findNavController().navigate(action)
+            true
+        }
         mainActivity.clearToolbarMenu()
         return root
     }

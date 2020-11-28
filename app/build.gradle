@@ -16,7 +16,7 @@ android {
         minSdkVersion 23
         targetSdkVersion 30
         versionCode 26
-        versionName "2.0.3"
+        versionName "2.1.0"
         testInstrumentationRunner "bela.mi.vi.BelaTestRunner"
     }
 
@@ -81,6 +81,10 @@ dependencies {
     kapt "androidx.hilt:hilt-compiler:${versions.hilt}"
     // Work
     implementation "androidx.work:work-runtime-ktx:${versions.work}"
+    // Stateless4j state machine
+    implementation "com.github.stateless4j:stateless4j:${versions.stateless4j}"
+    // ProcessPhoenix to restart app after restoring database
+    implementation "com.jakewharton:process-phoenix:${versions.processPhoenix}"
     // Unit test
     testImplementation "junit:junit:${versions.junit}"
     testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:${versions.coroutinesAndroidVersion}"
@@ -92,5 +96,5 @@ dependencies {
     // Allows to inspect real database content from browser when debug build is running on device
     //debugImplementation 'com.amitshekhar.android:debug-db:1.0.6'
     // Leak canary
-    debugImplementation "com.squareup.leakcanary:leakcanary-android:${versions.leakCanary}"
+    //debugImplementation "com.squareup.leakcanary:leakcanary-android:${versions.leakCanary}"
 }

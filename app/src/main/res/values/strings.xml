@@ -41,6 +41,11 @@
     <string name="title_quick_match_valid_30_days">30 days</string>
     <string name="title_quick_match_valid_always">Never</string>
     <string name="title_reset_declarations">Reset declarations</string>
+    <string name="title_backup">Backup</string>
+    <string name="title_create">Create</string>
+    <string name="title_create_backup">Backup</string>
+    <string name="title_restore">Restore</string>
+    <string name="title_restore_backup">Restore</string>
     <string name="action_new_match">New Match</string>
     <string name="action_new_quick_match">Quick Match</string>
     <string name="action_new_game">New Game</string>
@@ -48,6 +53,9 @@
     <string name="action_save">Save</string>
     <string name="action_delete">Delete</string>
     <string name="action_delete_all">Delete All</string>
+    <string name="action_backup">Backup</string>
+    <string name="action_restore">Restore</string>
+    <string name="action_restart">Restart</string>
     <string name="description_operation_failed_player_used_in_match">Cannot delete players that are members of a match</string>
     <string name="description_operation_failed_player_name_invalid">Invalid player name</string>
     <string name="description_operation_failed_player_name_not_unique">Player with name %1$s already exists</string>
@@ -65,10 +73,29 @@
     <string name="description_empty_match_list">Click the add button below to create a new match</string>
     <string name="description_empty_player_list">Click the add button below to create a new player</string>
     <string name="description_empty_available_player_list">No available players, add more from the menu</string>
+    <string name="description_backup">Application is using database to store user data like players and matches. Once database is exported to a backup file it can be used for migration to another device or to same device in case of application reinstall or device factory reset.</string>
+    <string name="description_settings_backup">Create a backup of application database</string>
+    <string name="description_settings_restore">Restore application database from a backup</string>
+    <string name="state_backup_idle">Create a backup</string>
+    <string name="state_backup_idle_detailed">In order to create a backup press button at the bottom of the screen. Process will begin with selecting a location and a file name of a backup. Once done database will be copied to selected location.</string>
+    <string name="state_backup_in_progress">Copy database is in progress…</string>
+    <string name="state_backup_successful">Backup successfully completed</string>
+    <string name="state_backup_successful_detailed">Application needs to restart in order to reload database so please press restart button.</string>
+    <string name="state_backup_failed">Backup failed</string>
+    <string name="state_backup_failed_detailed">Please check that you have enough free space on selected storage.\nApplication needs to restart in order to reload database so please press restart button and then you can try again.</string>
+    <string name="state_restore_idle">Restore</string>
+    <string name="state_restore_idle_detailed">In order to restore a database press button at the bottom of the screen. Process will begin with selecting backup file. Once done database from backup file will override current database.</string>
+    <string name="state_restore_in_progress">Restoring database is in progress…</string>
+    <string name="state_restore_successful">Restore successfully completed</string>
+    <string name="state_restore_successful_detailed">Application needs to restart in order to reload database so please press restart button.</string>
+    <string name="state_restore_failed">Restore failed</string>
+    <string name="state_restore_failed_detailed">Please check that you have enough free space on device.\nApplication needs to restart in order to reload database so please press restart button and then you can try again.</string>
+    <string name="state_restore_failed_invalid_backup_file_detailed">Selected bakup file does not contain valid database.\nApplication needs to restart in order to reload database so please press restart button and then you can try again.</string>
     <string name="hint_new_match">Select player</string>
     <string name="tooltip_add_20">Add 20 declarations</string>
     <string name="tooltip_add_50">Add 50 declarations</string>
     <string name="tooltip_win_set">Add enough points to win the set</string>
+    <string name="empty" translatable="false" />
 
     <string name="key_match_id" translatable="false">matchId</string>
     <string name="key_all_matches" translatable="false">allMatches</string>
@@ -85,6 +112,8 @@
     <string name="key_settings_set_limit" translatable="false">setLimitPref</string>
     <string name="key_settings_theme" translatable="false">themePref</string>
     <string name="key_settings_quick_match_auto_remove" translatable="false">quickMatchAutoRemovePref</string>
+    <string name="key_settings_backup" translatable="false">backup</string>
+    <string name="key_settings_restore" translatable="false">restore</string>
 
     <string name="settings_theme_dark" translatable="false">dark</string>
     <string name="settings_theme_light" translatable="false">light</string>

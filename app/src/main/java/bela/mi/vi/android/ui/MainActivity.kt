@@ -82,6 +82,12 @@ class MainActivity : AppCompatActivity() {
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
         toolbar.title = title
     }
+
+    companion object {
+        const val REQUEST_CODE_CREATE_BACKUP_FILE = 100
+        const val REQUEST_CODE_OPEN_BACKUP_FILE = 101
+        const val MIME_TYPE_ZIP = "application/x-zip-compressed"
+    }
 }
 
 fun Fragment.requireMainActivity(): MainActivity {
