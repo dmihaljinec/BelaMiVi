@@ -21,7 +21,7 @@ buildscript {
        preference: "1.1.1",
        processPhoenix: "2.0.0",
        recyclerView: "1.1.0", // 1.2.0-beta01
-       room: "2.3.0-alpha03",
+       room: "2.3.0-alpha04",
        stateless4j: "2.6.0",
        work: "2.4.0", // 2.5.0-beta02
     ]
