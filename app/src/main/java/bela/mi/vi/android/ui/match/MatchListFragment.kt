@@ -26,7 +26,7 @@ class MatchListFragment : Fragment(), Toolbar.OnMenuItemClickListener {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         val binding = DataBindingUtil.inflate<FragmentMatchListBinding>(
             inflater,
             R.layout.fragment_match_list,

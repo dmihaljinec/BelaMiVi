@@ -28,7 +28,7 @@ class NewMatchFragment : Fragment(), Toolbar.OnMenuItemClickListener {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         val binding = DataBindingUtil.inflate<FragmentNewMatchBinding>(
             inflater,
             R.layout.fragment_new_match,

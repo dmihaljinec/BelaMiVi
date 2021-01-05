@@ -26,7 +26,7 @@ class GameListFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         val binding = DataBindingUtil.inflate<FragmentGameListBinding>(
             inflater,
             R.layout.fragment_game_list,

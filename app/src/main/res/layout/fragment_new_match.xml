@@ -56,7 +56,8 @@
             app:layout_constraintEnd_toStartOf="@id/team_two_player_one"
             android:text="@{match.teamOnePlayerViewModelOne.name}"
             android:hint="@string/hint_new_match"
-            tools:text="Alice"/>
+            tools:text="Alice"
+            tools:ignore="UseCompatTextViewDrawableXml" />
 
         <TextView
             android:id="@+id/team_two_player_one"
@@ -75,7 +76,8 @@
             app:layout_constraintStart_toEndOf="@id/team_one_player_one"
             android:text="@{match.teamTwoPlayerViewModelOne.name}"
             android:hint="@string/hint_new_match"
-            tools:text="Charlie"/>
+            tools:text="Charlie"
+            tools:ignore="UseCompatTextViewDrawableXml" />
 
         <TextView
             android:id="@+id/team_one_player_two"
@@ -94,7 +96,8 @@
             app:layout_constraintEnd_toStartOf="@id/team_two_player_two"
             android:text="@{match.teamOnePlayerViewModelTwo.name}"
             android:hint="@string/hint_new_match"
-            tools:text="Bob"/>
+            tools:text="Bob"
+            tools:ignore="UseCompatTextViewDrawableXml" />
 
         <TextView
             android:id="@+id/team_two_player_two"
@@ -113,7 +116,8 @@
             app:layout_constraintStart_toEndOf="@id/team_one_player_two"
             android:text="@{match.teamTwoPlayerViewModelTwo.name}"
             android:hint="@string/hint_new_match"
-            tools:text="Dane"/>
+            tools:text="Dane"
+            tools:ignore="UseCompatTextViewDrawableXml" />
 
         <TextView
             android:id="@+id/list_label"

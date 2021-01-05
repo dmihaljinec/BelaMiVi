@@ -63,6 +63,7 @@ class BelaRepository(
 
     class GameOperationFailed(val reason: GameReason) : RuntimeException()
 
+    @Suppress("unused")
     sealed class GameReason {
         object GameNotEditable : GameReason()
         class InvalidGameData(val gamePoints: Int, val teamOnePoints: Int, val teamTwoPoints: Int) : GameReason()

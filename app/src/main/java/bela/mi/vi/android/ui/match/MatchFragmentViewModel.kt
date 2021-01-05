@@ -25,7 +25,7 @@ class MatchFragmentViewModel @ViewModelInject constructor(
     var matchViewModel: MutableLiveData<MatchViewModel> = MutableLiveData()
     val setScore: MediatorLiveData<String> = MediatorLiveData<String>().apply { value = "0 : 0" }
     val matchScore: MediatorLiveData<String> = MediatorLiveData<String>().apply { value = "0 - 0" }
-    val diff: MutableLiveData<Int> = MutableLiveData(0)
+    private val diff: MutableLiveData<Int> = MutableLiveData(0)
     val constraintSets: MutableLiveData<ArrayList<Int>>
     private val teamOneIconConstraint: Constraint.TeamOneIcon
     private val teamTwoIconConstraint: Constraint.TeamTwoIcon

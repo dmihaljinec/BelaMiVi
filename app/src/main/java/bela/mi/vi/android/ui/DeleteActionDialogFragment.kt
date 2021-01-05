@@ -53,7 +53,7 @@ class DeleteActionDialogFragment : BottomSheetDialogFragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         val binding = DataBindingUtil.inflate<DialogFragmentDeleteActionBinding>(
             inflater,
             R.layout.dialog_fragment_delete_action,

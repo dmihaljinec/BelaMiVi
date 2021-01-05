@@ -28,7 +28,7 @@ class MatchFragment : Fragment(), Toolbar.OnMenuItemClickListener {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         val mainActivity = requireMainActivity()
         val binding = DataBindingUtil.inflate<FragmentMatchBinding>(
             inflater,

@@ -25,7 +25,7 @@ class PlayerListFragment : Fragment(), Toolbar.OnMenuItemClickListener {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         val binding = DataBindingUtil.inflate<FragmentPlayerListBinding>(
             inflater,
             R.layout.fragment_player_list,
