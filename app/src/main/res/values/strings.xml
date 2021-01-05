@@ -31,7 +31,7 @@
     <string name="title_player_name">Player name</string>
     <string name="title_mi_vi" translatable="false">MI\u0020\u0020VI</string>
     <string name="title_version">Version</string>
-    <string name="title_copyright" translatable="false">\u00A9 2011-2020 Damir Mihaljinec</string>
+    <string name="title_copyright" translatable="false">\u00A9 2011-2021 Damir Mihaljinec</string>
     <string name="title_source_code">Source code</string>
     <string name="title_sets_finished">Sets played</string>
     <string name="title_winning_rate">Winning rate</string>
