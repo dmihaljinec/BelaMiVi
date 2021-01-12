@@ -20,4 +20,3 @@ object Versions {
     const val stateless4j = "2.6.0"
     const val work = "2.4.0" // 2.5.0-beta02
 }
-

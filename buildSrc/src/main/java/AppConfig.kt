@@ -8,4 +8,3 @@ object AppConfig {
     const val versionCode = 27
     const val versionName = "2.1.0"
 }
-

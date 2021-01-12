@@ -1,5 +1,5 @@
 import org.gradle.api.artifacts.dsl.DependencyHandler
-
+@Suppress("unused")
 object AppDependencies {
     // Kotlin std lib
     private const val kotlinStdLib = "org.jetbrains.kotlin:kotlin-stdlib-jdk8:${Versions.kotlin}"
