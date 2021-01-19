@@ -38,6 +38,17 @@ android {
         }
     }
 
+    flavorDimensions("mode")
+    productFlavors {
+        create("dev") {
+            applicationIdSuffix = ".dev"
+            dimension = "mode"
+        }
+        create("prod") {
+            dimension = "mode"
+        }
+    }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8

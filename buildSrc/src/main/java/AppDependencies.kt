@@ -46,32 +46,32 @@ object AppDependencies {
     private const val leakCanaryAndroid = "com.squareup.leakcanary:leakcanary-android:${Versions.leakCanary}"
 
     val appLibs = arrayListOf<String>().apply {
-        add(kotlinStdLib)
-        add(kotlinCoroutinesCore)
-        add(kotlinCoroutinesAndroid)
-        add(lifecycleExtensions)
-        add(lifecycleLiveDataKtx)
-        add(lifecycleViewModelKtx)
         add(appcompat)
         add(constraintLayout)
-        add(recyclerView)
         add(fragmentKtx)
-        add(preferenceKtx)
-        add(navigationFragmentKtx)
-        add(navigationUiKtx)
-        add(roomKtx)
         add(hiltAndroid)
         add(hiltLifecycleViewModel)
         add(hiltWork)
-        add(workRuntimeKtx)
-        add(stateless4j)
+        add(kotlinCoroutinesAndroid)
+        add(kotlinCoroutinesCore)
+        add(kotlinStdLib)
+        add(lifecycleExtensions)
+        add(lifecycleLiveDataKtx)
+        add(lifecycleViewModelKtx)
+        add(navigationFragmentKtx)
+        add(navigationUiKtx)
+        add(preferenceKtx)
         add(processPhoenix)
+        add(recyclerView)
+        add(roomKtx)
+        add(stateless4j)
+        add(workRuntimeKtx)
     }
 
     val appAnnotationProcessors = arrayListOf<String>().apply {
-        add(roomCompiler)
-        add(hiltDaggerCompiler)
         add(hiltCompiler)
+        add(hiltDaggerCompiler)
+        add(roomCompiler)
     }
     
     val testLibs = arrayListOf<String>().apply {
