@@ -54,16 +54,32 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintBottom_toTopOf="@id/version" />
 
-            <TextView
+            <LinearLayout
                 android:id="@+id/version"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/versionName"
-                android:textSize="@dimen/text_medium"
+                android:orientation="vertical"
+                android:gravity="center"
                 app:layout_constraintTop_toBottomOf="@id/version_label"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintBottom_toTopOf="@id/copyright" />
+                app:layout_constraintBottom_toTopOf="@id/copyright">
+
+                <TextView
+                    android:id="@+id/version_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/versionName"
+                    android:textSize="@dimen/text_medium" />
+
+                <TextView
+                    android:id="@+id/git_hash"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/gitHashShort"
+                    android:textSize="@dimen/text_small" />
+
+            </LinearLayout>
 
             <TextView
                 android:id="@+id/copyright"

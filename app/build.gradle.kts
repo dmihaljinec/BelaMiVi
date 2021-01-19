@@ -23,7 +23,16 @@ android {
 
     applicationVariants.all(object : Action<ApplicationVariant> {
         override fun execute(variant: ApplicationVariant) {
-            variant.resValue("string", "versionName", "${variant.versionName} . ${variant.versionCode}")
+            variant.resValue(
+                "string",
+                "versionName",
+                "${variant.versionName}.${variant.versionCode}"
+            )
+            variant.resValue(
+                "string",
+                "gitHashShort",
+                "git hash: ${"git rev-parse --short HEAD".runCommand(workingDir = rootDir)}"
+            )
         }
     })
 
