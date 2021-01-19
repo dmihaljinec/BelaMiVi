@@ -12,6 +12,10 @@ This project implements clean architecture. Data model can be found in bela.mi.v
 Android implementation of data sources uses Room (Sqlite database) and it can be found in bela.mi.vi.android.room package.
 UI part is implemented as single activity utilizing Android Navigation library. Screens (Fragments) contains ViewModels which are injected using Android Hilt dependency injection library. ViewModels and in some cases Fragments use injected interactors to perform actions over data models.
 
+Testing
+-------
+Project has unit and instrumentation tests to test application logic. Run them either through Android Studio or via terminal (./gradlew testDevDebugUnitTest and ./gradlew connectedDevDebugAndroidTest)
+
 Author
 ------
 Damir Mihaljinec - @dmihaljinec on GitHub
