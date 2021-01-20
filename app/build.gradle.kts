@@ -26,7 +26,7 @@ android {
             variant.resValue(
                 "string",
                 "versionName",
-                "${variant.versionName}.${variant.versionCode}"
+                variant.versionName
             )
             variant.resValue(
                 "string",
@@ -47,14 +47,13 @@ android {
         }
     }
 
-    flavorDimensions("mode")
+    flavorDimensions("default")
     productFlavors {
         create("dev") {
             applicationIdSuffix = ".dev"
-            dimension = "mode"
+            versionNameSuffix = "-dev"
         }
         create("prod") {
-            dimension = "mode"
         }
     }
 

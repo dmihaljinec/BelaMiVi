@@ -6,5 +6,5 @@ object AppConfig {
     const val targetSdk = 30
     const val testInstrumentationRunner = "bela.mi.vi.BelaTestRunner"
     const val versionCode = 27
-    const val versionName = "2.1.0"
+    const val versionName = "2.1.0.$versionCode"
 }
